@@ -1,0 +1,21 @@
+{% load static %}
+<html>
+<head>
+
+</head>
+<body>
+    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
+    <script src="{% static 'coup/coup.js' %}"></script>
+    <div>
+    <textarea id="message"></textarea>    
+</div>
+<div>
+    <button onclick="sendMessage()">Send</button>
+</div>
+<div id="response-box">
+    <textarea id="responses" readonly></textarea>
+</div>
+
+    <a href="/">back</a>
+</body>
+</html>

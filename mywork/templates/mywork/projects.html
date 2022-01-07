@@ -1,0 +1,26 @@
+{% extends "mywork/base.html" %}
+{% load static %}
+{% block content %}
+<h1>Here are some of my favourite personal projects!</h1>
+<div id="carouselExampleControls" class="carousel slide" data-interval="false" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'mywork/sand_project.gif' %}" class="d-block w-100" alt="project1">
+    </div>
+    <div class="carousel-item">
+      <img src="https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="https://compote.slate.com/images/697b023b-64a5-49a0-8059-27b963453fb1.gif" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{% endblock content %}

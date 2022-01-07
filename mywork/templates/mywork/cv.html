@@ -1,0 +1,72 @@
+{% extends "mywork/base.html" %}
+{% load static %}
+{% block content %}
+</script>
+<h1>Benjamin Allport <small class="text-muted">Software Developer</small></h1>
+<h2 id="title1">Profile</h2>
+<hr size="4px">
+<p>Skilled Software Developer working in all stages of the software development process. For the past three years I’ve had the opportunity to use my passion for coding working for a small software house specialising in retail software including e-commerce sites, sales reporting and till software. I am fortunate that my career is also my hobby, and enjoy learning new concepts in my own time which I can then bring to my job.</p>
+<h2>Key Skills</h2>
+<hr size="4px">
+    <ul>
+        <li>Software front and back-end development </li>
+        <li>In depth knowledge of Perl and Python</li>
+        <li>Experienced with SQL and database management</li>
+        <li>Competent in using Linux/Bash</li>
+        <li>Front-end skills in HTML/JS/CSS</li>
+        <li>Extensive use of version control software</li>
+        <li>Experience planning, writing, testing, debugging and documenting code</li>
+        <li>Excellent problem solving</li>
+        <li>Ability to work independently as well as with a team</li>
+        <li>Good time management and organisational skills</li>
+    </ul>
+<h2>Work experience</h2>
+<hr size="4px">
+<h5>Software Developer - Medoc Computers 2017 to Present</h5>
+<p>Working in a small team at Medoc has meant I’ve experienced the full process of developing products for clients, from the initial planning and analysis, through writing the code, testing and assisting with deployment. I have written the documentation for all the jobs I’ve completed, ensuring it could be understood by anyone with no familiarity with the functionality. Working in a small team has meant not only being competent at a broad range of tasks, but also needing to start new tasks and learn the skills required with minimal guidance, whilst still coordinating changes and ideas with my team.</p>
+<b>Key Roles:</b>
+    <ul>
+        <li>Front-end and back-end software development</li>
+        <li>Writing specs for new functionality</li>
+        <li>Writing and performing testing of my code</li>
+        <li>Documenting my functionality on the company wiki</li>
+        <li>Triaging issues from live sites and QA</li>
+    </ul>
+<b>Some of my notable work at Medoc includes:</b>
+
+    <ul>
+        <li>Content management system, allowing clients to manage the appearance of webpages without the need for server-side changes, saving time for both the clients and my company</li>
+        <li>Re-write of our gift-aid management system to increase its reliability and usability</li>
+        <li>Performance improvements to both retrieval of data from the database and rendering of the web pages</li>
+        <li>Designing and developing many reports including pre-orders, stock lookup and returns</li>
+        <li>Designing and developing many pieces of back-end functionality including allowing safe transferral of data between our new and legacy systems, handling of  returned items and a system for taking API calls and generating emails from the data received</li>
+        <li>Security improvements to decrease the risk of cross site scripting and SQL injection</li>
+        <li>Front-end improvements to the CSS and JS including making sure our software works on different major browsers and improving the responsiveness on smart phones</li>
+    </ul>
+
+<h5>Quality Controller - Tim’s Dairy January 2015 to 2017</h5>
+<p>After graduating I worked in the food industry as a quality controller, for a producer of yogurts. As well as ensuring the quality of the products, I was chosen to go to meetings with clients such as Waitrose to discuss our process and new products.</p>
+
+<h2>Education</h2>
+<hr size="4px">
+<h5>Sec-1 Secure Coding Conferences 2018, 2019</h5>
+<h5>Codecademy 2017</h5>
+<p>Python, Java, Javascript</p>
+<h5>IQMS Internal Auditor Certification 2017</h5>
+<h5>RSPH Level 2 Food Safety for Manufacturing 2016</h5>
+<h5>University of Nottingham 2011-2014</h5>
+<p>Degree: Biotechnology BSc Hons</p>
+<h5>Amersham School 2004-2011</h5>
+<p>GCSE</p>
+<p>Physics (A*), Biology (A), Chemistry (A), Mathematics (A), Statistics (A), Music (B),  English (B),  IT (C),  Humanities (C),  Geography (C)</p>
+<p>A-level</p>
+<p>Biology (B), Chemistry (C), Mathematics (C)</p>
+<h2>Hobbies and Interests</h2>
+<hr size="4px">
+<p>In my spare time I enjoy playing piano and guitar, and write my own music in modern and classical styles. I solve Rubik’s cubes and play chess competitively and I like to do coding projects that teach me something new. Some of my coding projects include machine learning, particle simulations, various utilities, some of which have been then put into use at my workplace.</p>
+{% endblock content %}
+{% block pic %}
+<div class="">
+    <img src="{% static 'mywork/me.png' %}">
+</div>
+{% endblock pic %}

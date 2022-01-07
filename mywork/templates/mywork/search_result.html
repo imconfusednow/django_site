@@ -1,0 +1,12 @@
+{% extends "mywork/base.html" %}
+{% block content %}
+<h3>Your search results for "{{ search }}" returned {{count}} results:</h3>
+
+{% for result in results %}
+<div>
+    <hr>
+    <a class="result_link" href="/{{ result.link }}?scroll={{result.tag}}.{{result.number}}">{{result.name}}</a>
+    <p class="result">{{ result.result }}</p>
+</div>
+{% endfor %}
+{% endblock content %}
