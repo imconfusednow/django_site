@@ -21,7 +21,7 @@ function sendMessage()
 }
 
 
-function joinGame()
+function joinGame(button)
 {
     var game_id_input = document.getElementById("game-id");
     game_id_input.style = "Display:block";
@@ -30,6 +30,8 @@ function joinGame()
 
     if ( game_id_input.value == "" ) return;
 
+    button.form.submitted = button;
+
 }
 
 function createGame()
@@ -37,7 +39,7 @@ function createGame()
     return;
 }
 
-function handleSubmit(e)
+function handleSubmit(event,button)
 {
-    e.preventDefault();
+    event.preventDefault();
 }
