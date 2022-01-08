@@ -24,11 +24,15 @@ function sendMessage()
 function joinGame(button)
 {
     var game_id_input = document.getElementById("game-id");
-    game_id_input.style = "Display:block";
     var create_game_button = document.getElementById("create-game-button");
     create_game_button.style = "Display:none";
 
-    if ( game_id_input.value == "" ) return;
+    if ( game_id_input.value == "" )
+    {
+        game_id_input.setAttribute("required", "");        
+        game_id_input.style == "Display:block";
+        return;
+    } 
 
     button.form.submitted = button;
 
