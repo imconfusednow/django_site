@@ -1,7 +1,7 @@
 @font-face
 {
   font-family:  "Coup";
-  src:  url(/static/coup/Kwajong-BVRG.ttf);
+  src:  url("/static/coup/Kwajong-BVRG.ttf");
 }
 
 *, *::before, *after{
@@ -17,6 +17,7 @@ body {
 .title
 {
   text-align:center;
+    font-family: Coup;
 }
 
 .title-text
@@ -32,7 +33,6 @@ body {
   background-color:#717b85;
   padding:1%;
   border-radius: 5px;
-
 }
 
 #game-id
