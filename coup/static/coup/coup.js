@@ -39,7 +39,7 @@ function createGame()
     return;
 }
 
-function handleSubmit(event,button)
+function handleSubmit(button)
 {
     event.preventDefault();
 }
