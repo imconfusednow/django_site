@@ -29,8 +29,15 @@ function joinGame(button)
 
     if ( game_id_input.value == "" )
     {
-        game_id_input.setAttribute("required", "");        
-        game_id_input.style = "Display:block";
+        if (game_id_input.getAttribute("visible"))
+        {
+            game_id_input.setAttribute("required", "");
+        }
+        else
+        {
+            game_id_input.setAttribute("visible", "true");
+            game_id_input.style = "Display:block";
+        }
         return;
     } 
 

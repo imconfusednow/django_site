@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .forms import ContactForm, SearchForm
 from .models import Emails, site_contents
 from django.utils import timezone
+from django.http import HttpResponseRedirect
+
 
 def about(request):
     return render(request, 'mywork/about.html')
@@ -45,7 +47,7 @@ def contact(request):
                 context = {'result': "Email Sent!"}
             except Exception as e:
                 context = {'result': e}
-            return render(request, 'mywork/contact_result.html', context)
+            return HttpResponseRedirect()
     else:
         form = ContactForm()
     context = {'form': form}
