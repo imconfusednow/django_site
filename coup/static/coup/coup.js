@@ -34,6 +34,10 @@ function joinGame()
 
 function createGame()
 {
-
     return;
+}
+
+function handleSubmit(e)
+{
+    e.preventDefault();
 }

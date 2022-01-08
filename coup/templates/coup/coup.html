@@ -7,7 +7,7 @@
         <h1 class="title-text">Welcome to Coup Online</h1>
     </div>
     <div id="form-div">
-        <form id="login-form">
+        <form id="login-form" onsubmit="handleSubmit()">
             {% csrf_token %}
             <div class="form-group">
                 <label for="game-id" id="game-id-label">Join or create a game below</label>
