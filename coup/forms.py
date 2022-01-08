@@ -1,5 +1,5 @@
 from django import forms
 
 
-class MsgForm(forms.Form):
-    msg = forms.CharField(label="")
+class LoginForm(forms.Form):
+    game_id = forms.CharField(label="")
