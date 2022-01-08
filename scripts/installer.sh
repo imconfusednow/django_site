@@ -1,6 +1,6 @@
 cd /home/imconfusednow/repo/django_site
 git pull
-cp -rp /home/imconfusednow/repo/django_site/* /home/imconfusednow/cv_project
+cp -r /home/imconfusednow/repo/django_site/* /home/imconfusednow/cv_project
 chmod -R 775 /home/imconfusednow/cv_project
 chown -R www-data:imconfusednow /home/imconfusednow/cv_project
 python3 /home/imconfusednow/cv_project/manage.py collectstatic --noinput --clear
