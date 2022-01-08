@@ -19,3 +19,21 @@ function sendMessage()
     let msg = document.getElementById("message").value;
     socket.emit('send_message', {msg: msg});
 }
+
+
+function joinGame()
+{
+    var game_id_input = document.getElementById("game-id");
+    game_id_input.style = "Display:block";
+    var create_game_button = document.getElementById("create-game-button");
+    game_id_input.style = "Display:none";
+
+    if ( game_id_input.value == "" ) return;
+
+}
+
+function createGame()
+{
+
+    return;
+}
