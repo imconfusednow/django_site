@@ -7,4 +7,4 @@ python3 /home/imconfusednow/cv_project/manage.py collectstatic --noinput --clear
 server_pid=`ps aux | grep coup_server.py | grep -v grep | awk '{print $2}'`
 kill ${server_pid}
 nohup python3 /home/imconfusednow/cv_project/coup/coup_server.py&
-cd 
+cd .
