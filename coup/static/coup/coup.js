@@ -42,6 +42,7 @@ function joinGame(button)
     } 
 
     button.form.submitted = button;
+    button.form.submit();
 
 }
 
