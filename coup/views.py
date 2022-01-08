@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 
-def coup_login(request):
+def login(request):
     context = {}
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -27,6 +27,6 @@ def coup_login(request):
         return render(request, 'coup/coup_login.html', context)
 
 
-def coup_game(request):
+def game(request):
     context = {}
     return render(request, 'coup/coup_game.html', context)
