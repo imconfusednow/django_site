@@ -41,17 +41,16 @@ function joinGame(button)
         return;
     } 
 
-    button.form.submitted = button;
     button.form.submit();
 
 }
 
-function createGame()
+function createGame(button)
 {
-    return;
+    button.form.submit();
 }
 
-function handleSubmit(button)
+function handleSubmit()
 {
     event.preventDefault();
 }
