@@ -11,7 +11,7 @@
             {% csrf_token %}
             <div class="form-group">
                 <label for="game-id" id="game-id-label">Join or create a game below</label>
-                <input style="display: none" type="text" class="form-control" id="game-id" aria-describedby="emailHelp" placeholder="Enter Game ID to Join">
+                <input style="display: none" type="text" class="form-control" id="game-id" name="game_id" placeholder="Enter Game ID to Join">
             </div>
             <div class="button-group">
                 <button type="submit" class="btn btn-primary" id="create-game-button" onclick="createGame()">Create Game</button>
