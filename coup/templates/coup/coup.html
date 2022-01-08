@@ -4,12 +4,16 @@
     <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
     <script src="{% static 'coup/coup.js' %}"></script>
     <Container>
-        <Form onSubmit={handleSubmit} class="w-100">
-            {% csrf_token %}
-            <label>Welcome to Coup Online! Enter or Create a game below:</label>
-            <Input type=text></Input>
-        </Form>
-        <button type="submit" class="btn mr-2">Create Game</button>
-        <button type="submit" class="btn-secondary">Join Game</button>
+    <form>
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="game-id">Email address</label>
+            <input type="email" class="form-control" id="game-id" aria-describedby="emailHelp" placeholder="Enter Game ID to Join">
+        </div>
+        <div>
+            <button type="submit" class="btn-primary mr-2">Create Game</button>
+            <button type="submit" class="btn-secondary">Join Game</button>
+        </div>
+    </form>
     </Container>
 {% endblock content %}
