@@ -4,10 +4,10 @@
     <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
     <script src="{% static 'coup/coup.js' %}"></script>
     <Container>
-    <form>
+    <form id="login-form">
         {% csrf_token %}
         <div class="form-group">
-            <label for="game-id">Email address</label>
+            <label for="game-id">Welcome to Coup Online!</label>
             <input type="email" class="form-control" id="game-id" aria-describedby="emailHelp" placeholder="Enter Game ID to Join">
         </div>
         <div>

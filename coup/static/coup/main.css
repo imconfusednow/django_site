@@ -7,48 +7,11 @@ body {
   color: #333333;
 }
 
-.content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
-}
 
-#main
+#main-form
 {
-  padding-top:20px;
-}
-
-h2
-{
-  color:#0cb1d2;
-}
-
-hr
-{ 
-  color: #07839c;
-  margin-top: 0px;
-}
-
-#search_form
-{
-  display:contents;
-}
-
-#search_box
-{
-    padding-right: 6px;
-}
-
-.result_link
-{
-  font-size: 1.3125em;
-  text-decoration: none;
-}
-
-.result
-{
-  margin-left: 50px;
-
+  width:20%;
+  text-align:center;
+  margin:auto;
+  color:
 }
