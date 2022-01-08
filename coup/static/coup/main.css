@@ -9,8 +9,7 @@
 }
 
 body {
-  background: #f0f2f5;
-  color: #333333;
+  background: linear-gradient(to bottom right,black,#323232, black)
 }
 
 
@@ -18,11 +17,14 @@ body {
 {
   text-align:center;
     font-family: Coup;
+    margin:50px;
+    margin-bottom:200px;
 }
 
 .title-text
 {
   padding:1%;
+  color:whitesmoke;
 }
 
 #form-div
@@ -33,6 +35,7 @@ body {
   background-color:#717b85;
   padding:1%;
   border-radius: 5px;
+  
 }
 
 #game-id
