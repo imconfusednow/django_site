@@ -1,3 +1,9 @@
+@font-face
+{
+  font-family:  "Coup";
+  src:  url(/static/coup/Kwajong-BVRG.ttf);
+}
+
 *, *::before, *after{
   box-sizing:border-box;
 }
@@ -8,18 +14,6 @@ body {
 }
 
 
-#login-form
-{ 
-  width:20%;
-  text-align:center;
-  margin:auto;
-}
-
-.form-group{
-  margin-top:50%;
-  padding-bottom:4%;
-}
-
 .title
 {
   text-align:center;
@@ -27,5 +21,33 @@ body {
 
 .title-text
 {
-  padding-top:1%
+  padding:1%;
+}
+
+#form-div
+{
+  text-align:center;
+  margin: auto;
+  max-width: 300px;
+  background-color:#717b85;
+  padding:1%;
+  border-radius: 5px;
+
+}
+
+#game-id
+{
+  text-align:center;  
+}
+
+.button-group
+{
+  margin:5%;
+}
+
+#game-id-label
+{
+  margin:2%;
+  font-size:larger;
+  color:white
 }
