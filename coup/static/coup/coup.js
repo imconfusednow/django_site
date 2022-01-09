@@ -2,8 +2,9 @@ const socket = io("http://81.110.114.52:3000");
 
 socket.on('connect', () => {
     console.log('connected');
+    if (!localStorage.getItem("player_id")) localStorage.setItem("player_id", socket.id)
     var title = document.getElementById("coup-title");
-    title.innerText = title.innerText + " " + socket.id;
+    title.innerText = title.innerText + " " + localStorage.getItem("player_id");
 });
 
 socket.on('disconnect', () => {
