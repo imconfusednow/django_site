@@ -2,6 +2,8 @@ const socket = io("http://81.110.114.52:3000");
 
 socket.on('connect', () => {
     console.log('connected');
+    var title = document.getElementById("coup-title");
+    title.innerText = title.innerText + " " + socket.id;
 });
 
 socket.on('disconnect', () => {

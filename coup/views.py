@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .forms import LoginForm
 
@@ -16,7 +16,7 @@ def login(request):
                 context = {'game_id': game_id}
             except Exception as e:
                 context = {'result': e}
-            return HttpResponseRedirect("/coup/game")
+            return redirect("/coup/game", game_id)
         else:
             context["errors"] = form.errors
     return render(request, 'coup/coup_login.html', context)
