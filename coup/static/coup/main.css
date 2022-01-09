@@ -54,3 +54,65 @@ body {
   font-size:larger;
   color:white
 }
+
+.player-card
+{
+  margin: auto;  
+  width: 50%;  
+}
+
+.player-card-1
+{
+  margin-right: 0px;
+  float:left;
+}
+
+.player-card-2
+{
+  margin-left: 0px;
+  float:right;
+}
+
+.grid-container
+{
+  display:grid;
+  width: 100%;
+  height:100%;
+  position: relative;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:1fr 1fr 1fr;
+ 
+}
+
+.grid-item
+{
+
+  width:100%;
+  height:100%;
+
+}
+
+.grid-item-player
+{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  justify-items:center;
+}
+
+.player-card-div
+{
+  margin: auto;
+}
+
+.player-card-div-1 
+{
+  float: right;
+  margin-left: 5px;
+}
+
+.player-card-div-2
+{
+  float: left;
+  margin-right: 5px;
+}
+
