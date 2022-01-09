@@ -53,24 +53,6 @@ body {
   color:white
 }
 
-.player-card
-{
-  margin: auto;  
-  width: 50%;  
-}
-
-.player-card-1
-{
-  margin-right: 0px;
-  float:left;
-}
-
-.player-card-2
-{
-  margin-left: 0px;
-  float:right;
-}
-
 .grid-container
 {
   display:grid;
@@ -105,12 +87,29 @@ body {
 .player-card-div-1 
 {
   float: right;
-  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .player-card-div-2
 {
   float: left;
-  margin-right: 5px;
+  margin-left: 5px;
 }
 
+.player-card
+{
+  margin: auto;  
+  width: 50%;  
+}
+
+.player-card-1
+{
+  margin-right: 0px;
+  float:right;
+}
+
+.player-card-2
+{
+  margin-left: 0px;
+  float:left;
+}
