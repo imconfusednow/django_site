@@ -16,14 +16,12 @@ body {
 .title
 {
   text-align:center;
-    font-family: Coup;
-    margin:50px;
-    margin-bottom:200px;
+  font-family: Coup;
+  padding:10px;
 }
 
 .title-text
 {
-  padding:1%;
   color:whitesmoke;
 }
 
