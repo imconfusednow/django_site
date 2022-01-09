@@ -19,4 +19,9 @@
             </div>
         </form>
     </div>
+    {% if errors %}
+        {% for error in errors %}
+            <script>alert(error)</script>
+        {% endfor %}
+    {% endif %}
 {% endblock content %}

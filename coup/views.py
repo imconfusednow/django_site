@@ -17,8 +17,9 @@ def login(request):
             except Exception as e:
                 context = {'result': e}
             return HttpResponseRedirect("/coup/game")
-    else:
-        return render(request, 'coup/coup_login.html', context)
+        else:
+            context["errors"] = form.errors
+    return render(request, 'coup/coup_login.html', context)
 
 
 def game(request):
