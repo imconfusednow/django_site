@@ -21,7 +21,7 @@
     </div>
     {% if errors %}
         {% for key, error in errors.items %}
-            <script>alert({{ key }} + {{ error }})</script>
+            <script>alert("{{ key }} + {{ error }}")</script>
         {% endfor %}
     {% endif %}
 {% endblock content %}
