@@ -20,8 +20,8 @@
         </form>
     </div>
     {% if errors %}
-        {% for error in errors %}
-            <script>alert({{ error }})</script>
+        {% for key, error in errors.items %}
+            <script>alert({{ key }} + {{ error }})</script>
         {% endfor %}
     {% endif %}
 {% endblock content %}
