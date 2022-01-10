@@ -1,11 +1,6 @@
 {% extends "coup/base.html" %}
 {% load static %}
 {% block content %}
-    <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous"></script>
-    <script src="{% static 'coup/coup.js' %}"></script>
-    <div class="title">
-        <h1 class="title-text" id="coup-title">Coup Online</h1>
-    </div>
     <div class="grid-container">
         <div class="grid-item"></div>
         <div class="grid-item"></div>
@@ -15,11 +10,28 @@
         <div class="grid-item"></div>
         <div class="grid-item "></div>
         <div class="grid-item grid-item-player">
+            <div class="player-info">                
+                <span style="" id="player-name">You</span>
+                <span style="" id="player-money">Coins: 5</span>
+            </div>
+            <div class="turn-options">
+                <button class="option-button option-button-true" style="float: right;">Take 1 Coin</button>
+                <button class="option-button option-button-true" style="float: right;">Foreign Aid (Take 2 Coins)</button>
+            </div>
             <div class="player-card-div-1 player-card-div">
                 <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-1 player-card">
             </div>
-            <div class="player-card-div-2 player-card-div" >
+            <div class="player-card-div-2 player-card-div">
                 <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-2 player-card">
+            </div>
+            <div class="turn-options">
+                <button class="option-button option-button-lie">Assassinate - Assassin</button>
+                <button class="option-button option-button-lie">Take 3 Coins - Duke</button>
+                <button class="option-button option-button-true">Steal 2 Coins - Captain</button>
+                <button class="option-button option-button-lie">Swap Cards - Ambassador</button>
+            </div>
+            <div class="coup-action">
+                <button class="option-button button-inactive">Coup</button>
             </div>
         </div>
         <div class="grid-item "></div>
