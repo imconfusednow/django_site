@@ -4,8 +4,9 @@
   src:  url("/static/coup/Kwajong-BVRG.ttf");
 }
 
-*, *::before, *after{
+*, *::before, *::after{
   box-sizing:border-box;
+  user-select:none;
 }
 
 body {
@@ -163,7 +164,7 @@ body {
 
 .button-inactive
 {
-  filter:brightness(25%);
+  filter:brightness(25%) important;
 }
 
 .player-info
