@@ -99,6 +99,7 @@ body {
   margin: auto;  
   width: 70%;
   border-radius:5px;
+  min-width: 100px;
 }
 
 .player-card-1
