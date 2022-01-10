@@ -164,7 +164,7 @@ body {
 
 .button-inactive
 {
-  filter:brightness(25%) important;
+  filter:brightness(25%) !important;
 }
 
 .player-info
