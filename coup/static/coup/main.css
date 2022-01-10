@@ -10,7 +10,8 @@
 }
 
 body {
-  background: linear-gradient(to bottom right,black,#323232, black)
+  background: linear-gradient(to bottom right,black,#323232, black);
+  position: fixed;
 }
 
 
