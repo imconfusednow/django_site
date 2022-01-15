@@ -66,14 +66,21 @@ body {
   width: 100%;
   height:100%;
   position: relative;
-  grid-template-columns:1fr 2fr 1fr;
-  grid-template-rows:1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 0.4fr 1fr 1fr;
+  padding: 0px;
 }
 
 .grid-item
 {
   width:100%;
   height:100%;
+  display: grid;
+  justify-items: center;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  grid-template-columns: 80px 80px;
 }
 
 .grid-item-player
@@ -119,6 +126,29 @@ body {
 {
   margin-left: 0px;
   float:left;
+}
+
+.opponent-card-div
+{
+  max-width:50px;
+}
+
+.opponent-card
+{
+  margin:auto;
+  max-width: 50px;
+}
+
+.opponent1-card
+{
+}
+
+.opponent2-card
+{
+}
+
+.opponent3-card
+{
 }
 
 .turn-options
