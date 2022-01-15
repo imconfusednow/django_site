@@ -57,7 +57,7 @@ body {
 {
   margin:2%;
   font-size:larger;
-  color:white
+  color:white;
 }
 
 .grid-container
@@ -153,7 +153,7 @@ body {
 
 .turn-options
 {
-  layout:grid;
+  display:grid;
   grid-template-columns:1fr;  
   margin:auto;
   justify-items:center;
@@ -191,7 +191,7 @@ body {
 {
   background: linear-gradient(black,#f7584c, black);
   border-color:#f7584c;
-  filter:brightness(1.7)
+  filter:brightness(1.7);
 }
 
 .coup-action
@@ -207,7 +207,7 @@ body {
 
 .player-info
 {
-  layout:grid;
+  display:grid;
   grid-column:1/-1;
   font-family:coup;
   border-radius:5px;
@@ -216,17 +216,16 @@ body {
   margin:10px;
   color:white;
   text-align:center;
-  font-size:x-large
+  font-size:x-large;
 }
 
 
 #player-name
 {
-  margin:10px;  
 }
 
-#player-money
+.on-turn
 {
-  margin:10px;
+ color:blue;
 
 }
