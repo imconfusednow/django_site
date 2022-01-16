@@ -2,7 +2,7 @@ from django.db import models
 
 class players(models.Model):
     name = models.CharField(max_length=50, default="")
-    game_id = models.ForeignKey(games)
+    game_id = models.ForeignKey("games", on_delete=models.SET(None))
     player_id = models.CharField(max_length=50, default="")
     sequence = models.IntegerField(default=0)
     turn = models.BooleanField(default=False)
@@ -14,6 +14,6 @@ class games(models.Model):
     name = models.CharField(max_length=50, default="")
 
 class decks(models.Model):
-    game_id = models.ForeignKey(games)
+    game_id = models.ForeignKey("games", on_delete=models.CASCADE)
     card_type = models.CharField(max_length=10, default="")
     sequence = models.IntegerField(default=0)
