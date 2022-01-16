@@ -17,7 +17,7 @@ def login(request):
                     error = c.add_game(room_name)
                     if error: raise ValueError(error)
             except Exception as e:
-                context = {'result': e}
+                context = {'error': e}
                 return render(request, 'coup/coup_login.html', context)
             return redirect("/coup/game")
         else:
