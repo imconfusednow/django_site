@@ -14,12 +14,12 @@ def login(request):
                 context = {'game_id': game_id}
             except Exception as e:
                 context = {'result': e}
-            return redirect("/coup/game", game_id)
+            return redirect("/coup/game", game=game_id)
         else:
             context["errors"] = form.errors
     return render(request, 'coup/coup_login.html', context)
 
 
-def game(request):
-    context = {}
-    return render(request, 'coup/coup_game.html', context)
+def game(request, game):
+    context = {"game_name", game}
+    return render(request, 'coup/coup_game.html', game)
