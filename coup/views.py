@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .forms import LoginForm
 from .models import players, games
-import coup as c
+import coup_functs as c
 
 
 def login(request):
