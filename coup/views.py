@@ -9,10 +9,8 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            context = {}
             try:
-                game_id = form.cleaned_data['game_id']
-                
+                game_id = form.cleaned_data['game_id']                
                 context = {'game_id': game_id}
             except Exception as e:
                 context = {'result': e}

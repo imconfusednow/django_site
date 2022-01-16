@@ -22,3 +22,14 @@ function sendMessage()
     let msg = document.getElementById("message").value;
     socket.emit('send_message', {msg: msg});
 }
+
+
+function myTurn()
+{
+    
+}
+
+function notMyTurn()
+{
+    
+}
