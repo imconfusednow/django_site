@@ -20,6 +20,6 @@ def login(request):
     return render(request, 'coup/coup_login.html', context)
 
 
-def game(request, game):
+def game(request):
     context = {"room_name": request.session["room_name"]}
     return render(request, 'coup/coup_game.html', context)
