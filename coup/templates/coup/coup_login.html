@@ -9,6 +9,9 @@
         <form id="login-form" onsubmit="handleSubmit(this.submitted)" method="post">
             {% csrf_token %}
             <div class="form-group">
+                {{% if error %}}
+                    <span class="error">{{ error }}</span>
+                {{% endif %}}
                 <label for="game-id" id="game-id-label">Join or create a game below</label>
                 <input required type="text" class="form-control" id="room-name" name="room_name" placeholder="Enter Game Room Name">
                 <input hidden type="text" class="form-control" id="submit-type" name="submit_type">

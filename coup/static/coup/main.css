@@ -229,3 +229,13 @@ body {
  color:blue;
 
 }
+
+.room_name
+{
+  color: darkcyan;
+}
+
+.error
+{
+  color: red;
+}
