@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .forms import LoginForm
-
+from .models import players, games
 
 
 def login(request):
@@ -10,16 +10,16 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
-                game_id = form.cleaned_data['game_id']                
-                context = {'game_id': game_id}
+                room_name = form.cleaned_data['room_name']
+                request.session["room_name"] = room_name
             except Exception as e:
                 context = {'result': e}
-            return redirect("/coup/game", game=game_id)
+            return redirect("/coup/game")
         else:
             context["errors"] = form.errors
     return render(request, 'coup/coup_login.html', context)
 
 
 def game(request, game):
-    context = {"game_name", game}
-    return render(request, 'coup/coup_game.html', game)
+    context = {"room_name": request.session["room_name"]}
+    return render(request, 'coup/coup_game.html', context)
