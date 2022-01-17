@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from .forms import LoginForm
 from .models import players, games
-import coup_functs as c
+import coup.coup_functs as c
 
 
 def login(request):
@@ -11,10 +11,14 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
-                room_name = form.cleaned_data['room_name']
+                room_name = form.cleaned_data['room_name']                
                 request.session["room_name"] = room_name
+                session_id =  request.session.session_key
                 if (form.cleaned_data['submit_type'] == "create"):
-                    error = c.add_game(room_name)
+                    error = c.add_game(room_name,session_id)
+                    if error: raise ValueError(error)
+                else:
+                    error = c.join_game(room_name,session_id)
                     if error: raise ValueError(error)
             except Exception as e:
                 context = {'error': e}
