@@ -21,6 +21,6 @@ def add_player(room, player_id):
     pk = None
     if existing.exists():
         pk = existing[0].pk
-    player = players(game_id=room, session_id=session_id, computer=False, coins=0, pk=pk)
+    player = players(game_id=room, computer=False, coins=0, pk=pk)
     player.save()
     return player.pk
