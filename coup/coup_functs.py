@@ -1,24 +1,26 @@
 from .models import players, games
 
-def add_game(name):
+def add_game(name,player_id):
     existing = games.objects.filter(name=name)
     if existing.exists():
-        return f"Room already exists, click join to join this room: {name}"
+        return {"error":"Room does not exist, click create to create this room: {name}"}
     game = games(name=name)
     game.save()
-    add_player(game, session_id)
-    return ""
+    pk = add_player(game, player_id)
+    return {"pk":pk}
 
-def join_game(name, session_id):
+def join_game(name, player_id):
     existing = games.objects.filter(name=name)
     if not existing.exists():
-        return f"Room does not exist, click create to create this room: {name}"
-    add_player(existing.first(), session_id)
+        return {"error":"Room does not exist, click create to create this room: {name}"}
+    pk = add_player(existing.first(), player_id)
+    return {"pk":pk}
 
-def add_player(room, session_id):
-    existing = players.objects.filter(session_id=session_id)
+def add_player(room, player_id):
+    existing = players.objects.filter(pk=player_id)
     pk = None
     if existing.exists():
         pk = existing[0].pk
     player = players(game_id=room, session_id=session_id, computer=False, coins=0, pk=pk)
     player.save()
+    return player.pk

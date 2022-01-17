@@ -13,19 +13,20 @@ def login(request):
             try:
                 room_name = form.cleaned_data['room_name']                
                 request.session["room_name"] = room_name
-                session_id =  request.session.session_key
+                returned = ""              
                 if (form.cleaned_data['submit_type'] == "create"):
-                    error = c.add_game(room_name,session_id)
-                    if error: raise ValueError(error)
+                    returned = c.add_game(room_name,session_id)
+                    if returned["error"]: raise ValueError(returned["error"])
                 else:
-                    error = c.join_game(room_name,session_id)
-                    if error: raise ValueError(error)
+                    returned = c.join_game(room_name,session_id)
+                    if returned["error"]: raise ValueError(returned["error"])
+                session_id =  request.session["player_id"] = returned["player_id"]
             except Exception as e:
                 context = {'error': e}
                 return render(request, 'coup/coup_login.html', context)
             return redirect("/coup/game")
         else:
-            context["errors"] = form.errors
+            context["error"] = form.errors[0]
     return render(request, 'coup/coup_login.html', context)
 
 
