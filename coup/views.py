@@ -15,10 +15,10 @@ def login(request):
                 request.session["room_name"] = room_name
                 returned = ""              
                 if (form.cleaned_data['submit_type'] == "create"):
-                    returned = c.add_game(room_name,session["player_id"])
+                    returned = c.add_game(room_name,request.session["player_id"])
                     if returned["error"]: raise ValueError(returned["error"])
                 else:
-                    returned = c.join_game(room_name,session["player_id"])
+                    returned = c.join_game(room_name,request.session["player_id"])
                     if returned["error"]: raise ValueError(returned["error"])
                 request.session["player_id"] = returned["player_id"]
             except Exception as e:
