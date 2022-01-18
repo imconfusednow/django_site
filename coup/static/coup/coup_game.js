@@ -23,6 +23,22 @@ function sendMessage()
     socket.emit('send_message', {msg: msg});
 }
 
+function joinGame()
+{
+    let nick_field = document.getElementById("nick");
+
+    if (!nick_field.value)
+    {
+        nick_field.style.backgroundColor = "red";
+        return;
+    }
+
+    let join_button = document.getElementById("join-button");
+    join_button.remove();
+    nick_field.remove();
+
+    document.getElementById("player-ready").style.display = "grid";
+}
 
 function myTurn()
 {
