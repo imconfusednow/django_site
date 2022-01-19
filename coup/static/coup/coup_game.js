@@ -38,9 +38,10 @@ function joinGame()
 
     p_setup.parentElement.appendChild(start_but);
     p_setup.remove();
-    start_but.innerText = "Start";
-    start_but.classList = ["btn", "btn-success"];
-    start_but.style.min_width = "100%";
+    start_but.innerText = "Start Game";
+    start_but.classList.add("btn", "btn-success");
+    start_but.style.minWidth = "200px";
+    start_but.style.minHeight = "50px";
 
     document.getElementById("player-ready").style.display = "grid";
 
