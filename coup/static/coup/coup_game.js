@@ -26,6 +26,7 @@ function sendMessage()
 function joinGame()
 {
     let nick_field = document.getElementById("nick");
+    let name = nick_field.value;
 
     if (!nick_field.value)
     {
@@ -44,6 +45,8 @@ function joinGame()
     start_but.style.minHeight = "50px";
 
     document.getElementById("player-ready").style.display = "grid";
+
+    document.getElementById("player-name").innerText = name;
 
 
 }
