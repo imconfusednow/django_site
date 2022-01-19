@@ -7,7 +7,7 @@ def add_game(name,player_id):
     game = games(name=name)
     game.save()
     pk = add_player(game, player_id)    
-    return {"player_id":pk, players: []}
+    return {"player_id":pk, "players": []}
 
 def join_game(name, player_id):
     existing = games.objects.filter(name=name)
