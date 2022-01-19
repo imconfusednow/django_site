@@ -33,7 +33,12 @@
                 <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="opponent-card opponent1-card">
             </div>
         </div>
-        <div class="grid-item"></div>
+        <div class="grid-item">
+            <div id="player-setup">
+                <input required type="text" id="nick" placeholder="Enter Nick">
+                <button class='btn btn-primary form-control' id="join-button" onclick="joinGame()">Join</button>
+            </div>   
+        </div>
         <div class="grid-item" style="transform: rotate(270deg)">
             <div class="player-info" id="opponent3-info">
                 <span style="" id="opponent3-name">You</span>
@@ -47,35 +52,29 @@
             </div>
         </div>
         <div class="grid-item "></div>
-        <div class="grid-item grid-item-player">
-            <div id="player-setup">
-                <input required type="text" id="nick" placeholder="Enter Nick">
-                <button class='btn btn-primary' id="join-button" onclick="joinGame()">Join</button>
+        <div class="grid-item grid-item-player" id="player-ready" style="display:none">                     
+            <div class="player-info">
+                <span style="" id="player-name">You</span>
+                <span style="" id="player-money">Coins: 5</span>
             </div>
-            <div id="player-ready" style="display: none;">
-                <div class="player-info">
-                    <span style="" id="player-name">You</span>
-                    <span style="" id="player-money">Coins: 5</span>
-                </div>
-                <div class="turn-options">
-                    <button class="option-button option-button-true" style="float: right;">Take 1 Coin</button>
-                    <button class="option-button option-button-true" style="float: right;">Foreign Aid (Take 2 Coins)</button>
-                </div>
-                <div class="player-card-div-1 player-card-div">
-                    <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-1 player-card">
-                </div>
-                <div class="player-card-div-2 player-card-div">
-                    <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-2 player-card">
-                </div>
-                <div class="turn-options">
-                    <button class="option-button option-button-lie">Assassinate - Assassin</button>
-                    <button class="option-button option-button-lie">Take 3 Coins - Duke</button>
-                    <button class="option-button option-button-true">Steal 2 Coins - Captain</button>
-                    <button class="option-button option-button-lie">Swap Cards - Ambassador</button>
-                </div>
-                <div class="coup-action turn-options">
-                    <button class="option-button button-inactive">Coup</button>
-                </div>
+            <div class="turn-options">
+                <button class="option-button option-button-true" style="float: right;">Take 1 Coin</button>
+                <button class="option-button option-button-true" style="float: right;">Foreign Aid (Take 2 Coins)</button>
+            </div>
+            <div class="player-card-div-1 player-card-div">
+                <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-1 player-card">
+            </div>
+            <div class="player-card-div-2 player-card-div">
+                <img src="https://theboardgameshow.files.wordpress.com/2014/01/coup2.jpg" class="player-card-2 player-card">
+            </div>
+            <div class="turn-options">
+                <button class="option-button option-button-lie">Assassinate - Assassin</button>
+                <button class="option-button option-button-lie">Take 3 Coins - Duke</button>
+                <button class="option-button option-button-true">Steal 2 Coins - Captain</button>
+                <button class="option-button option-button-lie">Swap Cards - Ambassador</button>
+            </div>
+            <div class="coup-action turn-options">
+                <button class="option-button button-inactive">Coup</button>
             </div>
         </div>
         <div class="grid-item "></div>

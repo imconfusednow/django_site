@@ -29,13 +29,12 @@ function joinGame()
 
     if (!nick_field.value)
     {
-        nick_field.style.backgroundColor = "red";
+        nick_field.style.backgroundColor = "pink";
         return;
     }
 
-    let join_button = document.getElementById("join-button");
-    join_button.remove();
-    nick_field.remove();
+    let p_setup = document.getElementById("player-setup");
+    p_setup.remove();
 
     document.getElementById("player-ready").style.display = "grid";
 }

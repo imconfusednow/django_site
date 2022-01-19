@@ -239,3 +239,8 @@ body {
 {
   color: red;
 }
+
+#join-button
+{
+  max-width: max-content;
+}
