@@ -7,7 +7,7 @@ def add_game(name,player_id):
     game = games(name=name)
     game.save()
     pk = add_player(game, player_id)    
-    return {"player_id":pk, "players": []}
+    return {"player_id":pk}
 
 def join_game(name, player_id):
     existing = games.objects.filter(name=name)
@@ -15,7 +15,7 @@ def join_game(name, player_id):
         return {"error":"Room does not exist, click create to create this room: {name}"}
     existing_players = players.objects.filter(game_id=existing.first())
     pk = add_player(existing.first(), player_id)
-    return {"player_id":pk, "players": existing_players}
+    return {"player_id":pk}
 
 def add_player(room, player_id):
     existing = players.objects.filter(pk=player_id)
@@ -25,3 +25,9 @@ def add_player(room, player_id):
     player = players(game_id=room, computer=False, coins=0, pk=pk)
     player.save()
     return player.pk
+
+
+def get_current_players(room):
+    existing = games.objects.filter(name=room)
+    existing_players = players.objects.filter(game_id=existing.first())
+    return existing_players
