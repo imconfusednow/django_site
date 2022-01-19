@@ -34,9 +34,17 @@ function joinGame()
     }
 
     let p_setup = document.getElementById("player-setup");
+    let start_but = document.createElement('button')
+
+    p_setup.parentElement.appendChild(start_but);
     p_setup.remove();
+    start_but.innerText = "Start";
+    start_but.classList = ["btn", "btn-success"];
+    start_but.style.min_width = "100%";
 
     document.getElementById("player-ready").style.display = "grid";
+
+
 }
 
 function myTurn()

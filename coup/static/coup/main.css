@@ -7,6 +7,7 @@
 *, *::before, *::after{
   box-sizing:border-box;
   user-select:none;
+  font-family: Coup;
 }
 
 body {
@@ -23,7 +24,6 @@ body {
 .title
 {
   text-align:center;
-  font-family: Coup;
   padding:10px;
 }
 
@@ -161,7 +161,6 @@ body {
 
 .option-button
 {
-  font-family:"Coup";
   font-weight: bold;
   min-width:270px;
   color:black;
@@ -209,7 +208,6 @@ body {
 {
   display:grid;
   grid-column:1/-1;
-  font-family:coup;
   border-radius:5px;
   width:100%;
   border-style:dashed;
@@ -227,7 +225,6 @@ body {
 .on-turn
 {
  color:blue;
-
 }
 
 .room_name
@@ -240,7 +237,21 @@ body {
   color: red;
 }
 
+#nick
+{
+  min-width: max-content;
+  margin: auto;
+}
+
 #join-button
 {
-  max-width: max-content;
+  min-width: 100%;
+  margin-top: 10px;
+  margin: auto;
+}
+
+.center-grid
+{
+  text-align: center;
+  display: flex;
 }
