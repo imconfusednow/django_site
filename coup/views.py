@@ -21,7 +21,6 @@ def login(request):
                     returned = c.join_game(room_name,request.session.get("player_id", False))
                     if "error" in returned: raise ValueError(returned["error"])
                 request.session["player_id"] = returned["player_id"]
-                context["players"] = returned["players"]
             except Exception as e:
                 context = {'error': e}
                 return render(request, 'coup/coup_login.html', context)
