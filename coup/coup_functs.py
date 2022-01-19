@@ -14,7 +14,7 @@ def join_game(name, player_id):
     if not existing.exists():
         return {"error": f"Room does not exist, click create to create this room: {name}"}
     existing_players = players.objects.filter(game_id=existing.first())
-    if len(existing_players  > 3):
+    if len(existing_players)  > 3:
         return {"error": f"Room {name} full"}
     pk = add_player(existing.first(), player_id)
     return {"player_id":pk}
