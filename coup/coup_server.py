@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import eventlet
 import socketio
+import coup_functs as c
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -16,9 +17,8 @@ def disconnect(sid):
 
 
 @sio.event
-def send_message(sid, data):
-    msg = data['msg']
-    sio.emit('send_result', {'result': msg})
+def join_game(sid, data):
+    c.set_player_nick(data["player_id"], data["nick"])
 
 
 if __name__ == '__main__':

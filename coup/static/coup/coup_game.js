@@ -2,9 +2,7 @@ const socket = io("http://81.110.114.52:3000");
 
 socket.on('connect', () => {
     console.log('connected');
-    //if (!localStorage.getItem("player_id")) localStorage.setItem("player_id", socket.id)
-    //var title = document.getElementById("coup-title");
-    //title.innerText = title.innerText + " " + localStorage.getItem("player_id");
+    if (!localStorage.getItem("player_id")) localStorage.setItem("player_id", document.getElementById("player_id").value);
 });
 
 socket.on('disconnect', () => {
@@ -12,9 +10,6 @@ socket.on('disconnect', () => {
 });
 
 
-socket.on('send_result', (data) => {
-    document.getElementById("responses").value = document.getElementById("responses").value + "\n" + data['result'];
-});
 
 
 function sendMessage()
@@ -47,7 +42,8 @@ function joinGame()
     document.getElementById("player-ready").style.display = "grid";
 
     document.getElementById("player-name").innerText = name;
-
+    let player_id = localStorage.getItem("player_id");
+    socket.emit("join_game", {"nick": name, "player_id": player_id});
 
 }
 
