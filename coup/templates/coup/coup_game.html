@@ -6,7 +6,7 @@
     {% endfor %}
     <script src="https://cdn.socket.io/4.4.0/socket.io.min.js" integrity="sha384-1fOn6VtTq3PWwfsOrk45LnYcGosJwzMHv+Xh/Jx5303FVOXzEnw0EpLv30mtjmlj" crossorigin="anonymous" defer></script>
     <script src="{% static 'coup/coup_game.js' %}" defer></script>
-    <input hidden value="{{player_id}}">
+    <input hidden value="{{player_id}}" id="player_id">
     <div class="title">
         <h1 class="title-text" id="coup-title">Coup Online - <span class="room_name" id="room_name">{{ room_name }}</span></h1>
     </div>
