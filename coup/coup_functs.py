@@ -37,6 +37,3 @@ def get_current_players(room):
     existing_players = players.objects.filter(game_id=existing.first())
     return existing_players
 
-def set_player_nick(player_id, name):
-    player = players(pk=player_id, name=name)
-    player.save()

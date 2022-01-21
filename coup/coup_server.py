@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import eventlet
 import socketio
-import coup_functs as c
+import coup_server_functs as c
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
