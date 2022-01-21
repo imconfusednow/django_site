@@ -2,7 +2,7 @@ from django.db import models
 
 class players(models.Model):
     name = models.CharField(max_length=50, default="")
-    game_id = models.ForeignKey("games", on_delete=models.SET(None), null=true)
+    game_id = models.ForeignKey("games", on_delete=models.SET(None), null=True)
     player_id = models.CharField(max_length=50, default="")
     sequence = models.IntegerField(default=0)
     turn = models.BooleanField(default=False)
