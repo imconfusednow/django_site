@@ -260,7 +260,7 @@ body {
   display: flex;
 }
 
-.spinner
+#spinner
 {
   color: red;
   font-size: 10rem;
