@@ -38,7 +38,7 @@ function joinGame()
     start_but.classList.add("btn", "btn-success");
     start_but.style.minWidth = "200px";
     start_but.style.minHeight = "50px";
-    start_but.addEventListener("click", startGame);
+    start_but.addEventListener("click", selectStarter);
 
     document.getElementById("player-ready").style.display = "grid";
 
@@ -48,13 +48,14 @@ function joinGame()
 
 }
 
-function startGame()
+function selectStarter()
 {
     var rand = Math.random() * 360;  
     document.documentElement.style.setProperty('--start-spin', rand + "deg");
     document.documentElement.style.setProperty('--end-spin', (rand + 1000) + "deg");
 
     let spinner = document.createElement('span');
+    spinner.addEventListener('animationend', startGame);
     spinner.innerText = "➤";
     spinner.id = "spinner";
     spinner.style.animation = "spin 2s ease 0s 1 normal forwards";
@@ -62,6 +63,11 @@ function startGame()
     let c_grid = document.getElementById("center-grid");
     c_grid.innerText = "";
     c_grid.appendChild(spinner);
+}
+
+function startGame()
+{
+    document.getElementsById('player-info').color = "cyan";
 }
 
 function myTurn()
