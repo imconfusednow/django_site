@@ -27,13 +27,15 @@ def add_player(room, player_id):
     pk = None
     if existing.exists():
         pk = existing[0].pk
-    player = players(game_id=room, computer=False, coins=0, pk=pk)
-    player.save()
+    player = players(game_id=room, computer=False, coins=0, pk=player_id)
+    player.save(update_fields=["game_id", "computer", "coins"])
     return player.pk
 
 
-def get_current_players(room):
+def get_current_players(room, player_id):
     existing = games.objects.filter(name=room)
     existing_players = players.objects.filter(game_id=existing.first())
+    this_player = players.objects.get(pk=player_id)
     return existing_players
+
 
