@@ -30,7 +30,7 @@ function joinGame()
     }
 
     let p_setup = document.getElementById("player-setup");
-    let start_but = document.createElement('button')
+    let start_but = document.createElement('button');
 
     p_setup.parentElement.appendChild(start_but);
     p_setup.remove();
@@ -45,6 +45,22 @@ function joinGame()
     let player_id = localStorage.getItem("player_id");
     socket.emit("join_game", {"nick": name, "player_id": player_id});
 
+}
+
+function startGame()
+{
+    var rand = Math.random() * 360;  
+    document.documentElement.style.setProperty('--start-spin', rand + "deg");
+    document.documentElement.style.setProperty('--end-spin', (rand + 1000) + "deg");
+
+    let spinner = document.createElement('span');
+    spinner.innerText = "➤";
+    spinner.id = "spinner";
+    spinner.style.animation = "spin 2s ease";
+      
+    let c_grid = document.getElementById("center-grid");
+    c_grid.innerText = "";
+    c_grid.appendChild(spinner);
 }
 
 function myTurn()

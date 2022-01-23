@@ -244,6 +244,7 @@ body {
 {
   min-width: max-content;
   margin: auto;
+  text-align: center;
 }
 
 #join-button
@@ -257,4 +258,16 @@ body {
 {
   text-align: center;
   display: flex;
+}
+
+.spinner
+{
+  color: red;
+  font-size: 10rem;
+  animation-fill-mode: forwards;
+}
+
+@keyframes spin {
+    from {transform:rotate(var(--start-spin));}
+    to {transform:rotate(var(--end-spin) );}
 }
