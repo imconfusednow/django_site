@@ -57,7 +57,7 @@ function startGame()
     let spinner = document.createElement('span');
     spinner.innerText = "➤";
     spinner.id = "spinner";
-    spinner.style.animation = "spin 2s ease";
+    spinner.style.animation = "spin 2s ease 0s 1 normal forwards";
       
     let c_grid = document.getElementById("center-grid");
     c_grid.innerText = "";
