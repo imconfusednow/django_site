@@ -38,6 +38,7 @@ function joinGame()
     start_but.classList.add("btn", "btn-success");
     start_but.style.minWidth = "200px";
     start_but.style.minHeight = "50px";
+    start_bun.addEventListener("click", startGame);
 
     document.getElementById("player-ready").style.display = "grid";
 
