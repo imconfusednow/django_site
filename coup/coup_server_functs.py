@@ -4,6 +4,7 @@ import random
 
 def set_player_nick(player_id, name):
     run_statement("UPDATE coup_players SET name = ? WHERE id = ?", [name, player_id])
+    run_query("SELECT game_id_id FROM coup_players WHERE id = ?",  [player_id])
 
 def pick_player():
     players = run_query("SELECT * FROM coup_players", [])
