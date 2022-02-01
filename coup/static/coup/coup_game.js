@@ -12,10 +12,8 @@ socket.on('disconnect', () => {
 
 socket.on('start_game', (data) => {
     console.log(data);
-    if (data[0].turn)
-    {
-        myTurn();
-    }
+    setPlayerDetails(data[0]);
+    setOpponentDetails(data.slice(1));
     document.getElementById('spinner').remove();
 });
 
@@ -76,15 +74,31 @@ function startGame(turn)
 {    
     var cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
+    cards = document.querySelectorAll(".opponent-card-div");
+    cards.forEach(element => element.classList.remove("hidden"));
     socket.emit('start_game');
 }
 
-function myTurn()
+function setPlayerDetails(data)
 {
-    document.getElementById('player-info').classList.add("on-turn");
+    if (data.turn)
+    {
+        document.getElementById('player-info').classList.add("on-turn");
+        var options = document.querySelectorAll(".turn-options");
+        cards.forEach(element => element.classList.remove("hidden"));
+    }
+    else
+    {
+        document.getElementById('player-info').classList.remove("on-turn");
+        var options = document.querySelectorAll(".turn-options");
+        cards.forEach(element => element.classList.add("hidden"));
+    }
 }
 
-function notMyTurn()
+function setOpponentDetails(data)
 {
-    
+    for (var i = 1; i < data.length + 1; i++) {
+        var player = data[i];
+        document.getElementById("player-name" + i).innerText = player.name;
+    }
 }
