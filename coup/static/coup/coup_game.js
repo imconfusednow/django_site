@@ -99,7 +99,7 @@ function setOpponentDetails(data)
 {
     for (var i = 1; i < data.length + 1; i++) {
         var player = data[i];
-        document.getElementById("opponent" + i + "name").innerText = player.name;
-        document.getElementById("opponent" + i + "money").innerText = player.coins;
+        document.querySelector("#opponent" + i + "-name").innerText = player.name;
+        document.querySelector("#opponent" + i + "-money").innerText = player.coins;
     }
 }
