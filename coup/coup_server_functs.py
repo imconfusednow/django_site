@@ -10,6 +10,7 @@ def set_player_nick(player_id, name):
 def pick_player():
     players = run_query("SELECT * FROM coup_players", [])
     picked = random.choice(players)
+    run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [0, picked["id"]])
     run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
     players = run_query("SELECT * FROM coup_players", [])
     return players
