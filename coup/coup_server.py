@@ -21,7 +21,7 @@ def join_game(sid, data):
     players = c.get_players(False)
     sio.enter_room(sid, room)
     for i in players:
-        sio.emit("join_game", players, to=i["player_id"])
+        sio.emit("join_game", players, to=players[0]["player_id"])
         players.append(players.pop(0))        
     print(f"Player {sid} entered room {room}")
 
@@ -29,7 +29,7 @@ def join_game(sid, data):
 def start_game(sid):
     players = c.get_players(True)
     for i in players:
-        sio.emit("start_game", players, to=i["player_id"])
+        sio.emit("start_game", players, to=players[0]["player_id"])
         players.append(players.pop(0))        
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 
