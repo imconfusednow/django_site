@@ -93,7 +93,6 @@ body {
 .player-card-div
 {
   margin: auto;
-  visibility: hidden;
 }
 
 .player-card-div-1 
@@ -271,4 +270,10 @@ body {
 @keyframes spin {
     from {transform:rotate(var(--start-spin));}
     to {transform:rotate(var(--end-spin) );}
+}
+
+
+.hidden
+{
+  visibility: hidden;
 }

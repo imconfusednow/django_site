@@ -11,8 +11,8 @@ socket.on('disconnect', () => {
 
 
 socket.on('start_game', (data) => {
-    console.log(data);    
-    if (data.turn)
+    console.log(data);
+    if (data[0].turn)
     {
         myTurn();
     }
@@ -74,12 +74,14 @@ function selectStarter()
 
 function startGame(turn)
 {    
+    var cards = document.querySelectorAll(".player-card-div");
+    cards.forEach(element => element.classList.remove("hidden"));
     socket.emit('start_game');
 }
 
 function myTurn()
 {
-    document.getElementById('player-info').classList.add("on-turn")
+    document.getElementById('player-info').classList.add("on-turn");
 }
 
 function notMyTurn()
