@@ -22,7 +22,7 @@ def join_game(sid, data):
     room = c.set_player_nick(data["player_id"], data["nick"])
     players = c.get_players(False)
     sio.enter_room(sid, room)
-    sio.emit("start_game", players, room=players[0]["game_id_id"])
+    sio.emit("join_game", players, room=players[0]["game_id_id"])
     print(f"Player {sid} entered room {room}")
 
 @sio.event
