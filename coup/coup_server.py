@@ -21,7 +21,7 @@ def disconnect(sid):
 def join_game(sid, data):
     room = c.set_player_nick(data["player_id"], data["nick"])
     sio.enter_room(sid, room)
-    print("Player {sid} entered room {room}")
+    print(f"Player {sid} entered room {room}")
 
 @sio.event
 def start_game(sid):
