@@ -21,7 +21,6 @@ def join_game(sid, data):
     players = c.get_players(False)
     sio.enter_room(sid, room)
     for i in players:
-        if players[0].player_id == sid: break
         sio.emit("join_game", players, to=i["player_id"])
         players.append(players.pop(0))        
     print(f"Player {sid} entered room {room}")
