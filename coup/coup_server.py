@@ -20,12 +20,14 @@ def disconnect(sid):
 @sio.event
 def join_game(sid, data):
     room = c.set_player_nick(data["player_id"], data["nick"])
+    players = c.get_players(False)
     sio.enter_room(sid, room)
+    sio.emit("start_game", players, room=players[0]["game_id_id"])
     print(f"Player {sid} entered room {room}")
 
 @sio.event
 def start_game(sid):
-    players = c.pick_player()
+    players = c.get_players(True)
     sio.emit("start_game", players, room=players[0]["game_id_id"])
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 

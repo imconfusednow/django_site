@@ -17,6 +17,12 @@ socket.on('start_game', (data) => {
     document.getElementById('spinner').remove();
 });
 
+socket.on('join_game', (data) => {
+    console.log(data);
+    setPlayerDetails(data[0]);
+    setOpponentDetails(data.slice(1));
+});
+
 function sendMessage()
 {
     let msg = document.getElementById("message").value;
@@ -99,7 +105,7 @@ function setOpponentDetails(data)
 {
     for (var i = 0; i < data.length; i++) {
         var player = data[i];
-        document.querySelector("#opponent" + i + "-name").innerText = "Coins: " + player.name;
-        document.querySelector("#opponent" + i + "-money").innerText = player.coins;
+        document.querySelector("#opponent" + i + "-name").innerText =  player.name;
+        document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
     }
 }
