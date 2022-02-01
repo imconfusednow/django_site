@@ -8,7 +8,7 @@ def set_player_nick(player_id, name):
 def pick_player():
     players = run_query("SELECT * FROM coup_players", [])
     picked = random.choice(players)
-    run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked.id])
+    run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
     players = run_query("SELECT * FROM coup_players", [])
     return players
 
@@ -26,6 +26,7 @@ def run_query(query, params):
     rows = []
     try:
         con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
+        con.row_factory = sqlite3.Row
         rows = con.execute(query, params).fetchall()        
     except Exception as e:
         print(e)
