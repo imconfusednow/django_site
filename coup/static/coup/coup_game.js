@@ -85,13 +85,13 @@ function setPlayerDetails(data)
     {
         document.getElementById('player-info').classList.add("on-turn");
         var options = document.querySelectorAll(".turn-options");
-        cards.forEach(element => element.classList.remove("hidden"));
+        options.forEach(element => element.classList.remove("hidden"));
     }
     else
     {
         document.getElementById('player-info').classList.remove("on-turn");
         var options = document.querySelectorAll(".turn-options");
-        cards.forEach(element => element.classList.add("hidden"));
+        options.forEach(element => element.classList.add("hidden"));
     }
 }
 
@@ -99,6 +99,7 @@ function setOpponentDetails(data)
 {
     for (var i = 1; i < data.length + 1; i++) {
         var player = data[i];
-        document.getElementById("player-name" + i).innerText = player.name;
+        document.getElementById("opponent" + i + "name").innerText = player.name;
+        document.getElementById("opponent" + i + "money").innerText = player.coins;
     }
 }
