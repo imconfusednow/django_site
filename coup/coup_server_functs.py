@@ -27,7 +27,7 @@ def run_query(query, params):
     try:
         con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
         con.row_factory = sqlite3.Row
-        rows = con.execute(query, params).fetchall()        
+        rows = list(con.execute(query, params).fetchall())
     except Exception as e:
         print(e)
 
