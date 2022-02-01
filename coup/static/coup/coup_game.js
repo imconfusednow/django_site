@@ -67,8 +67,10 @@ function selectStarter()
 
 function startGame()
 {
-    document.getElementById('player-info').style.color = "cyan";
+    let player_info = document.getElementById('player-info');
+    player_info.style.color = "cyan";
     document.getElementById('player-info').style.backgroundColor = "rgba(0,256,255,0.5)";
+    document.getElementById('spinner').remove();
 }
 
 function myTurn()

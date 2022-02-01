@@ -35,7 +35,9 @@ def add_player(room, player_id):
 def get_current_players(room, player_id):
     existing = games.objects.filter(name=room)
     existing_players = players.objects.filter(game_id=existing.first())
-    this_player = players.objects.get(pk=player_id)
+    for i in existing_players:
+        if existing_players[0].id == player_id: break
+        existing_players.append(existing_players.pop(0))
     return existing_players
 
 
