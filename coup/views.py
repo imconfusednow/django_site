@@ -33,6 +33,6 @@ def login(request):
 def game(request):
     context = {"room_name": request.session["room_name"]}
     context["players"] = c.get_current_players(request.session["room_name"], request.session["player_id"])
-    context["player_id"] = request.session.get("player_id", False)
+    context["player_id"] = request.session["player_id"]
 
     return render(request, 'coup/coup_game.html', context)
