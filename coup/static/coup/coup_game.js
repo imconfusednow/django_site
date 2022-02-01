@@ -13,8 +13,8 @@ socket.on('disconnect', () => {
 socket.on('start_game', (data) => {
     console.log(data);
     setPlayerDetails(data[0]);
-    setOpponentDetails(data.slice(1));
-    selectStarter();
+    var ind = setOpponentDetails(data.slice(1));
+    selectStarter(ind);
 });
 
 socket.on('join_game', (data) => {
@@ -58,11 +58,13 @@ function joinGame()
 
 }
 
-function selectStarter()
+function selectStarter(ind)
 {
-    var rand = Math.random() * 360;  
-    document.documentElement.style.setProperty('--start-spin', rand + "deg");
-    document.documentElement.style.setProperty('--end-spin', (rand + 1000) + "deg");
+    var finish = ind * 90;
+    var rand = Math.random() * 10;
+    rand -= 5;  
+    document.documentElement.style.setProperty('--start-spin', 0 + "deg");
+    document.documentElement.style.setProperty('--end-spin', (finish + 1800 + rand) + "deg");
 
     let spinner = document.createElement('span');
     spinner.addEventListener('animationend', startGame);
@@ -102,9 +104,16 @@ function setPlayerDetails(data)
 
 function setOpponentDetails(data)
 {
+    var ind = 0;
     for (var i = 0; i < data.length; i++) {
         var player = data[i];
         document.querySelector("#opponent" + i + "-name").innerText =  player.name;
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
+        if (player.turn)
+        {
+            ind = i;
+            document.querySelector("#opponent" + i + "-info").classList.add("on-turn");
+        }
     }
+    return ind;
 }
