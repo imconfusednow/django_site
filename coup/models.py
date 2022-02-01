@@ -12,6 +12,7 @@ class players(models.Model):
 
 class games(models.Model):
     name = models.CharField(max_length=50, default="")
+    started = models.BooleanField(default=False)
 
 class decks(models.Model):
     game_id = models.ForeignKey("games", on_delete=models.CASCADE)

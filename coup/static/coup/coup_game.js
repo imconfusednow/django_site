@@ -14,7 +14,7 @@ socket.on('start_game', (data) => {
     console.log(data);
     setPlayerDetails(data[0]);
     setOpponentDetails(data.slice(1));
-    document.getElementById('spinner').remove();
+    selectStarter();
 });
 
 socket.on('join_game', (data) => {
@@ -23,10 +23,9 @@ socket.on('join_game', (data) => {
     setOpponentDetails(data.slice(1));
 });
 
-function sendMessage()
+function sendStart()
 {
-    let msg = document.getElementById("message").value;
-    socket.emit('send_message', {msg: msg});
+    socket.emit('start_game');
 }
 
 function joinGame()
@@ -49,7 +48,7 @@ function joinGame()
     start_but.classList.add("btn", "btn-success");
     start_but.style.minWidth = "200px";
     start_but.style.minHeight = "50px";
-    start_but.addEventListener("click", selectStarter);
+    start_but.addEventListener("click", sendStart);
 
     document.getElementById("player-ready").style.display = "grid";
 
@@ -76,13 +75,13 @@ function selectStarter()
     c_grid.appendChild(spinner);
 }
 
-function startGame(turn)
+function startGame()
 {    
     var cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
     cards = document.querySelectorAll(".opponent-card-div");
-    cards.forEach(element => element.classList.remove("hidden"));
-    socket.emit('start_game');
+    cards.forEach(element => element.classList.remove("hidden"));    
+    document.getElementById('spinner').remove();
 }
 
 function setPlayerDetails(data)
