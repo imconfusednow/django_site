@@ -20,6 +20,11 @@ def disconnect(sid):
 def join_game(sid, data):
     c.set_player_nick(data["player_id"], data["nick"])
 
+@sio.event
+def start_game(sid):
+    players = c.pick_player()
+    sio.emit("start_game", players)
+
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 3000)), app)

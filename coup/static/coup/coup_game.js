@@ -10,7 +10,14 @@ socket.on('disconnect', () => {
 });
 
 
-
+socket.on('start_game', (data) => {
+    console.log(data);    
+    if (data.turn)
+    {
+        myTurn();
+    }
+    document.getElementById('spinner').remove();
+});
 
 function sendMessage()
 {
@@ -65,17 +72,14 @@ function selectStarter()
     c_grid.appendChild(spinner);
 }
 
-function startGame()
-{
-    let player_info = document.getElementById('player-info');
-    player_info.style.color = "cyan";
-    document.getElementById('player-info').style.backgroundColor = "rgba(0,256,255,0.5)";
-    document.getElementById('spinner').remove();
+function startGame(turn)
+{    
+    socket.emit('start_game');
 }
 
 function myTurn()
 {
-    
+    document.getElementById('player-info').classList.add("on-turn")
 }
 
 function notMyTurn()

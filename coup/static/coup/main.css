@@ -227,7 +227,8 @@ body {
 
 .on-turn
 {
- color:blue;
+ background-color: rgba(0,256,255,0.5);
+ color: cyan;
 }
 
 .room_name
