@@ -157,7 +157,6 @@ body {
   grid-template-columns:1fr;  
   margin:auto;
   justify-items:center;
-  visibility: hidden;
 }
 
 .option-button
