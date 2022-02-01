@@ -11,6 +11,7 @@ def connect(sid, environ):
     print('connect ', sid)
 
 
+
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
@@ -18,12 +19,13 @@ def disconnect(sid):
 
 @sio.event
 def join_game(sid, data):
-    c.set_player_nick(data["player_id"], data["nick"])
+    room = c.set_player_nick(data["player_id"], data["nick"])
+    sio.enter_room(sid, room)
 
 @sio.event
 def start_game(sid):
     players = c.pick_player()
-    sio.emit("start_game", players)
+    sio.emit("start_game", players, room=players[0]["game_id"])
 
 
 if __name__ == '__main__':
