@@ -2,8 +2,8 @@
 import sqlite3
 import random
 
-def set_player_nick(player_id, name):
-    run_statement("UPDATE coup_players SET name = ? WHERE id = ?", [name, player_id])
+def set_player_nick(player_id, sid, name):
+    run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [name, sid, player_id])
     players = run_query("SELECT game_id_id FROM coup_players WHERE id = ?",  [player_id])
     return players[0]["game_id_id"]
 

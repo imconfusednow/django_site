@@ -10,8 +10,6 @@ app = socketio.WSGIApp(sio)
 def connect(sid, environ):
     print('connect ', sid)
 
-
-
 @sio.event
 def disconnect(sid):
     print('disconnect ', sid)
@@ -19,16 +17,21 @@ def disconnect(sid):
 
 @sio.event
 def join_game(sid, data):
-    room = c.set_player_nick(data["player_id"], data["nick"])
+    room = c.set_player_nick(data["player_id"], sid, data["nick"])
     players = c.get_players(False)
     sio.enter_room(sid, room)
-    sio.emit("join_game", players, room=players[0]["game_id_id"])
+    for i in players:
+        if players[0].player_id == sid: break
+        sio.emit("join_game", players, to=i["player_id"])
+        players.append(players.pop(0))        
     print(f"Player {sid} entered room {room}")
 
 @sio.event
 def start_game(sid):
     players = c.get_players(True)
-    sio.emit("start_game", players, room=players[0]["game_id_id"])
+    for i in players:
+        sio.emit("start_game", players, to=i["player_id"])
+        players.append(players.pop(0))        
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 
 
