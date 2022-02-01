@@ -23,12 +23,14 @@ def run_statement(query, params):
         print(e)
 
 def run_query(query, params):
-    rows = []
+    return_value = []
     try:
         con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
         con.row_factory = sqlite3.Row
         rows = list(con.execute(query, params).fetchall())
+        for r in rows:
+            return_value.append(dict(r))
     except Exception as e:
         print(e)
 
-    return rows
+    return return_value
