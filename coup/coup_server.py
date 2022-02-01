@@ -25,7 +25,7 @@ def join_game(sid, data):
 @sio.event
 def start_game(sid):
     players = c.pick_player()
-    sio.emit("start_game", players, room=players[0]["game_id"])
+    sio.emit("start_game", players, room=players[0]["game_id_id"])
 
 
 if __name__ == '__main__':
