@@ -13,7 +13,7 @@ socket.on('disconnect', () => {
 socket.on('start_game', (data) => {
     console.log(data);
     var ind = getOnTurn(data);  
-    selectStarter(ind);    
+    selectStarter(ind, data);    
 });
 
 socket.on('join_game', (data) => {
@@ -57,7 +57,7 @@ function joinGame()
 
 }
 
-function selectStarter(ind)
+function selectStarter(ind, data)
 {
     var finish = ind * 90;
     var rand = Math.random() * 10;
@@ -66,6 +66,7 @@ function selectStarter(ind)
     document.documentElement.style.setProperty('--end-spin', (finish + 1890 + rand) + "deg");
 
     let spinner = document.createElement('span');
+    spinner.data = data;
     spinner.addEventListener('animationend', startGame);
     spinner.innerText = "➤";
     spinner.id = "spinner";
@@ -77,8 +78,9 @@ function selectStarter(ind)
 }
 
 
-function startGame()
-{    
+function startGame(event)
+{
+    var data = event.currentTarget.data;
     setPlayerDetails(data[0]);
     setOpponentDetails(data.slice(1));
     var cards = document.querySelectorAll(".player-card-div");
