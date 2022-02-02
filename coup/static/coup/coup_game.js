@@ -13,9 +13,7 @@ socket.on('disconnect', () => {
 socket.on('start_game', (data) => {
     console.log(data);
     var ind = getOnTurn(data);  
-    selectStarter(ind);
-    setPlayerDetails(data[0]);
-    setOpponentDetails(data.slice(1));
+    selectStarter(ind);    
 });
 
 socket.on('join_game', (data) => {
@@ -65,7 +63,7 @@ function selectStarter(ind)
     var rand = Math.random() * 10;
     rand -= 5;  
     document.documentElement.style.setProperty('--start-spin', 0 + "deg");
-    document.documentElement.style.setProperty('--end-spin', (finish + 1980 + rand) + "deg");
+    document.documentElement.style.setProperty('--end-spin', (finish + 1890 + rand) + "deg");
 
     let spinner = document.createElement('span');
     spinner.addEventListener('animationend', startGame);
@@ -78,8 +76,11 @@ function selectStarter(ind)
     c_grid.appendChild(spinner);
 }
 
+
 function startGame()
 {    
+    setPlayerDetails(data[0]);
+    setOpponentDetails(data.slice(1));
     var cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
     cards = document.querySelectorAll(".opponent-card-div");
