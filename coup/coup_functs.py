@@ -46,7 +46,7 @@ def get_current_players(room, player_id):
 
 
 def add_deck(game):
-    cards = ["co"] * 3 + ["du"] * 3 + ["ca"] * 3 + ["as"] * 3 + ["am"]
+    cards = ["co"] * 3 + ["du"] * 3 + ["ca"] * 3 + ["as"] * 3 + ["am"] * 3
     random.shuffle(cards)
     decks.objects.filter(game_id=game).delete()
     for c in cards:

@@ -18,7 +18,7 @@ def get_players(pick, sid):
         run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
     players = run_query(where, params)
     for i in range(4 - len(players)):
-        players.append({"id": "t" + str(i), "name": "???", "coins": 0, "game_id_id": "temp", "hand":"", "player_id": "temp", "turn": 0})
+        players.append({"id": "t" + str(i), "name": "???", "coins": 0, "game_id_id": room, "hand":"", "player_id": "temp", "turn": 0})
     return players
 
 
@@ -32,9 +32,10 @@ def deal(players):
 
 
 def assign_cards(num, player_id, game_id):
-    cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id DESC LIMIT ?", [game_id, num])
+    cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [game_id, num])
     types = f"{cards[0]['card_type']},{cards[1]['card_type']}"
-    run_statement("UPDATE coup_players SET hand = ? WHERE player_id = ?" [types, player_id])
+    run_statement("UPDATE coup_players SET hand = ? WHERE player_id = ?", [types, player_id])
+    run_statement("DELETE FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [game_id, num])
     return types
 
 def discard_cards(num, player):
