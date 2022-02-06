@@ -60,8 +60,7 @@ function joinGame()
 function selectStarter(ind, data)
 {
     var finish = ind * 90;
-    var rand = Math.random() * 10;
-    rand -= 5;  
+    var rand = Math.random() * 20 - 10;
     document.documentElement.style.setProperty('--start-spin', 0 + "deg");
     document.documentElement.style.setProperty('--end-spin', (finish + 1890 + rand) + "deg");
 

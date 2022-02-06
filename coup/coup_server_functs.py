@@ -14,6 +14,8 @@ def get_players(pick):
         run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [0, picked["id"]])
         run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
     players = run_query("SELECT * FROM coup_players", [])
+    for i in range(4 - len(players)):
+        players.append({"id": "t" + str(i), "name": "temp" + str(i), "coins": 0, "game_id_id": "temp", "hand":"", "player_id": "temp", "turn": 0})
     return players
 
 
