@@ -4,10 +4,11 @@ import random
 
 def set_player_nick(player_id, sid, name):
     run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [name, sid, player_id])
-    players = run_query("SELECT game_id_id FROM coup_players WHERE id = ?",  [player_id])
-    return players[0]["game_id_id"]
+    room = sid_to_room(sid)
+    return room
 
-def get_players(pick, room):
+def get_players(pick, sid):
+    room = sid_to_room(sid)
     where = "SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?"
     params = [room]
     players = run_query(where, params)
@@ -20,6 +21,10 @@ def get_players(pick, room):
         players.append({"id": "t" + str(i), "name": "???" + str(i), "coins": 0, "game_id_id": "temp", "hand":"", "player_id": "temp", "turn": 0})
     return players
 
+
+def sid_to_room(sid):
+    players = run_query("SELECT game_id_id FROM coup_players WHERE id = ?", [sid])
+    return players[0]["game_id_id"]
 
 def run_statement(query, params):
     try:

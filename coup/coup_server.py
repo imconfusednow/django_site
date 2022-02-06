@@ -18,7 +18,7 @@ def disconnect(sid):
 @sio.event
 def join_game(sid, data):
     room = c.set_player_nick(data["player_id"], sid, data["nick"])
-    players = c.get_players(False, room)
+    players = c.get_players(False, sid)
     sio.enter_room(sid, room)
     for i in players:
         sio.emit("join_game", players, to=players[0]["player_id"])
@@ -27,7 +27,7 @@ def join_game(sid, data):
 
 @sio.event
 def start_game(sid):
-    players = c.get_players(True, room)
+    players = c.get_players(True, sid)
     for i in players:
         sio.emit("start_game", players, to=players[0]["player_id"])
         players.append(players.pop(0))        
