@@ -25,9 +25,11 @@ def join_game(sid, data):
         players.append(players.pop(0))        
     print(f"Player {sid} entered room {room}")
 
+
 @sio.event
 def start_game(sid):
     players = c.get_players(True, sid)
+    c.deal(players)
     for i in players:
         sio.emit("start_game", players, to=players[0]["player_id"])
         players.append(players.pop(0))        

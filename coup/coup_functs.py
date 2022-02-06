@@ -1,5 +1,5 @@
-from .models import players, games
-
+from .models import players, games, decks
+import random
 
 def add_game(name, player_id):
     existing = games.objects.filter(name=name)
@@ -8,6 +8,7 @@ def add_game(name, player_id):
     game = games(name=name)
     game.save()
     pk = add_player(game, player_id)
+    add_deck(game)
     return {"player_id": pk}
 
 
@@ -44,3 +45,10 @@ def get_current_players(room, player_id):
     return existing_players
 
 
+def add_deck(game):
+    cards = ["co"] * 3 + ["du"] * 3 + ["ca"] * 3 + ["as"] * 3 + ["am"]
+    random.shuffle(cards)
+    decks.objects.filter(game_id=game).delete()
+    for c in cards:
+        deck = decks(game_id=game, card_type=c)
+        deck.save()
