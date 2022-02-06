@@ -8,14 +8,14 @@ def set_player_nick(player_id, sid, name):
     return players[0]["game_id_id"]
 
 def get_players(pick):
-    players = run_query("SELECT * FROM coup_players", [])
+    players = run_query("SELECT * FROM coup_players WHERE player_id != ''", [])
     if pick:
         picked = random.choice(players)
         run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [0, picked["id"]])
         run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
     players = run_query("SELECT * FROM coup_players", [])
     for i in range(4 - len(players)):
-        players.append({"id": "t" + str(i), "name": "temp" + str(i), "coins": 0, "game_id_id": "temp", "hand":"", "player_id": "temp", "turn": 0})
+        players.append({"id": "t" + str(i), "name": "???" + str(i), "coins": 0, "game_id_id": "temp", "hand":"", "player_id": "temp", "turn": 0})
     return players
 
 
