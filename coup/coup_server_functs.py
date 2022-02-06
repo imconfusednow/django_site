@@ -23,7 +23,7 @@ def get_players(pick, sid):
 
 
 def sid_to_room(sid):
-    players = run_query("SELECT game_id_id FROM coup_players WHERE id = ?", [sid])
+    players = run_query("SELECT game_id_id FROM coup_players WHERE player_id = ?", [sid])
     return players[0]["game_id_id"]
 
 def run_statement(query, params):
