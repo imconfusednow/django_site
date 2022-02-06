@@ -11,8 +11,8 @@ def login(request):
         form = LoginForm(request.POST)
         if form.is_valid():
             try:
-                room_name = form.cleaned_data['room_name']                
-                request.session["room_name"] = room_name.lower()
+                room_name = form.cleaned_data['room_name'].lower()           
+                request.session["room_name"] = room_name
                 returned = ""              
                 if (form.cleaned_data['submit_type'] == "create"):
                     returned = c.add_game(room_name,request.session.get("player_id", None))
