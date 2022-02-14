@@ -1,5 +1,14 @@
 const socket = io("http://81.110.114.52:3000");
 
+let cardTypes = 
+{
+    "co": {"actions": {}, "image": "cortessa.png"},
+    "du": {"actions": {"3-coins": 1}, "image": "duke.png"},
+    "ca": {"actions": {"steal": 1}, "image": "captain.png"},
+    "as": {"actions": {"assassinate": 1}, "image": "assassin.png"},
+    "am": {"actions": {"swap": 1},  "image": "ambassador.png"},
+}
+
 socket.on('connect', () => {
     console.log('connected');
     if (!localStorage.getItem("player_id")) localStorage.setItem("player_id", document.getElementById("player_id").value);
@@ -100,8 +109,28 @@ function setPlayerDetails(data)
     else
     {
         document.getElementById('player-info').classList.remove("on-turn");
+        var cards = data.hand.split(",");
+        document.querySelectorAll("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
+        if (cards[1])
+        {
+            document.querySelectorAll("#player-card-1").src = "/static/coup/" + cardTypes[cards[1]].image;
+        }
         var options = document.querySelectorAll(".turn-options");
-        options.forEach(element => element.classList.add("hidden"));
+        options.forEach(element => {
+                element.classList.add("hidden");
+                if (cardTypes[cards[0]].actions[element.id])
+                {
+                    element.classList.remove("option-button-lie");
+                    element.classList.add("option-button-true");
+                }
+                else
+                {
+                    element.classList.add("option-button-lie");
+                    element.classList.remove("option-button-true");
+                
+                }
+            }
+        );
     }
 }
 
