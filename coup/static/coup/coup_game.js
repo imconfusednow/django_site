@@ -109,8 +109,12 @@ function setPlayerDetails(data)
         {
             document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
         }
-        var options = document.querySelectorAll(".option-button");
+        var options = document.querySelectorAll(".turn-options");
+        var buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
+                element.classList.add("hidden");
+            }
+        buttons.forEach(element => {
                 element.classList.remove("hidden");
                 if (cardTypes[cards[0]].actions[element.id])
                 {
