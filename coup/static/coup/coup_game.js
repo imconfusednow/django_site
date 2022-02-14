@@ -104,10 +104,10 @@ function setPlayerDetails(data)
     {
         document.getElementById('player-info').classList.add("on-turn");
         var cards = data.hand.split(",");
-        document.querySelectorAll("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
+        document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
         if (cards[1])
         {
-            document.querySelectorAll("#player-card-1").src = "/static/coup/" + cardTypes[cards[1]].image;
+            document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[1]].image;
         }
         var options = document.querySelectorAll(".turn-options");
         options.forEach(element => {
