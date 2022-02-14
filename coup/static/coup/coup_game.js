@@ -103,12 +103,6 @@ function setPlayerDetails(data)
     if (data.turn)
     {
         document.getElementById('player-info').classList.add("on-turn");
-        var options = document.querySelectorAll(".turn-options");
-        options.forEach(element => element.classList.remove("hidden"));
-    }
-    else
-    {
-        document.getElementById('player-info').classList.remove("on-turn");
         var cards = data.hand.split(",");
         document.querySelectorAll("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
         if (cards[1])
@@ -117,7 +111,7 @@ function setPlayerDetails(data)
         }
         var options = document.querySelectorAll(".turn-options");
         options.forEach(element => {
-                element.classList.add("hidden");
+                element.classList.remove("hidden");
                 if (cardTypes[cards[0]].actions[element.id])
                 {
                     element.classList.remove("option-button-lie");
@@ -129,6 +123,15 @@ function setPlayerDetails(data)
                     element.classList.remove("option-button-true");
                 
                 }
+            }
+        );
+    }
+    else
+    {
+        document.getElementById('player-info').classList.remove("on-turn");
+        var options = document.querySelectorAll(".turn-options");
+        options.forEach(element => {
+                element.classList.add("hidden");
             }
         );
     }
