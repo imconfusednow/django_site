@@ -112,11 +112,11 @@ function setPlayerDetails(data)
         var options = document.querySelectorAll(".turn-options");
         var buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
-                element.classList.add("hidden");
+                element.classList.remove("hidden");
             });
         buttons.forEach(element => {
                 element.classList.remove("hidden");
-                if (cardTypes[cards[0]].actions[element.id])
+                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id])
                 {
                     element.classList.remove("option-button-lie");
                     element.classList.add("option-button-true");
