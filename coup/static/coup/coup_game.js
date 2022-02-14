@@ -113,7 +113,7 @@ function setPlayerDetails(data)
         var buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
                 element.classList.add("hidden");
-            }
+            });
         buttons.forEach(element => {
                 element.classList.remove("hidden");
                 if (cardTypes[cards[0]].actions[element.id])
