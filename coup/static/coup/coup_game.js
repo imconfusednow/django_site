@@ -31,6 +31,15 @@ socket.on('join_game', (data) => {
     setOpponentDetails(data.slice(1));
 });
 
+socket.on('rejoin_game', (data) => {
+    console.log(data);
+    let c_grid = document.getElementById("center-grid");
+    c_grid.innerText = "";
+    setPlayerDetails(data[0]);
+    setOpponentDetails(data.slice(1));
+});
+
+
 function sendStart()
 {
     socket.emit('start_game');
@@ -97,6 +106,12 @@ function startGame(event)
     cards.forEach(element => element.classList.remove("hidden"));    
     document.getElementById('spinner').remove();
 }
+
+function sendRejoin(event)
+{
+    socket.emit('rejoin_game');
+}
+
 
 function setPlayerDetails(data)
 {

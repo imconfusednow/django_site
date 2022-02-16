@@ -17,7 +17,8 @@ def disconnect(sid):
 
 @sio.event
 def join_game(sid, data):
-    room = c.set_player_nick(data["player_id"], sid, data["nick"])
+    c.set_player_nick(data["player_id"], sid, data["nick"])
+    room = c.sid_to_room(sid)
     players = c.get_players(False, sid)
     sio.enter_room(sid, room)
     for i in players:
@@ -35,6 +36,17 @@ def start_game(sid):
         players.append(players.pop(0))        
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 
+
+@sio.event
+def rejoin_game(sid, data):
+    room = c.sid_to_room(sid)
+    players = c.get_players(False, sid)
+    sio.enter_room(sid, room)
+    for i in players:
+        players.append(players.pop(0))
+        if players[0]["player_id"] == sid:
+            sio.emit("rejoin_game", players, to=players[0]["player_id"])
+    print(f"Player {sid} entered room {room}")
 
 if __name__ == '__main__':
     eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 3000)), app)

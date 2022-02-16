@@ -3,9 +3,7 @@ import sqlite3
 import random
 
 def set_player_nick(player_id, sid, name):
-    run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [name, sid, player_id])
-    room = sid_to_room(sid)
-    return room
+    run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [name, sid, player_id])    
 
 def get_players(pick, sid):
     room = sid_to_room(sid)
@@ -26,9 +24,11 @@ def sid_to_room(sid):
     players = run_query("SELECT game_id_id FROM coup_players WHERE player_id = ?", [sid])
     return players[0]["game_id_id"]
 
+
 def deal(players):
     for p in players:
         p["hand"] = assign_cards(2, p["player_id"], p["game_id_id"])
+    run_statement("UPDATE coup_games SET started = 1 WHERE game_id_id = ?", players[0]["game_id_id"])
 
 
 def assign_cards(num, player_id, game_id):

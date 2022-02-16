@@ -1,6 +1,7 @@
 from .models import players, games, decks
 import random
 
+
 def add_game(name, player_id):
     existing = games.objects.filter(name=name)
     if existing.exists():
@@ -36,13 +37,12 @@ def add_player(room, player_id):
     return player.pk
 
 
-def get_current_players(room, player_id):
+def get_player(room, player_id):
     existing = games.objects.filter(name=room)
-    existing_players = list(players.objects.filter(game_id=existing.first()))
-    for i in existing_players:
-        if existing_players[0].id == player_id: break
-        existing_players.append(existing_players.pop(0))
-    return existing_players
+    player = list(players.objects.filter(game_id=existing.first(), pk=player_id))
+    name = player.name
+    in_game = True if name and existing.started else False
+    return [name, in_game]
 
 
 def add_deck(game):
