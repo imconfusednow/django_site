@@ -109,7 +109,9 @@ function startGame(event)
 
 function sendRejoin(event)
 {
-    socket.emit('rejoin_game');
+    document.getElementById("player-name").innerText = name;
+    let player_id = localStorage.getItem("player_id");
+    socket.emit("rejoin_game", {"nick": name, "player_id": player_id});
 }
 
 
