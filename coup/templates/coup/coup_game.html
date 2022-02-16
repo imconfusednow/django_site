@@ -39,7 +39,7 @@
                 <input required class="form-control" type="text" id="nick" placeholder="Enter Nick" value="">
                 <script>
                     var player_id = document.getElementById("player_id").value;
-                    document.getElementById("nick").value = {{ player_name }}
+                    document.getElementById("nick").value = "{{ player_name }}"
                 </script>
                 <button class='btn btn-primary' id="join-button" onclick="joinGame()">Join</button>
             </div>   

@@ -28,7 +28,7 @@ def sid_to_room(sid):
 def deal(players):
     for p in players:
         p["hand"] = assign_cards(2, p["player_id"], p["game_id_id"])
-    run_statement("UPDATE coup_games SET started = 1 WHERE game_id_id = ?", players[0]["game_id_id"])
+    run_statement("UPDATE coup_games SET started = 1 WHERE id = ?", players[0]["game_id_id"])
 
 
 def assign_cards(num, player_id, game_id):
