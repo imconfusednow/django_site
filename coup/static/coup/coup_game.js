@@ -109,8 +109,15 @@ function startGame(event)
 
 function sendRejoin(event)
 {
+    let nick_field = document.getElementById("nick");
+    let name = nick_field.value;
+    document.getElementById("player-ready").style.display = "grid";
     document.getElementById("player-name").innerText = name;
     let player_id = localStorage.getItem("player_id");
+    var cards = document.querySelectorAll(".player-card-div");
+    cards.forEach(element => element.classList.remove("hidden"));
+    cards = document.querySelectorAll(".opponent-card-div");
+    cards.forEach(element => element.classList.remove("hidden"));
     socket.emit("rejoin_game", {"nick": name, "player_id": player_id});
 }
 

@@ -39,6 +39,7 @@ def start_game(sid):
 
 @sio.event
 def rejoin_game(sid, data):
+    c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
     players = c.get_players(False, sid)
     sio.enter_room(sid, room)
