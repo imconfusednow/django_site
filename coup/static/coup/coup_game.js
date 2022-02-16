@@ -144,7 +144,7 @@ function setPlayerDetails(data)
                 element.classList.remove("hidden");
                 if (element.id == "coup-action")
                     {
-                        continue;
+                        return;
                     }
                 if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id] || defaultActions[element.id])
                 {
