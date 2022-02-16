@@ -28,7 +28,7 @@ def login(request):
         else:
             context["error"] = form.errors[0]
     else:
-        name, started = c.get_player(request.session["room_name"], request.session["player_id"])
+        name, started = c.get_player(request.session.get("room_name", None), request.session.get("player_id", None))
         if name:
             return redirect("/coup/game")
     return render(request, 'coup/coup_login.html', context)
@@ -36,7 +36,7 @@ def login(request):
 
 def game(request):
     context = {"room_name": request.session["room_name"]}
-    context["player_name"], context["player_in_started_game"] = c.get_player(request.session["room_name"], request.session["player_id"])
+    context["player_name"], context["player_in_started_game"] = c.get_player(request.session.get("room_name", None), request.session.get("player_id", None))
     context["player_id"] = request.session["player_id"]
 
     return render(request, 'coup/coup_game.html', context)
