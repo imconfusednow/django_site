@@ -38,8 +38,14 @@ def add_player(room, player_id):
 
 
 def get_player(room, player_id):
+    if not (room and player_id):
+        return ["", False]
     existing = games.objects.filter(name=room).first()
+    if not (existing.exists()):
+        return ["", False]
     player = players.objects.filter(game_id=existing, pk=player_id).first()
+    if not player:
+        return ["", False]
     name = player.name
     in_game = True if name and existing.started else False
     return [name, in_game]

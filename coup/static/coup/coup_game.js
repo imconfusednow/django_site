@@ -142,7 +142,11 @@ function setPlayerDetails(data)
             });
         buttons.forEach(element => {
                 element.classList.remove("hidden");
-                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id] || defaultActions[element.id] || (element.id == "coup-action"))
+                if (element.id == "coup-action")
+                    {
+                        continue;
+                    }
+                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id] || defaultActions[element.id])
                 {
                     element.classList.remove("option-button-lie");
                     element.classList.add("option-button-true");

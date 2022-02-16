@@ -27,6 +27,10 @@ def login(request):
             return redirect("/coup/game")
         else:
             context["error"] = form.errors[0]
+    else:
+        name, started = c.get_player(request.session["room_name"], request.session["player_id"])
+        if name:
+            return redirect("/coup/game")
     return render(request, 'coup/coup_login.html', context)
 
 
