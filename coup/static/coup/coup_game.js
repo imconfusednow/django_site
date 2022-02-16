@@ -3,11 +3,13 @@ const socket = io("http://81.110.114.52:3000");
 let cardTypes = 
 {
     "co": {"actions": {}, "image": "cortessa.png"},
-    "du": {"actions": {"3-coins": 1}, "image": "duke.png"},
+    "du": {"actions": {"take-3": 1}, "image": "duke.png"},
     "ca": {"actions": {"steal": 1}, "image": "captain.png"},
     "as": {"actions": {"assassinate": 1}, "image": "assassin.png"},
     "am": {"actions": {"swap": 1},  "image": "ambassador.png"},
-}
+};
+
+let defaultActions = {"take-1" : 1, "foreign-aid" : 1};
 
 socket.on('connect', () => {
     console.log('connected');
@@ -140,7 +142,7 @@ function setPlayerDetails(data)
             });
         buttons.forEach(element => {
                 element.classList.remove("hidden");
-                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id])
+                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id] || defaultActions[element.id] || (element.id == "coup-action"))
                 {
                     element.classList.remove("option-button-lie");
                     element.classList.add("option-button-true");
