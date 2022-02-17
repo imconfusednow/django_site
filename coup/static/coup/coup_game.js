@@ -23,22 +23,28 @@ socket.on('disconnect', () => {
 
 socket.on('start_game', (data) => {
     console.log(data);
-    var ind = getOnTurn(data);  
-    selectStarter(ind, data);    
+    var players = data[0];
+    var hands = data[1];
+    var ind = getOnTurn(players);  
+    selectStarter(ind, players);    
 });
 
 socket.on('join_game', (data) => {
     console.log(data);
-    setPlayerDetails(data[0]);
-    setOpponentDetails(data.slice(1));
+    var players = data[0];
+    var hands = data[1];
+    setPlayerDetails(players[0]);
+    setOpponentDetails(players.slice(1));
 });
 
 socket.on('rejoin_game', (data) => {
     console.log(data);
+    var players = data[0];
+    var hands = data[1];
     let c_grid = document.getElementById("center-grid");
     c_grid.innerText = "";
-    setPlayerDetails(data[0]);
-    setOpponentDetails(data.slice(1));
+    setPlayerDetails(players[0]);
+    setOpponentDetails(players.slice(1));
 });
 
 
