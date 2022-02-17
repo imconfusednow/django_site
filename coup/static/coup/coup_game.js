@@ -26,7 +26,7 @@ socket.on('start_game', (data) => {
     var players = data[0];
     var hands = data[1];
     var ind = getOnTurn(players);  
-    selectStarter(ind, players);    
+    selectStarter(ind, data);    
 });
 
 socket.on('join_game', (data) => {
