@@ -33,8 +33,8 @@ socket.on('join_game', (data) => {
     console.log(data);
     var players = data[0];
     var hands = data[1];
-    setPlayerDetails(players[0]);
-    setOpponentDetails(players.slice(1));
+    setPlayerDetails(players[0], hands[0]);
+    setOpponentDetails(players.slice(1), hands.slice(1));
 });
 
 socket.on('rejoin_game', (data) => {
@@ -130,12 +130,12 @@ function sendRejoin(event)
 }
 
 
-function setPlayerDetails(data)
+function setPlayerDetails(player, hand)
 {
-    if (data.turn)
+    if (player.turn)
     {
         document.getElementById('player-info').classList.add("on-turn");
-        var cards = data.hand.split(",");
+        var cards = hand.split(",");
         document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
         if (cards[1])
         {
