@@ -43,8 +43,8 @@ socket.on('rejoin_game', (data) => {
     var hands = data[1];
     let c_grid = document.getElementById("center-grid");
     c_grid.innerText = "";
-    setPlayerDetails(players[0]);
-    setOpponentDetails(players.slice(1));
+    setPlayerDetails(players[0], hands[0]);
+    setOpponentDetails(players.slice(1), hands.slice(1));
 });
 
 
@@ -106,8 +106,10 @@ function selectStarter(ind, data)
 function startGame(event)
 {
     var data = event.currentTarget.data;
-    setPlayerDetails(data[0]);
-    setOpponentDetails(data.slice(1));
+    var players = data[0];
+    var hands = data[1];
+    setPlayerDetails(players[0], hands[0]);
+    setOpponentDetails(players.slice(1), hands.slice(1));
     var cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
     cards = document.querySelectorAll(".opponent-card-div");
