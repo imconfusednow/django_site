@@ -179,10 +179,22 @@ function setPlayerDetails(player, hand)
     }
 }
 
-function setOpponentDetails(data)
+function setOpponentDetails(players, hands)
 {
-    for (var i = 0; i < data.length; i++) {
-        var player = data[i];
+    for (var i = 0; i < players.length; i++) {
+        var player = players[i];
+        var hand = hands[i];
+        var cards = document.querySelectorAll("#opponent" + i + "-card");
+        for (var c = 0; c < cards.length; c++) {
+            if (c > hand)
+            {
+                cards[i].classList.add("hidden");
+            }
+            else
+            {
+                cards[i].classList.remove("hidden");
+            }
+        }
         document.querySelector("#opponent" + i + "-name").innerText =  player.name;
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
         if (player.turn)
