@@ -143,6 +143,10 @@ function setPlayerDetails(player, hand)
         {
             document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
         }
+        else
+        {
+            document.querySelector("#player-card-2").classList.add("hidden");
+        }
         var options = document.querySelectorAll(".turn-options");
         var buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
@@ -188,11 +192,11 @@ function setOpponentDetails(players, hands)
         for (var c = cards.length - 1; c > - 1; c--) {
             if (c < hand)
             {
-                cards[i].classList.remove("hidden");
+                cards[c].classList.remove("hidden");
             }
             else
             {
-                cards[i].classList.add("hidden");
+                cards[c].classList.add("hidden");
             }
         }
         document.querySelector("#opponent" + i + "-name").innerText =  player.name;
