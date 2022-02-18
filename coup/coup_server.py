@@ -47,7 +47,7 @@ def send_info(players, sid, only_one, method):
     hands = [h.pop("hand") for h in players]
     no_cards = [len(h.split(",")) for h in hands]
     for i in players:
-        if only_one or players[0]["player_id"] == sid:
+        if not only_one or players[0]["player_id"] == sid:
             sio.emit(method, [players, [hands[0]] + no_cards[1:]],  to=players[0]["player_id"])
             if only_one: break
         players.append(players.pop(0))

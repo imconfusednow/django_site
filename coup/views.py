@@ -37,8 +37,6 @@ def login(request):
 def game(request):
     context = {"room_name": request.session["room_name"]}
     context["player_name"], context["player_in_started_game"] = c.get_player(request.session.get("room_name", None), request.session.get("player_id", None))
-    if not context["player_name"]:
-        return render(request, 'coup/coup_login.html', context)
     context["player_id"] = request.session["player_id"]
 
     return render(request, 'coup/coup_game.html', context)
