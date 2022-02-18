@@ -184,15 +184,15 @@ function setOpponentDetails(players, hands)
     for (var i = 0; i < players.length; i++) {
         var player = players[i];
         var hand = hands[i];
-        var cards = document.querySelectorAll("#opponent" + i + "-card");
-        for (var c = 0; c < cards.length; c++) {
-            if (c > hand)
+        var cards = document.querySelectorAll(".opponent" + i + "-card");
+        for (var c = cards.length - 1; c > - 1; c--) {
+            if (c < hand)
             {
-                cards[i].classList.add("hidden");
+                cards[i].classList.remove("hidden");
             }
             else
             {
-                cards[i].classList.remove("hidden");
+                cards[i].classList.add("hidden");
             }
         }
         document.querySelector("#opponent" + i + "-name").innerText =  player.name;
