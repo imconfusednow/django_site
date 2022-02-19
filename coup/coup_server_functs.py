@@ -3,6 +3,7 @@ import sqlite3
 import random
 
 con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
+names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia", "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
 
 def set_player_nick(player_id, sid, name):
     run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [
@@ -54,7 +55,7 @@ def pick_starter(sid):
     params = [room]
     players = run_query(where, params)
     for i in range(4 - len(players)):
-        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn) VALUES(room, 1, 0, '', 0)")
+        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name) VALUES(?,?,?,?,?, name)", [room, 1, 0, '', 0, AI + random.choice(names)])
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
