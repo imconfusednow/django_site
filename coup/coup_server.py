@@ -19,7 +19,7 @@ def disconnect(sid):
 def join_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
-    players = c.get_players(False, sid)
+    players = c.get_players(sid)
     sio.enter_room(sid, room)
     c.send_info(players, sid, False, "join_game")   
     print(f"Player {sid} entered room {room}")
@@ -27,7 +27,7 @@ def join_game(sid, data):
 
 @sio.event
 def start_game(sid):
-    players = c.get_players(True, sid)
+    players = c.pick_starter(sid)
     c.deal(players)    
     c.send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
@@ -37,7 +37,7 @@ def start_game(sid):
 def rejoin_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
-    players = c.get_players(False, sid)
+    players = c.get_players(sid)
     sio.enter_room(sid, room)    
     c.send_info(players, sid, True, "rejoin_game")   
     print(f"Player {sid} entered room {room}")
