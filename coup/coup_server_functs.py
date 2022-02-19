@@ -54,7 +54,7 @@ def pick_starter(sid):
     params = [room]
     players = run_query(where, params)
     for i in range(4 - len(players)):
-        run_statement("UPDATE coup_players SET game_id_id = ?, computer = ?, coins = ?, hand = ?, turn = ?", [room, 1, 0, "", 0])
+        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn) VALUES(room, 1, 0, '', 0)")
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
