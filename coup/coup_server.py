@@ -21,15 +21,15 @@ def join_game(sid, data):
     room = c.sid_to_room(sid)
     players = c.get_players(False, sid)
     sio.enter_room(sid, room)
-    send_info(players, sid, False, "join_game")   
+    c.send_info(players, sid, False, "join_game")   
     print(f"Player {sid} entered room {room}")
 
 
 @sio.event
 def start_game(sid):
     players = c.get_players(True, sid)
-    c.deal(players)
-    send_info(players, sid, False, "start_game")
+    c.deal(players)    
+    c.send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 
 
@@ -39,20 +39,11 @@ def rejoin_game(sid, data):
     room = c.sid_to_room(sid)
     players = c.get_players(False, sid)
     sio.enter_room(sid, room)    
-    send_info(players, sid, True, "rejoin_game")   
+    c.send_info(players, sid, True, "rejoin_game")   
     print(f"Player {sid} entered room {room}")
 
 
-def send_info(players, sid, only_one, method):
-    hands = [h.pop("hand") for h in players]
-    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
-    for i in players:
-        if not only_one or players[0]["player_id"] == sid:
-            sio.emit(method, [players, [hands[0]] + no_cards[1:]],  to=players[0]["player_id"])
-            if only_one: break
-        players.append(players.pop(0))
-        hands.append(hands.pop(0))
-        no_cards.append(no_cards.pop(0))
+
 
 
 if __name__ == '__main__':

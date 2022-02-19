@@ -5,16 +5,11 @@ import random
 def set_player_nick(player_id, sid, name):
     run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [name, sid, player_id])    
 
-def get_players(pick, sid):
+def get_players(sid):
     room = sid_to_room(sid)
     where = "SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?"
     params = [room]
-    players = run_query(where, params)
-    if pick:
-        picked = random.choice(players)
-        run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [0, picked["id"]])
-        run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
-    players = run_query(where, params)
+    players = run_query(where, params)    
     for i in range(4 - len(players)):
         players.append({"id": "t" + str(i), "name": "???", "coins": 0, "game_id_id": room, "hand":"", "player_id": "temp", "turn": 0})
     return players
@@ -42,6 +37,32 @@ def discard_cards(num, player):
     pass
 
 
+def send_info(players, sid, only_one, method):
+    hands = [h.pop("hand") for h in players]
+    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
+    for i in players:
+        if not only_one or players[0]["player_id"] == sid:
+            sio.emit(method, [players, [hands[0]] + no_cards[1:]],  to=players[0]["player_id"])
+            if only_one: break
+        players.append(players.pop(0))
+        hands.append(hands.pop(0))
+        no_cards.append(no_cards.pop(0))
+
+
+def pick_starter(sid):
+    room = sid_to_room(sid)
+    where = "SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?"
+    params = [room]
+    players = run_query(where, params)
+    for i in range(4 - len(players)):
+        ai = players(game_id=room, computer=True, coins=0, hand="", turn="0")
+        ai.save()
+    players = run_query(where, params)
+    picked = random.choice(players)
+    run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [0, picked["id"]])
+    run_statement("UPDATE coup_players SET turn = ? WHERE id = ?", [1, picked["id"]])
+    
+
 def run_statement(query, params):
     try:
         con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
@@ -63,5 +84,4 @@ def run_query(query, params):
         print(e)
 
     return return_value
-
 
