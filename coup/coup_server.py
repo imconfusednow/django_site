@@ -21,7 +21,7 @@ def join_game(sid, data):
     room = c.sid_to_room(sid)
     players = c.get_players(sid)
     sio.enter_room(sid, room)
-    c.send_info(players, sid, False, "join_game")   
+    send_info(players, sid, False, "join_game")   
     print(f"Player {sid} entered room {room}")
 
 
@@ -29,7 +29,7 @@ def join_game(sid, data):
 def start_game(sid):
     players = c.pick_starter(sid)
     c.deal(players)    
-    c.send_info(players, sid, False, "start_game")
+    send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
 
 
@@ -39,7 +39,7 @@ def rejoin_game(sid, data):
     room = c.sid_to_room(sid)
     players = c.get_players(sid)
     sio.enter_room(sid, room)    
-    c.send_info(players, sid, True, "rejoin_game")   
+    send_info(players, sid, True, "rejoin_game")   
     print(f"Player {sid} entered room {room}")
 
 
