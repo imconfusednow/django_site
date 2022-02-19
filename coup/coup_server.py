@@ -43,6 +43,18 @@ def rejoin_game(sid, data):
     print(f"Player {sid} entered room {room}")
 
 
+def send_info(players, sid, only_one, method):
+    hands = [h.pop("hand") for h in players]
+    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
+    for i in players:
+        if not only_one or players[0]["player_id"] == sid:
+            sio.emit(method, [players, [hands[0]] +
+                              no_cards[1:]],  to=players[0]["player_id"])
+            if only_one:
+                break
+        players.append(players.pop(0))
+        hands.append(hands.pop(0))
+        no_cards.append(no_cards.pop(0))
 
 
 

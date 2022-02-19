@@ -2,6 +2,7 @@
 import sqlite3
 import random
 
+con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
 
 def set_player_nick(player_id, sid, name):
     run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [
@@ -47,28 +48,13 @@ def discard_cards(num, player):
     pass
 
 
-def send_info(players, sid, only_one, method):
-    hands = [h.pop("hand") for h in players]
-    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
-    for i in players:
-        if not only_one or players[0]["player_id"] == sid:
-            sio.emit(method, [players, [hands[0]] +
-                              no_cards[1:]],  to=players[0]["player_id"])
-            if only_one:
-                break
-        players.append(players.pop(0))
-        hands.append(hands.pop(0))
-        no_cards.append(no_cards.pop(0))
-
-
 def pick_starter(sid):
     room = sid_to_room(sid)
     where = "SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?"
     params = [room]
     players = run_query(where, params)
     for i in range(4 - len(players)):
-        ai = players(game_id=room, computer=True, coins=0, hand="", turn="0")
-        ai.save()
+        run_statement("UPDATE coup_players SET game_id_id = ?, computer = ?, coins = ?, hand = ?, turn = ?", [room, 1, 0, "", 0])
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
@@ -79,12 +65,11 @@ def pick_starter(sid):
     players = run_query(where, params)
     return players
 
+
 def run_statement(query, params):
     try:
-        con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
         con.execute(query, params)
         con.commit()
-        con.close()
     except Exception as e:
         print(e)
 
@@ -92,7 +77,6 @@ def run_statement(query, params):
 def run_query(query, params):
     return_value = []
     try:
-        con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
         con.row_factory = sqlite3.Row
         rows = list(con.execute(query, params).fetchall())
         for r in rows:
