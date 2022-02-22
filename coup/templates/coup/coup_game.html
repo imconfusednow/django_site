@@ -63,8 +63,8 @@
                 <span style="" id="player-money">Coins: 0</span>
             </div>
             <div class="turn-options hidden">
-                <button class="option-button option-button-true" id="take-1" style="float: right;">Take 1 Coin</button>
-                <button class="option-button option-button-true" id="foreign-aid" style="float: right;">Foreign Aid (Take 2 Coins)</button>
+                <button class="option-button option-button-true" id="take-1" onclick="doAction('take-1')" style="float: right;">Take 1 Coin</button>
+                <button class="option-button option-button-true" id="foreign-aid" onclick="doAction('foreign-aid')" style="float: right;">Foreign Aid (Take 2 Coins)</button>
             </div>
             <div class="player-card-div-1 player-card-div hidden">
                 <img src="{% static 'coup/assassin.png' %}" class="player-card-1 player-card" id="player-card-1">
@@ -73,10 +73,10 @@
                 <img src="{% static 'coup/duke.png' %}" class="player-card-2 player-card" id="player-card-2">
             </div>
             <div class="turn-options hidden">
-                <button class="option-button option-button-lie" id="assassinate" onclick="doAction()">Assassinate - Assassin</button>
-                <button class="option-button option-button-lie" id="take-3" onclick="doAction()">Take 3 Coins - Duke</button>
-                <button class="option-button option-button-true" id="steal" onclick="doAction()">Steal 2 Coins - Captain</button>
-                <button class="option-button option-button-lie" id="swap" onclick="doAction()">Swap Cards - Ambassador</button>
+                <button class="option-button option-button-lie" id="assassinate" onclick="doAction('assassinate')">Assassinate - Assassin</button>
+                <button class="option-button option-button-lie" id="take-3" onclick="doAction('take-3')">Take 3 Coins - Duke</button>
+                <button class="option-button option-button-true" id="steal" onclick="doAction('steal')">Steal 2 Coins - Captain</button>
+                <button class="option-button option-button-lie" id="swap" onclick="doAction('swap')">Swap Cards - Ambassador</button>
             </div>
             <div class="coup-action turn-options hidden">
                 <button class="option-button button-inactive" id="coup-action">Coup</button>

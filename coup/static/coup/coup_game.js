@@ -221,8 +221,7 @@ function getOnTurn(data)
     return ind;
 }
 
-function doAction(event)
+function doAction(event_type)
 {
-    let event_type = event.currentTarget.id;
     socket.emit('do_action', event_type);
 }
