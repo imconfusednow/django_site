@@ -46,7 +46,8 @@ def rejoin_game(sid, data):
 @sio.event
 def do_action(sid, data):
     sleep(5)    
-    players = c.do_action(sid, data)
+    c.do_action(sid, data)
+    players = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")  
 
 
