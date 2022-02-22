@@ -181,6 +181,7 @@ function setPlayerDetails(player, hand)
             }
         );
     }
+    document.querySelector("#player-money").innerText = "Coins: " + player.coins;
 }
 
 function setOpponentDetails(players, hands)

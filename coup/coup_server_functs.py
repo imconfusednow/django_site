@@ -73,7 +73,7 @@ def do_action(sid, action_type):
 
 def next_turn(sid):
     room = sid_to_room(sid)
-    players = run_query("SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?", [room])
+    players = run_query("SELECT * FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ?", [room])
     curr_player = next_player = 0
     for i, p in enumerate(players):
         if p["player_id"] == sid:
