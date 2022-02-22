@@ -23,24 +23,24 @@ socket.on('disconnect', () => {
 
 socket.on('start_game', (data) => {
     console.log(data);
-    var players = data[0];
-    var hands = data[1];
-    var ind = getOnTurn(players);  
+    let players = data[0];
+    let hands = data[1];
+    let ind = getOnTurn(players);  
     selectStarter(ind, data);    
 });
 
 socket.on('join_game', (data) => {
     console.log(data);
-    var players = data[0];
-    var hands = data[1];
+    let players = data[0];
+    let hands = data[1];
     setPlayerDetails(players[0], hands[0]);
     setOpponentDetails(players.slice(1), hands.slice(1));
 });
 
 socket.on('rejoin_game', (data) => {
     console.log(data);
-    var players = data[0];
-    var hands = data[1];
+    let players = data[0];
+    let hands = data[1];
     let c_grid = document.getElementById("center-grid");
     c_grid.innerText = "";
     setPlayerDetails(players[0], hands[0]);
@@ -85,8 +85,8 @@ function joinGame()
 
 function selectStarter(ind, data)
 {
-    var finish = ind * 90;
-    var rand = Math.random() * 20 - 10;
+    let finish = ind * 90;
+    let rand = Math.random() * 20 - 10;
     document.documentElement.style.setProperty('--start-spin', 0 + "deg");
     document.documentElement.style.setProperty('--end-spin', (finish + 1890 + rand) + "deg");
 
@@ -105,12 +105,12 @@ function selectStarter(ind, data)
 
 function startGame(event)
 {
-    var data = event.currentTarget.data;
-    var players = data[0];
-    var hands = data[1];
+    let data = event.currentTarget.data;
+    let players = data[0];
+    let hands = data[1];
     setPlayerDetails(players[0], hands[0]);
     setOpponentDetails(players.slice(1), hands.slice(1));
-    var cards = document.querySelectorAll(".player-card-div");
+    let cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
     cards = document.querySelectorAll(".opponent-card-div");
     cards.forEach(element => element.classList.remove("hidden"));    
@@ -124,7 +124,7 @@ function sendRejoin(event)
     document.getElementById("player-ready").style.display = "grid";
     document.getElementById("player-name").innerText = name;
     let player_id = localStorage.getItem("player_id");
-    var cards = document.querySelectorAll(".player-card-div");
+    let cards = document.querySelectorAll(".player-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
     cards = document.querySelectorAll(".opponent-card-div");
     cards.forEach(element => element.classList.remove("hidden"));
@@ -137,7 +137,7 @@ function setPlayerDetails(player, hand)
     if (player.turn)
     {
         document.getElementById('player-info').classList.add("on-turn");
-        var cards = hand.split(",");
+        let cards = hand.split(",");
         document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
         if (cards[1])
         {
@@ -147,8 +147,8 @@ function setPlayerDetails(player, hand)
         {
             document.querySelector("#player-card-2").classList.add("hidden");
         }
-        var options = document.querySelectorAll(".turn-options");
-        var buttons =  document.querySelectorAll(".option-button");
+        let options = document.querySelectorAll(".turn-options");
+        let buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
                 element.classList.remove("hidden");
             });
@@ -175,7 +175,7 @@ function setPlayerDetails(player, hand)
     else
     {
         document.getElementById('player-info').classList.remove("on-turn");
-        var options = document.querySelectorAll(".turn-options");
+        let options = document.querySelectorAll(".turn-options");
         options.forEach(element => {
                 element.classList.add("hidden");
             }
@@ -185,11 +185,11 @@ function setPlayerDetails(player, hand)
 
 function setOpponentDetails(players, hands)
 {
-    for (var i = 0; i < players.length; i++) {
-        var player = players[i];
-        var hand = hands[i];
-        var cards = document.querySelectorAll(".opponent" + i + "-card");
-        for (var c = cards.length - 1; c > - 1; c--) {
+    for (let i = 0; i < players.length; i++) {
+        let player = players[i];
+        let hand = hands[i];
+        let cards = document.querySelectorAll(".opponent" + i + "-card");
+        for (let c = cards.length - 1; c > - 1; c--) {
             if (c < hand)
             {
                 cards[c].classList.remove("hidden");
@@ -210,13 +210,19 @@ function setOpponentDetails(players, hands)
 
 function getOnTurn(data)
 {
-    var ind = 0;
-    for (var i = 0; i < data.length; i++) {
-        var player = data[i];
+    let ind = 0;
+    for (let i = 0; i < data.length; i++) {
+        let player = data[i];
         if (player.turn)
         {
             ind = i;
         }
     }
     return ind;
+}
+
+function doAction(event)
+{
+    let event_type = event.currentTarget.id;
+    socket.emit('do_action', event_type);
 }

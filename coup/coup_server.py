@@ -2,6 +2,7 @@
 import eventlet
 import socketio
 import coup_server_functs as c
+from time import sleep
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -41,6 +42,13 @@ def rejoin_game(sid, data):
     sio.enter_room(sid, room)    
     send_info(players, sid, True, "rejoin_game")   
     print(f"Player {sid} entered room {room}")
+
+@sio.event
+def do_action(sid, data):
+    sleep(5)    
+    players = c.do_action(sid, data)
+    send_info(players, sid, False, "rejoin_game")  
+
 
 
 def send_info(players, sid, only_one, method):

@@ -73,10 +73,10 @@
                 <img src="{% static 'coup/duke.png' %}" class="player-card-2 player-card" id="player-card-2">
             </div>
             <div class="turn-options hidden">
-                <button class="option-button option-button-lie" id="assassinate">Assassinate - Assassin</button>
-                <button class="option-button option-button-lie" id="take-3">Take 3 Coins - Duke</button>
-                <button class="option-button option-button-true" id="steal">Steal 2 Coins - Captain</button>
-                <button class="option-button option-button-lie" id="swap">Swap Cards - Ambassador</button>
+                <button class="option-button option-button-lie" id="assassinate" onclick="doAction()">Assassinate - Assassin</button>
+                <button class="option-button option-button-lie" id="take-3" onclick="doAction()">Take 3 Coins - Duke</button>
+                <button class="option-button option-button-true" id="steal" onclick="doAction()">Steal 2 Coins - Captain</button>
+                <button class="option-button option-button-lie" id="swap" onclick="doAction()">Swap Cards - Ambassador</button>
             </div>
             <div class="coup-action turn-options hidden">
                 <button class="option-button button-inactive" id="coup-action">Coup</button>

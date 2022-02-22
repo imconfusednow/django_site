@@ -66,6 +66,32 @@ def pick_starter(sid):
     players = run_query(where, params)
     return players
 
+def do_action(sid, action_type):
+    if action_type == "take-1":
+        take_one(sid)
+    return next_turn(sid)
+
+
+def next_turn(sid):
+    room = sid_to_room(sid)
+    players = run_query("SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?", [room])
+    curr_player = next_player = 0
+    for i, p in enumerate(players):
+        if p.player_id == sid:
+            curr_player = i
+
+    if curr_player < len(players) - 1:
+        next_player = curr_player + 1
+    else:
+        next_player = 0
+    run_statement("UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
+    run_statement("UPDATE coup_players SET turn = 1 WHERE player_id == ?", [players[next_turn][player_id]])
+    return players
+
+def take_one(sid):
+    run_statement("UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
+
+
 
 def run_statement(query, params):
     try:
