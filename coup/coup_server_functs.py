@@ -69,6 +69,7 @@ def pick_starter(sid):
 def do_action(sid, action_type):
     if action_type == "take-1":
         take_one(sid)
+    next_turn(sid)
 
 
 def next_turn(sid):
@@ -84,7 +85,7 @@ def next_turn(sid):
     else:
         next_player = 0
     run_statement("UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
-    run_statement("UPDATE coup_players SET turn = 1 WHERE player_id == ?", [players[next_player]["player_id"]])
+    run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [players[next_player]["id"]])
 
 def take_one(sid):
     run_statement("UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
