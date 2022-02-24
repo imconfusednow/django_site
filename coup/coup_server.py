@@ -20,7 +20,7 @@ def disconnect(sid):
 def join_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
-    players = c.get_players(sid)
+    players, player = c.get_players(sid)
     sio.enter_room(sid, room)
     send_info(players, sid, False, "join_game")   
     print(f"Player {sid} entered room {room}")
@@ -38,14 +38,17 @@ def start_game(sid):
 def rejoin_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
-    players = c.get_players(sid)
+    players, player = c.get_players(sid)
     sio.enter_room(sid, room)    
     send_info(players, sid, True, "rejoin_game")   
     print(f"Player {sid} entered room {room}")
 
 @sio.event
 def do_action(sid, data):
-    sleep(5)    
+    players, player = c.get_players(sid)
+    allow_challenge = False if data == "take-1" else True
+    send_action(players, sid, allow_challenge, data, player)
+    c.check_action_success(sid)
     c.do_action(sid, data)
     players = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")  
@@ -65,6 +68,14 @@ def send_info(players, sid, only_one, method):
         hands.append(hands.pop(0))
         no_cards.append(no_cards.pop(0))
 
+
+def send_action(players, sid, allow_challenge, action_type, player):    
+    for i in players:
+        if (not i['computer']):
+            sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": action_type, "player": player["name"]},  to=i["player_id"])
+    if allow_challenge:
+        sleep(5)
+            
 
 
 if __name__ == '__main__':

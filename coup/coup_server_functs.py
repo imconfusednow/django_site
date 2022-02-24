@@ -15,10 +15,14 @@ def get_players(sid):
     where = "SELECT * FROM coup_players WHERE player_id != '' AND game_id_id = ?"
     params = [room]
     players = run_query(where, params)
+    player = ""
+    for i in players:
+        if i["player_id"] == sid:
+            player = i
     for i in range(4 - len(players)):
         players.append({"id": "t" + str(i), "name": "???", "coins": 0,
                         "game_id_id": room, "hand": "", "player_id": "temp", "turn": 0})
-    return players
+    return [players, player]
 
 
 def sid_to_room(sid):
@@ -70,6 +74,9 @@ def do_action(sid, action_type):
     if action_type == "take-1":
         take_one(sid)
     next_turn(sid)
+
+def check_action_success(sid):
+    pass
 
 
 def next_turn(sid):
