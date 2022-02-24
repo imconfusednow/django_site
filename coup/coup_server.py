@@ -49,10 +49,23 @@ def do_action(sid, data):
     allow_challenge = False if data == "take-1" else True
     send_action(players, sid, allow_challenge, data, player)
     c.check_action_success(sid)
-    c.do_action(sid, data)
-    players = c.get_players(sid)
-    send_info(players, sid, False, "rejoin_game")  
+    next_player = c.do_action(sid, data)
+    players, player = c.get_players(sid)
+    send_info(players, sid, False, "rejoin_game")
+    if next_player["computer"]::
+        do_computer_action(next_player["player_id"], data)
 
+
+def do_computer_action(sid, data):
+    players, player = c.get_players(sid)
+    allow_challenge = False if data == "take-1" else True
+    send_action(players, sid, allow_challenge, data, player)
+    c.check_action_success(sid)
+    next_player = c.do_action(sid, data)
+    players, player = c.get_players(sid)
+    send_info(players, sid, False, "rejoin_game")
+    if next_player["computer"]:
+        do_computer_action(next_player["player_id"], data)
 
 
 def send_info(players, sid, only_one, method):

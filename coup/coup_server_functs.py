@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sqlite3
 import random
+import string
 
 con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
 names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia", "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
@@ -59,7 +60,8 @@ def pick_starter(sid):
     params = [room]
     players = run_query(where, params)
     for i in range(4 - len(players)):
-        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id) VALUES(?,?,?,?,?,?,?)", [room, 1, 0, '', 0, 'AI ' + random.choice(names), 'COMPUTER'])
+        player_id = get_random_string(8)
+        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id) VALUES(?,?,?,?,?,?,?)", [room, 1, 0, '', 0, 'AI ' + random.choice(names), player_id])
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
@@ -73,7 +75,9 @@ def pick_starter(sid):
 def do_action(sid, action_type):
     if action_type == "take-1":
         take_one(sid)
-    next_turn(sid)
+    next_player = next_turn(sid)
+    return next_player
+
 
 def check_action_success(sid):
     pass
@@ -93,11 +97,16 @@ def next_turn(sid):
         next_player = 0
     run_statement("UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
     run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [players[next_player]["id"]])
+    return players[next_player]
 
 def take_one(sid):
     run_statement("UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
 
 
+def get_random_string(length):
+    letters = string.ascii_lowercase
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
 
 def run_statement(query, params):
     try:

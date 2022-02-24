@@ -48,6 +48,11 @@ socket.on('rejoin_game', (data) => {
 });
 
 
+socket.on('report_action', (data) => {
+    console.log(data);
+    alert(data.player + " did action " + data.action_type);
+});
+
 function sendStart()
 {
     socket.emit('start_game');
