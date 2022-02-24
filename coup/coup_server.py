@@ -52,7 +52,7 @@ def do_action(sid, data):
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
-    if next_player["computer"]::
+    if next_player["computer"]:
         do_computer_action(next_player["player_id"], data)
 
 
