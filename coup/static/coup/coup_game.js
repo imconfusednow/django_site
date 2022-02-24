@@ -211,6 +211,10 @@ function setOpponentDetails(players, hands)
         {
             document.querySelector("#opponent" + i + "-info").classList.add("on-turn");
         }
+        else
+        {
+            document.querySelector("#opponent" + i + "-info").classList.remove("on-turn");
+        }
     }
 }
 

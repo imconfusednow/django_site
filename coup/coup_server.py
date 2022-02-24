@@ -57,6 +57,7 @@ def do_action(sid, data):
 
 
 def do_computer_action(sid, data):
+    sleep(1)
     players, player = c.get_players(sid)
     allow_challenge = False if data == "take-1" else True
     send_action(players, sid, allow_challenge, data, player)
