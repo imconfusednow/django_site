@@ -70,7 +70,7 @@ def pick_starter(sid):
                   1, picked["id"]])
 
     players = run_query(where, params)
-    return players
+    return players, picked
 
 def do_action(sid, action_type):
     if action_type == "take-1":

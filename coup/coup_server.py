@@ -28,10 +28,12 @@ def join_game(sid, data):
 
 @sio.event
 def start_game(sid):
-    players = c.pick_starter(sid)
+    players, player = c.pick_starter(sid)
     c.deal(players)    
     send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
+    if player["computer"]:
+        do_computer_action(player["player_id"], "take-1")
 
 
 @sio.event
@@ -85,7 +87,7 @@ def send_info(players, sid, only_one, method):
 
 def send_action(players, sid, allow_challenge, action_type, player):    
     for i in players:
-        if (not i['computer']):
+        if (not i['computer'] and not i["player_id"] == sid):
             sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": action_type, "player": player["name"]},  to=i["player_id"])
     if allow_challenge:
         sio.sleep(5)
