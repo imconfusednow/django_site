@@ -84,6 +84,17 @@
         </div>
         <div class="grid-item "></div>
     </div>
+
+
+  <!-- Modal content -->
+  <div id="action-overlay">
+      <div id="action-modal">    
+        <p id="action-modal-text"></p>
+        <button id="action-modal-btn" class="btn btn-primary"></button>
+      </div>
+  </div>
+
+
     {% if player_in_started_game %}
         <script defer>sendRejoin()</script>
     {% endif %}

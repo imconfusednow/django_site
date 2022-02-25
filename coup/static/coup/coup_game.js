@@ -50,7 +50,14 @@ socket.on('rejoin_game', (data) => {
 
 socket.on('report_action', (data) => {
     console.log(data);
-    alert(data.player + " did action " + data.action_type);
+    let modal = document.querySelector("#action-overlay");
+    modal.style.display = "block";
+    let modal_text = document.querySelector("#action-modal-text");
+    modal_text.innerText = data.player + " did action " + data.action_type;
+    let modal_btn = document.querySelector("#action-modal-btn");
+    modal_btn.innerText = "Cannot Challenge";
+    modal_btn.classList.add("button-inactive");
+    setTimeout(function() { modal.style.display = "none" }, 5000);
 });
 
 function sendStart()

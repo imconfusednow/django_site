@@ -2,7 +2,7 @@
 import eventlet
 import socketio
 import coup_server_functs as c
-from time import sleep
+import random
 
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
@@ -57,7 +57,7 @@ def do_action(sid, data):
 
 
 def do_computer_action(sid, data):
-    sleep(1)
+    sio.sleep(random.randint(2, 5))
     players, player = c.get_players(sid)
     allow_challenge = False if data == "take-1" else True
     send_action(players, sid, allow_challenge, data, player)
@@ -88,7 +88,7 @@ def send_action(players, sid, allow_challenge, action_type, player):
         if (not i['computer']):
             sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": action_type, "player": player["name"]},  to=i["player_id"])
     if allow_challenge:
-        sleep(5)
+        sio.sleep(5)
             
 
 
