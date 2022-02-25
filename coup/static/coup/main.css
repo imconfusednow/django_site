@@ -279,7 +279,6 @@ body {
 
 #action-modal {
   text-align: center;
-  border-style: groove;
   background: blueviolet;
   color: white;
   position: fixed;
@@ -300,4 +299,15 @@ body {
   position: fixed;
   top: 0;
   display: none;
+}
+
+#action-modal-text {
+  font-size: larger;
+  margin-top: 10px;
+}
+
+
+#action-modal-btn {
+  border-radius: 5px;
+  margin-bottom: 5px;  
 }

@@ -56,7 +56,7 @@ socket.on('report_action', (data) => {
     modal_text.innerText = data.player + " did action " + data.action_type;
     let modal_btn = document.querySelector("#action-modal-btn");
     modal_btn.innerText = "Cannot Challenge";
-    modal_btn.classList.add("button-inactive");
+    modal_btn.disabled = true;
     setTimeout(function() { modal.style.display = "none" }, 5000);
 });
 

@@ -57,7 +57,7 @@ def do_action(sid, data):
 
 
 def do_computer_action(sid, data):
-    sio.sleep(random.randint(2, 5))
+    sio.sleep(random.randint(6, 8))
     players, player = c.get_players(sid)
     allow_challenge = False if data == "take-1" else True
     send_action(players, sid, allow_challenge, data, player)
