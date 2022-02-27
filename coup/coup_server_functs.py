@@ -2,6 +2,7 @@
 import sqlite3
 import random
 import string
+import datetime
 
 con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
 names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia", "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
@@ -110,6 +111,7 @@ def get_random_string(length):
 
 def run_statement(query, params):
     try:
+        log(query + str(params))
         con.execute(query, params)
         con.commit()
     except Exception as e:
@@ -119,6 +121,7 @@ def run_statement(query, params):
 def run_query(query, params):
     return_value = []
     try:
+        log(query + str(params))
         con.row_factory = sqlite3.Row
         rows = list(con.execute(query, params).fetchall())
         for r in rows:
@@ -127,3 +130,10 @@ def run_query(query, params):
         print(e)
 
     return return_value
+
+
+def log(msg):
+    file = open("/home/imconfusednow/log.log", "w")
+    time = str(datetime.datetime.now())
+    file.write(f"[{time}] - {msg} \n")
+    file.close()
