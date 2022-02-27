@@ -7,6 +7,13 @@ import random
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
+actions = 
+{
+    "take-1": {"name": "Take 1 Coin", "challenge": False}
+    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True},
+    
+}
+
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
@@ -55,20 +62,21 @@ def do_action(sid, data):
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
-        do_computer_action(next_player["player_id"], data)
+        do_computer_action(next_player["player_id"])
 
 
-def do_computer_action(sid, data):
+def do_computer_action(sid):
+    data = random.choice(list(actions.keys()))
     sio.sleep(random.randint(6, 8))
     players, player = c.get_players(sid)
-    allow_challenge = False if data == "take-1" else True
+    allow_challenge = actions[data]["challenge"]
     send_action(players, sid, allow_challenge, data, player)
     c.check_action_success(sid)
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
-        do_computer_action(next_player["player_id"], data)
+        do_computer_action(next_player["player_id"])
 
 
 def send_info(players, sid, only_one, method):
@@ -88,7 +96,7 @@ def send_info(players, sid, only_one, method):
 def send_action(players, sid, allow_challenge, action_type, player):    
     for i in players:
         if (not i['computer'] and not i["player_id"] == sid):
-            sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": action_type, "player": player["name"]},  to=i["player_id"])
+            sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
     if allow_challenge:
         sio.sleep(5)
             

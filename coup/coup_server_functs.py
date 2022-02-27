@@ -7,6 +7,7 @@ import datetime
 con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
 names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia", "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
 
+
 def set_player_nick(player_id, sid, name):
     run_statement("UPDATE coup_players SET name = ?, player_id = ? WHERE id = ?", [
                   name, sid, player_id])
@@ -76,6 +77,8 @@ def pick_starter(sid):
 def do_action(sid, action_type):
     if action_type == "take-1":
         take_one(sid)
+    elif action_type == "take-3":
+        take_three(sid)
     next_player = next_turn(sid)
     return next_player
 
@@ -103,6 +106,8 @@ def next_turn(sid):
 def take_one(sid):
     run_statement("UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
 
+def take_three(sid):
+    run_statement("UPDATE coup_players SET coins = coins + 3 WHERE player_id == ?", [sid])
 
 def get_random_string(length):
     letters = string.ascii_lowercase
@@ -132,8 +137,9 @@ def run_query(query, params):
     return return_value
 
 
-def log(msg):
-    file = open("/home/imconfusednow/log.log", "w")
+def log(msg, wipe=False):
+    write_type = "w" if wipe else "a"
+    file = open("/home/imconfusednow/log.log", write_type)
     time = str(datetime.datetime.now())
     file.write(f"[{time}] - {msg} \n")
     file.close()

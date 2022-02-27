@@ -3,6 +3,7 @@ import random
 
 
 def add_game(name, player_id):
+    log(f"Adding game {name}", True)
     existing = games.objects.filter(name=name)
     if existing.exists():
         return {"error": f"Room already exists, click join to join: {name}"}
@@ -62,3 +63,11 @@ def add_deck(game):
     for c in cards:
         deck = decks(game_id=game, card_type=c)
         deck.save()
+
+
+def log(msg, wipe=False):
+    write_type = "w" if wipe else "a"
+    file = open("/home/imconfusednow/log.log", write_type)
+    time = str(datetime.datetime.now())
+    file.write(f"[{time}] - {msg} \n")
+    file.close()
