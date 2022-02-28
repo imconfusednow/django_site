@@ -55,9 +55,18 @@ socket.on('report_action', (data) => {
     let modal_text = document.querySelector("#action-modal-text");
     modal_text.innerText = data.player + " did action " + data.action_type;
     let modal_btn = document.querySelector("#action-modal-btn");
-    modal_btn.innerText = "Cannot Challenge";
-    modal_btn.disabled = true;
+    if (data.allow_challenge)
+    {        
+        modal_btn.innerText = "Challenge!";
+        modal_btn.disabled = false;
+    }
+    else
+    {
+        modal_btn.innerText = "Cannot Challenge";
+        modal_btn.disabled = true;
+    }
     setTimeout(function() { modal.style.display = "none" }, 5000);
+
 });
 
 function sendStart()

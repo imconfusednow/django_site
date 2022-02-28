@@ -7,16 +7,16 @@ import random
 sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
-actions = 
-{
-    "take-1": {"name": "Take 1 Coin", "challenge": False}
+actions = {
+    "take-1": {"name": "Take 1 Coin", "challenge": False},
     "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True},
-    
 }
+
 
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
+
 
 @sio.event
 def disconnect(sid):
@@ -29,18 +29,18 @@ def join_game(sid, data):
     room = c.sid_to_room(sid)
     players, player = c.get_players(sid)
     sio.enter_room(sid, room)
-    send_info(players, sid, False, "join_game")   
+    send_info(players, sid, False, "join_game")
     print(f"Player {sid} entered room {room}")
 
 
 @sio.event
 def start_game(sid):
     players, player = c.pick_starter(sid)
-    c.deal(players)    
+    c.deal(players)
     send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
     if player["computer"]:
-        do_computer_action(player["player_id"], "take-1")
+        do_computer_action(player["player_id"])
 
 
 @sio.event
@@ -48,9 +48,10 @@ def rejoin_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
     players, player = c.get_players(sid)
-    sio.enter_room(sid, room)    
-    send_info(players, sid, True, "rejoin_game")   
+    sio.enter_room(sid, room)
+    send_info(players, sid, True, "rejoin_game")
     print(f"Player {sid} entered room {room}")
+
 
 @sio.event
 def do_action(sid, data):
@@ -93,13 +94,13 @@ def send_info(players, sid, only_one, method):
         no_cards.append(no_cards.pop(0))
 
 
-def send_action(players, sid, allow_challenge, action_type, player):    
+def send_action(players, sid, allow_challenge, action_type, player):
     for i in players:
         if (not i['computer'] and not i["player_id"] == sid):
-            sio.emit("report_action", {"allow_challenge": allow_challenge, "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
+            sio.emit("report_action", {"allow_challenge": allow_challenge,
+                                       "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
     if allow_challenge:
         sio.sleep(5)
-            
 
 
 if __name__ == '__main__':
