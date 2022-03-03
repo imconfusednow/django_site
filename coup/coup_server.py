@@ -74,7 +74,7 @@ def do_action(sid, data):
 
 def do_computer_action(sid):
     data = random.choice(list(actions.keys()))
-    sio.sleep(random.randint(6, 8))
+    sio.sleep(random.randint(1, 3))
     players, player = c.get_players(sid)
     allow_challenge = actions[data]["challenge"]
     send_action(players, sid, allow_challenge, data, player)
@@ -106,7 +106,7 @@ def send_action(players, sid, allow_challenge, action_type, player):
             sio.emit("report_action", {"allow_challenge": allow_challenge,
                                        "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
     if allow_challenge:
-        sio.sleep(5)
+        sio.sleep(8)
 
 
 if __name__ == '__main__':

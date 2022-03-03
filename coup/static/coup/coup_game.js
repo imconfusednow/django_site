@@ -60,7 +60,7 @@ socket.on('report_action', (data) => {
     {
         buttons.push({"text":"Block"});
     }
-    showModal(5000, text, buttons);
+    showModal(text, buttons, 8000);
 
 });
 
@@ -73,10 +73,11 @@ function showModal(text, buttons, visible_time)
     let modal_btn_div = document.querySelector("#action-modal-btn-div");
     modal_btn_div.innerText = "";
 
-    buttons.foreach((element) =>{
+    buttons.forEach((element) =>{
         let button = document.createElement('button');
         modal_btn_div.appendChild(button);
         button.innerText = element.text;
+        button.classList.add("action-modal-btn");
     });
     setTimeout(function() { modal.style.display = "none" }, visible_time);
 }
