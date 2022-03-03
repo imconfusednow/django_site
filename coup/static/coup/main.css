@@ -283,10 +283,10 @@ body {
   color: white;
   position: fixed;
   top: 50%;
-  left: 37.5%;
-  width: 25%;
-  border-radius: 5px;
-  border-style: outset;
+  left: 35%;
+  width: 30%;
+  border-radius: 15px;
+  border-style: outset;  
 }
 
 
@@ -307,7 +307,21 @@ body {
 }
 
 
-#action-modal-btn {
-  border-radius: 5px;
-  margin-bottom: 5px;  
+.action-modal-btn {
+    min-width: 270px;
+    color: black;
+    background-color: #0dfd1b;
+    box-shadow: none;
+    border: none;
+    display: block;
+    border-radius: 5px;
+    font-size: x-large;
+    margin-bottom: 10px;
 }
+
+#action-modal-btn-div
+{
+    justify-content: center;
+    display: flex;
+}
+

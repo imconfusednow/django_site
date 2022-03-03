@@ -50,24 +50,36 @@ socket.on('rejoin_game', (data) => {
 
 socket.on('report_action', (data) => {
     console.log(data);
+    let text = data.player + " did action " + data.action_type;
+    let buttons = [];
+    if (data.allow_challenge)
+    {
+        buttons.push({"text":"Challenge"});
+    }
+    if (data.allow_block)
+    {
+        buttons.push({"text":"Block"});
+    }
+    showModal(5000, text, buttons);
+
+});
+
+function showModal(text, buttons, visible_time)
+{
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "block";
     let modal_text = document.querySelector("#action-modal-text");
-    modal_text.innerText = data.player + " did action " + data.action_type;
-    let modal_btn = document.querySelector("#action-modal-btn");
-    if (data.allow_challenge)
-    {        
-        modal_btn.innerText = "Challenge!";
-        modal_btn.disabled = false;
-    }
-    else
-    {
-        modal_btn.innerText = "Cannot Challenge";
-        modal_btn.disabled = true;
-    }
-    setTimeout(function() { modal.style.display = "none" }, 5000);
+    modal_text.innerText = text;
+    let modal_btn_div = document.querySelector("#action-modal-btn-div");
+    modal_btn_div.innerText = "";
 
-});
+    buttons.foreach((element) =>{
+        let button = document.createElement('button');
+        modal_btn_div.appendChild(button);
+        button.innerText = element.text;
+    });
+    setTimeout(function() { modal.style.display = "none" }, visible_time);
+}
 
 function sendStart()
 {
@@ -179,7 +191,7 @@ function setPlayerDetails(player, hand)
                     {
                         return;
                     }
-                if (cardTypes[cards[0]].actions[element.id] || cardTypes[cards[1]].actions[element.id] || defaultActions[element.id])
+                if (cardTypes[cards[0]].actions[element.id] || (cards[1] && cardTypes[cards[1]].actions[element.id]) || defaultActions[element.id])
                 {
                     element.classList.remove("option-button-lie");
                     element.classList.add("option-button-true");
