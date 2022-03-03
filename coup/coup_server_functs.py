@@ -5,7 +5,8 @@ import string
 import datetime
 
 con = sqlite3.connect('/home/imconfusednow/cv_project/db.sqlite3')
-names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia", "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
+names = ["David", "John", "Michael", "Jane", "Emily", "Mohammed", "Mary", "Shopie", "Olivia",
+         "Ivy", "Rosie", "Isobel", "Charles", "Sadiq", "Noah", "George", "Alex", "Tim", "Isla"]
 
 
 def set_player_nick(player_id, sid, name):
@@ -63,7 +64,8 @@ def pick_starter(sid):
     players = run_query(where, params)
     for i in range(4 - len(players)):
         player_id = get_random_string(8)
-        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id) VALUES(?,?,?,?,?,?,?)", [room, 1, 0, '', 0, 'AI ' + random.choice(names), player_id])
+        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id) VALUES(?,?,?,?,?,?,?)", [
+                      room, 1, 0, '', 0, 'AI ' + random.choice(names), player_id])
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
@@ -74,11 +76,22 @@ def pick_starter(sid):
     players = run_query(where, params)
     return players, picked
 
+
 def do_action(sid, action_type):
-    if action_type == "take-1":
-        take_one(sid)
-    elif action_type == "take-3":
-        take_three(sid)
+    match action_type:
+        case "take-1":
+            take_one(sid)
+        case "foreign-aid":
+            foreign_aid(sid)
+        case "take-3":
+            take_three(sid)
+        case "assassinate":
+            assassinate(sid)
+        case "swap":
+            swap_cards(sid)
+        case "steal":
+            steal(sid, sid)
+
     next_player = next_turn(sid)
     return next_player
 
@@ -89,7 +102,8 @@ def check_action_success(sid):
 
 def next_turn(sid):
     room = sid_to_room(sid)
-    players = run_query("SELECT * FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ?", [room])
+    players = run_query(
+        "SELECT * FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ?", [room])
     curr_player = next_player = 0
     for i, p in enumerate(players):
         if p["player_id"] == sid:
@@ -99,20 +113,49 @@ def next_turn(sid):
         next_player = curr_player + 1
     else:
         next_player = 0
-    run_statement("UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
-    run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [players[next_player]["id"]])
+    run_statement(
+        "UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
+    run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [
+                  players[next_player]["id"]])
     return players[next_player]
 
+
 def take_one(sid):
-    run_statement("UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
+    run_statement(
+        "UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
+
+
+def foreign_aid(sid):
+    run_statement(
+        "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid])
+
 
 def take_three(sid):
-    run_statement("UPDATE coup_players SET coins = coins + 3 WHERE player_id == ?", [sid])
+    run_statement(
+        "UPDATE coup_players SET coins = coins + 3 WHERE player_id == ?", [sid])
+
+
+def assassinate(sid):
+    run_statement(
+        "UPDATE coup_players SET hand = ? WHERE player_id == ?", ["am", sid])
+
+
+def swap_cards(sid):
+    pass
+
+
+def steal(sid1, sid2):
+    run_statement(
+        "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid1])
+    run_statement(
+        "UPDATE coup_players SET coins = coins - 2 WHERE player_id == ?", [sid2])
+
 
 def get_random_string(length):
     letters = string.ascii_lowercase
     result_str = ''.join(random.choice(letters) for i in range(length))
     return result_str
+
 
 def run_statement(query, params):
     try:
