@@ -78,19 +78,18 @@ def pick_starter(sid):
 
 
 def do_action(sid, action_type):
-    match action_type:
-        case "take-1":
-            take_one(sid)
-        case "foreign-aid":
-            foreign_aid(sid)
-        case "take-3":
-            take_three(sid)
-        case "assassinate":
-            assassinate(sid)
-        case "swap":
-            swap_cards(sid)
-        case "steal":
-            steal(sid, sid)
+    if action_type == "take-1":
+        take_one(sid)
+    elif action_type == "foreign-aid":
+        foreign_aid(sid)
+    elif action_type == "take-3":
+        take_three(sid)
+    elif action_type == "assassinate":
+        assassinate(sid)
+    elif action_type == "swap":
+        swap_cards(sid)
+    elif action_type == "steal":
+        steal(sid, sid)
 
     next_player = next_turn(sid)
     return next_player
