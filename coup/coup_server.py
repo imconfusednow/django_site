@@ -10,6 +10,12 @@ app = socketio.WSGIApp(sio)
 actions = {
     "take-1": {"name": "Take 1 Coin", "challenge": False},
     "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True},
+    "foreign-aid": {"name": "Foreign Aid", "challenge": True},
+    "steal": {"name": "Steal (Captain)", "challenge": True},
+    "assassinate": {"name": "Assassinate", "challenge": True},
+    "swap": {"name": "Swap Cards (Ambassador)", "challenge": True},
+    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True},
+
 }
 
 
