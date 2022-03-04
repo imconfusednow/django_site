@@ -310,13 +310,22 @@ body {
 .action-modal-btn {
     min-width: 270px;
     color: black;
-    background-color: #0dfd1b;
+    background-color: #69ffbe;
     box-shadow: none;
     border: none;
     display: block;
     border-radius: 5px;
     font-size: x-large;
     margin-bottom: 10px;
+    margin: auto;
+}
+
+.action-modal-btn-true {
+    background-color: #69ffbe;
+}
+
+.action-modal-btn-lie {
+    background-color: #f7584c;
 }
 
 #action-modal-btn-div
@@ -324,4 +333,5 @@ body {
     justify-content: center;
     display: flex;
 }
+
 

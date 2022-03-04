@@ -51,26 +51,29 @@ socket.on('rejoin_game', (data) => {
 socket.on('report_action', (data) => {
     console.log(data);
     let text = data.player + " performed action " + data.action_type;
-    let visible_time = 8000;
+    let visible_time = 2000;
+    let truth = "true";
+
     if (data.player === "You")
     {
         text = "Waiting for challenges";
-        visible_time = 2000;
     }
     let buttons = [];
     if (data.allow_challenge)
     {
         buttons.push({"text":"Challenge"});
+        visible_time = 8000;
     }
     if (data.allow_block)
     {
         buttons.push({"text":"Block"});
+        visible_time = 8000;
     }
-    showModal(text, buttons, visible_time);
+    showModal(text, buttons, visible_time, truth);
 
 });
 
-function showModal(text, buttons, visible_time)
+function showModal(text, buttons, visible_time, truth)
 {
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "block";
@@ -84,6 +87,8 @@ function showModal(text, buttons, visible_time)
         modal_btn_div.appendChild(button);
         button.innerText = element.text;
         button.classList.add("action-modal-btn");
+        button.classList.add("action-modal-" + truth);
+        button.classList.add("option-button");
     });
     setTimeout(function() { modal.style.display = "none" }, visible_time);
 }
