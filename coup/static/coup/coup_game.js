@@ -66,7 +66,7 @@ socket.on('report_action', (data) => {
     {
         buttons.push({"text":"Block"});
     }
-    showModal(text, buttons, );
+    showModal(text, buttons, visible_time);
 
 });
 
