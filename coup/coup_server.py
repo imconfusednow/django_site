@@ -105,6 +105,9 @@ def send_action(players, sid, allow_challenge, action_type, player):
         if (not i['computer'] and not i["player_id"] == sid):
             sio.emit("report_action", {"allow_challenge": allow_challenge,
                                        "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
+        elif i["player_id"] == sid:
+            sio.emit("report_action", {"allow_challenge": False,
+                                       "action_type": actions[action_type]["name"], "player": "You"},  to=i["player_id"])
     if allow_challenge:
         sio.sleep(8)
 

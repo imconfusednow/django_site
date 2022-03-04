@@ -50,7 +50,11 @@ socket.on('rejoin_game', (data) => {
 
 socket.on('report_action', (data) => {
     console.log(data);
-    let text = data.player + " did action " + data.action_type;
+    let text = data.player + " performed action " + data.action_type;
+    if (data.player === "You")
+    {
+        text = "Waiting for challenges";
+    }
     let buttons = [];
     if (data.allow_challenge)
     {
