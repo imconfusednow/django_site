@@ -104,7 +104,7 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
             sio.emit("report_action", {"allow_challenge": allow_challenge, "allow_block": allow_block, "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
         elif i["player_id"] == sid:
             sio.emit("report_action", {"action_type": actions[action_type]["name"], "player": "You"},  to=i["player_id"])
-    if allow_challenge:
+    if allow_challenge or allow_block:
         sio.sleep(8)
 
 
