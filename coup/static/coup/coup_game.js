@@ -51,9 +51,11 @@ socket.on('rejoin_game', (data) => {
 socket.on('report_action', (data) => {
     console.log(data);
     let text = data.player + " performed action " + data.action_type;
+    let visible_time = 8000;
     if (data.player === "You")
     {
         text = "Waiting for challenges";
+        visible_time = 2000;
     }
     let buttons = [];
     if (data.allow_challenge)
@@ -64,7 +66,7 @@ socket.on('report_action', (data) => {
     {
         buttons.push({"text":"Block"});
     }
-    showModal(text, buttons, 8000);
+    showModal(text, buttons, );
 
 });
 
@@ -172,19 +174,19 @@ function sendRejoin(event)
 
 function setPlayerDetails(player, hand)
 {
+    let cards = hand.split(",");
+    document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
+    if (cards[1])
+    {
+        document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
+    }
+    else
+    {
+        document.querySelector("#player-card-2").classList.add("hidden");
+    }
     if (player.turn)
     {
-        document.getElementById('player-info').classList.add("on-turn");
-        let cards = hand.split(",");
-        document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
-        if (cards[1])
-        {
-            document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
-        }
-        else
-        {
-            document.querySelector("#player-card-2").classList.add("hidden");
-        }
+        document.getElementById('player-info').classList.add("on-turn");        
         let options = document.querySelectorAll(".turn-options");
         let buttons =  document.querySelectorAll(".option-button");
         options.forEach(element => {
