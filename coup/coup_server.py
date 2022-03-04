@@ -8,12 +8,12 @@ sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
 actions = {
-    "take-1": {"name": "Take 1 Coin", "challenge": False, "allow_block": False},
-    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True, "allow_block": False},
-    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "allow_block": True},
-    "steal": {"name": "Steal (Captain)", "challenge": True, "allow_block": True},
-    "assassinate": {"name": "Assassinate", "challenge": True, "allow_block": True},
-    "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "allow_block": False},
+    "take-1": {"name": "Take 1 Coin", "challenge": False, "block": False},
+    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True, "block": False},
+    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "block": True},
+    "steal": {"name": "Steal (Captain)", "challenge": True, "block": True},
+    "assassinate": {"name": "Assassinate", "challenge": True, "block": True},
+    "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "block": False},
 }
 
 
@@ -60,8 +60,8 @@ def rejoin_game(sid, data):
 @sio.event
 def do_action(sid, data):
     players, player = c.get_players(sid)
-    allow_challenge = False if data == "take-1" else True
-    send_action(players, sid, allow_challenge, data, player)
+    allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
+    send_action(players, sid, allow_challenge, allow_block, data, player)
     c.check_action_success(sid)
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
@@ -74,8 +74,8 @@ def do_computer_action(sid):
     data = random.choice(list(actions.keys()))
     sio.sleep(random.randint(1, 3))
     players, player = c.get_players(sid)
-    allow_challenge = actions[data]["challenge"]
-    send_action(players, sid, allow_challenge, data, player)
+    allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
+    send_action(players, sid, allow_challenge, allow_block, data, player)
     c.check_action_success(sid)
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
@@ -98,14 +98,12 @@ def send_info(players, sid, only_one, method):
         no_cards.append(no_cards.pop(0))
 
 
-def send_action(players, sid, allow_challenge, action_type, player):
+def send_action(players, sid, allow_challenge, allow_block, action_type, player):
     for i in players:
         if (not i['computer'] and not i["player_id"] == sid):
-            sio.emit("report_action", {"allow_challenge": allow_challenge,
-                                       "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
+            sio.emit("report_action", {"allow_challenge": allow_challenge, "allow_block": allow_block, "action_type": actions[action_type]["name"], "player": player["name"]},  to=i["player_id"])
         elif i["player_id"] == sid:
-            sio.emit("report_action", {"allow_challenge": False,
-                                       "action_type": actions[action_type]["name"], "player": "You"},  to=i["player_id"])
+            sio.emit("report_action", {"action_type": actions[action_type]["name"], "player": "You"},  to=i["player_id"])
     if allow_challenge:
         sio.sleep(8)
 
