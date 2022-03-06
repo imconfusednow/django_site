@@ -87,7 +87,7 @@ function showModal(text, buttons, visible_time, truth)
         modal_btn_div.appendChild(button);
         button.innerText = element.text;
         button.classList.add("action-modal-btn");
-        button.classList.add("action-modal-" + truth);
+        button.classList.add("action-modal-btn-" + truth);
         button.classList.add("option-button");
     });
     setTimeout(function() { modal.style.display = "none" }, visible_time);

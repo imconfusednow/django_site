@@ -8,6 +8,8 @@ class players(models.Model):
     computer = models.BooleanField(default=False)
     coins = models.IntegerField(default=0)
     hand = models.CharField(max_length=50, default="")
+    challenged_by = models.CharField(max_length=50, default="")
+    blocked_by = models.CharField(max_length=50, default="")
 
 class games(models.Model):
     name = models.CharField(max_length=50, default="")

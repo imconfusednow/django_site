@@ -94,10 +94,16 @@ def do_action(sid, action_type):
     next_player = next_turn(sid)
     return next_player
 
+def challenge(sid):
+    room = sid_to_room(sid)
+    run_statement("UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
 
-def check_action_success(sid):
-    pass
+def check_challenged(sid, action_type):
+    cnb = run_query("SELECT challenged_by, blocked_by, hand FROM coup_players WHERE player_id = ?", [sid])
+    hand = cnb["hand"].split(",")
 
+    has_card = True if action_type in hand else False
+    return cnb, has_card
 
 def next_turn(sid):
     room = sid_to_room(sid)
@@ -113,7 +119,7 @@ def next_turn(sid):
     else:
         next_player = 0
     run_statement(
-        "UPDATE coup_players SET turn = 0 WHERE player_id == ?", [sid])
+        "UPDATE coup_players SET turn = 0, challenged_by = "", blocked_by = "" WHERE player_id == ?", [sid])
     run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [
                   players[next_player]["id"]])
     return players[next_player]

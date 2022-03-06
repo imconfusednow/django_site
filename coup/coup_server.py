@@ -62,12 +62,17 @@ def do_action(sid, data):
     players, player = c.get_players(sid)
     allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
     send_action(players, sid, allow_challenge, allow_block, data, player)
-    c.check_action_success(sid)
+    cnb = c.check_action_success(sid)
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
         do_computer_action(next_player["player_id"])
+
+@sio.event
+def challenge(sid):
+    c.challenge(sid)
+    
 
 
 def do_computer_action(sid):
@@ -76,7 +81,9 @@ def do_computer_action(sid):
     players, player = c.get_players(sid)
     allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
     send_action(players, sid, allow_challenge, allow_block, data, player)
-    c.check_action_success(sid)
+    challenged, blocked, has_card = c.check_challenged(sid)
+    if challenged:
+        send_challenge(players, sid, challenged, has_card)
     next_player = c.do_action(sid, data)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
@@ -108,6 +115,14 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
         sio.sleep(8)
     else:
         sio.sleep(2)
+
+
+def send_challenge(players, sid, player, has_card):
+    for i in players:
+        if (not i['computer'] and not i["player_id"] == sid):
+            sio.emit("report_challenge", {"player": player["name"]}, "success": has_card,  to=i["player_id"])
+        elif i["player_id"] == sid:
+            sio.emit("report_challenge", {"player": "You", "success": has_card},  to=i["player_id"])
 
 
 if __name__ == '__main__':
