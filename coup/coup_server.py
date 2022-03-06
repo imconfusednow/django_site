@@ -120,7 +120,7 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
 def send_challenge(players, sid, player, has_card):
     for i in players:
         if (not i['computer'] and not i["player_id"] == sid):
-            sio.emit("report_challenge", {"player": player["name"]}, "success": has_card,  to=i["player_id"])
+            sio.emit("report_challenge", {"player": player["name"], "success": has_card},  to=i["player_id"])
         elif i["player_id"] == sid:
             sio.emit("report_challenge", {"player": "You", "success": has_card},  to=i["player_id"])
 
