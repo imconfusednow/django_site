@@ -62,7 +62,7 @@ def do_action(sid, data):
     players, player = c.get_players(sid)
     allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
     send_action(players, sid, allow_challenge, allow_block, data, player)
-    challenged, blocked, has_card = c.check_challenged(sid)
+    challenged, blocked, has_card = c.check_challenged(sid, data)
     if challenged:
         send_challenge(players, sid, challenged, has_card, data)
     next_player = c.do_action(sid, data)
@@ -83,7 +83,7 @@ def do_computer_action(sid):
     players, player = c.get_players(sid)
     allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
     send_action(players, sid, allow_challenge, allow_block, data, player)
-    challenged, blocked, has_card = c.check_challenged(sid)
+    challenged, blocked, has_card = c.check_challenged(sid, data)
     if challenged:
         send_challenge(players, sid, challenged, has_card, data)
     next_player = c.do_action(sid, data)

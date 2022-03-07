@@ -99,7 +99,7 @@ def challenge(sid):
     run_statement("UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
 
 def check_challenged(sid, action_type):
-    cnb = run_query("SELECT challenged_by, blocked_by, hand FROM coup_players WHERE player_id = ?", [sid])
+    cnb = run_query("SELECT challenged_by, blocked_by, hand FROM coup_players WHERE player_id = ?", [sid], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
@@ -171,7 +171,7 @@ def run_statement(query, params):
         print(e)
 
 
-def run_query(query, params):
+def run_query(query, params, only_one=False):
     return_value = []
     try:
         log(query + str(params))
@@ -179,6 +179,8 @@ def run_query(query, params):
         rows = list(con.execute(query, params).fetchall())
         for r in rows:
             return_value.append(dict(r))
+        if only_one:
+            return_value = return_value[0]
     except Exception as e:
         print(e)
 
