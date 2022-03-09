@@ -103,7 +103,7 @@ def check_challenged(sid, action_type):
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
-    return cnb, has_card
+    return cnb + has_card
 
 def next_turn(sid):
     room = sid_to_room(sid)
@@ -119,8 +119,9 @@ def next_turn(sid):
     else:
         next_player = 0
     run_statement(
-        "UPDATE coup_players SET turn = 0, challenged_by = "", blocked_by = "" WHERE player_id == ?", [sid])
+        "UPDATE coup_players SET turn = 0, challenged_by = '', blocked_by = '' WHERE player_id == ?", [sid])
     run_statement("UPDATE coup_players SET turn = 1 WHERE id == ?", [
+
                   players[next_player]["id"]])
     return players[next_player]
 
