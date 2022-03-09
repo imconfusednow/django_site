@@ -61,7 +61,7 @@ socket.on('report_action', (data) => {
     let buttons = [];
     if (data.allow_challenge)
     {
-        buttons.push({"text":"Challenge"});
+        buttons.push({"text":"Challenge", "function": challenge});
         visible_time = 8000;
     }
     if (data.allow_block)
@@ -89,6 +89,7 @@ function showModal(text, buttons, visible_time, truth)
         button.classList.add("action-modal-btn");
         button.classList.add("action-modal-btn-" + truth);
         button.classList.add("option-button");
+        button.addEventListener("click", element.function);
     });
     setTimeout(function() { modal.style.display = "none" }, visible_time);
 }
@@ -96,6 +97,11 @@ function showModal(text, buttons, visible_time, truth)
 function sendStart()
 {
     socket.emit('start_game');
+}
+
+function sendChallenge()
+{
+    socket.emit("challenge");
 }
 
 function joinGame()
