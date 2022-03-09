@@ -103,7 +103,7 @@ def check_challenged(sid, action_type):
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
-    return cnb + has_card
+    return cnb["chllenged_by"], cnb["blocked_by"] has_card
 
 def next_turn(sid):
     room = sid_to_room(sid)
