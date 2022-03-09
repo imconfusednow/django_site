@@ -77,19 +77,20 @@ def pick_starter(sid):
     return players, picked
 
 
-def do_action(sid, action_type):
-    if action_type == "take-1":
-        take_one(sid)
-    elif action_type == "foreign-aid":
-        foreign_aid(sid)
-    elif action_type == "take-3":
-        take_three(sid)
-    elif action_type == "assassinate":
-        assassinate(sid)
-    elif action_type == "swap":
-        swap_cards(sid)
-    elif action_type == "steal":
-        steal(sid, sid)
+def do_action(sid, action_type, blocked):
+    if not blocked:
+        if action_type == "take-1":
+            take_one(sid)
+        elif action_type == "foreign-aid":
+            foreign_aid(sid)
+        elif action_type == "take-3":
+            take_three(sid)
+        elif action_type == "assassinate":
+            assassinate(sid)
+        elif action_type == "swap":
+            swap_cards(sid)
+        elif action_type == "steal":
+            steal(sid, sid)
 
     next_player = next_turn(sid)
     return next_player

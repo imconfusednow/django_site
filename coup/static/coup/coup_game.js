@@ -61,7 +61,7 @@ socket.on('report_action', (data) => {
     let buttons = [];
     if (data.allow_challenge)
     {
-        buttons.push({"text":"Challenge", "function": challenge});
+        buttons.push({"text":"Challenge", "function": sendChallenge});
         visible_time = 8000;
     }
     if (data.allow_block)
