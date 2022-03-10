@@ -76,15 +76,14 @@ socket.on('report_action', (data) => {
 socket.on('report_challenge', (data) => {
     console.log(data);
     let text = data.player + " challenged action " + data.action_type;
-    let visible_time = 2000;
-    let truth = "true";
+    let visible_time = 3000;
 
     if (data.player === "You")
     {
         text = "You challenged";
     }
 
-    showModal(text, [], visible_time, truth);
+    showModal(text, [], visible_time, "");
 
 });
 

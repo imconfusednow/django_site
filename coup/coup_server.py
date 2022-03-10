@@ -125,6 +125,7 @@ def send_challenge(players, sid, player, has_card):
             sio.emit("report_challenge", {"player": player, "success": has_card},  to=i["player_id"])
         elif i["player_id"] == sid:
             sio.emit("report_challenge", {"player": "You", "success": has_card},  to=i["player_id"])
+    sio.sleep(10)
 
 
 if __name__ == '__main__':
