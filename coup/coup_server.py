@@ -8,12 +8,12 @@ sio = socketio.Server(cors_allowed_origins='*')
 app = socketio.WSGIApp(sio)
 
 actions = {
-    "take-1": {"name": "Take 1 Coin", "challenge": False, "block": False},
-    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True, "block": False},
-    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "block": True},
-    "steal": {"name": "Steal (Captain)", "challenge": True, "block": True},
-    "assassinate": {"name": "Assassinate", "challenge": True, "block": True},
-    "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "block": False},
+    "take-1": {"name": "Take 1 Coin", "challenge": False, "block": False, "code" : ""},
+    "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True, "block": False, "code" : "du"},
+    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "block": True, "code" : ""},
+    "steal": {"name": "Steal (Captain)", "challenge": True, "block": True, "code" : "ca"},
+    "assassinate": {"name": "Assassinate", "challenge": True, "block": True, "code" : "as"},
+    "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "block": False, "code" : "am"},
 }
 
 
@@ -112,9 +112,9 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
 def send_challenge(players, sid, player_id, has_card, challenger, action_type):
     for i in players:
         if (not i['computer'] and i["player_id"] != player_id):
-            sio.emit("report_challenge", {"player": challenger, "success": has_card, "action_type": action_type},  to=i["player_id"])
+            sio.emit("report_challenge", {"player": challenger, "success": has_card, "action_type": actions[action_type][code]},  to=i["player_id"])
         elif i["player_id"] == player_id:
-            sio.emit("report_challenge", {"player": "You", "success": has_card, "action_type": action_type },  to=i["player_id"])
+            sio.emit("report_challenge", {"player": "You", "success": has_card, "action_type": actions[action_type][code] },  to=i["player_id"])
     sio.sleep(10)
 
 

@@ -115,7 +115,12 @@ function flipCard(action_type)
     let cardFront = cardBack.cloneNode();
     cardFront.id = "animated-card-front";
     cardFront.src = "/static/coup/" + cardTypes[action_type].image;
+    cardFront.style.position = "absolute";
+    cardFront.style.transform = "rotateY(180deg)";
+    cardFront.style.backfaceVisibility = "hidden";    
     cardBack.parentElement.appendChild(cardFront);
+    cardFront.style.animation = "flip 2s ease 0s 1 normal forwards";
+    cardBack.style.animation = "flip 2s ease 0s 1 normal forwards";
 }
 
 function sendStart()

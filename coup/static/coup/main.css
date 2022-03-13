@@ -137,6 +137,7 @@ body {
 {
   margin:auto;
   max-width: 50px;
+  backface-visibility: hidden;
 }
 
 .opponent1-card
@@ -271,6 +272,10 @@ body {
     to {transform:rotate(var(--end-spin) );}
 }
 
+@keyframes flip {
+    from {transform:rotateY(180deg);}
+    to {transform:rotateY(0deg);}
+}
 
 .hidden
 {
@@ -335,3 +340,7 @@ body {
 }
 
 
+.flippable-card
+{
+  display: flex;
+}
