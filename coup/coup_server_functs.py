@@ -38,7 +38,7 @@ def sid_to_room(sid):
 def deal(players):
     for i, p in enumerate(players):
         p["hand"] = assign_cards(2, p["player_id"], p["game_id_id"])
-        run_statement("UPDATE coup_players SET sequence = ? WHERE player_id = ?", [i, player_id])
+        run_statement("UPDATE coup_players SET sequence = ? WHERE player_id = ?", [i, p["player_id"]])
     run_statement("UPDATE coup_games SET started = 1 WHERE id = ?", [
                   players[0]["game_id_id"]])
 
