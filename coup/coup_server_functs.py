@@ -101,10 +101,12 @@ def challenge(sid):
 
 def check_challenged(sid, action_type):
     cnb = run_query("SELECT challenged_by, blocked_by, hand FROM coup_players WHERE player_id = ?", [sid], True)
+    if cnb["challenged_by"]:        
+        challenger = run_query("SELECT name FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
-    return cnb["challenged_by"], cnb["blocked_by"], has_card
+    return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"]
 
 def next_turn(sid):
     room = sid_to_room(sid)

@@ -84,6 +84,7 @@ socket.on('report_challenge', (data) => {
     }
 
     showModal(text, [], visible_time, "");
+    flipCard(data.action_type);
 
 });
 
@@ -106,6 +107,15 @@ function showModal(text, buttons, visible_time, truth)
         button.addEventListener("click", element.function);
     });
     setTimeout(function() { modal.style.display = "none" }, visible_time);
+}
+
+function flipCard(action_type)
+{
+    let cardBack = document.querySelector("#opponent0-card-1");
+    let cardFront = cardBack.cloneNode();
+    cardFront.id = "animated-card-front";
+    cardFront.src = "/static/coup/" + cardTypes[action_type].image;
+    cardBack.parentElement.appendChild(cardFront);
 }
 
 function sendStart()
