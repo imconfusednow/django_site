@@ -215,14 +215,17 @@ function sendRejoin(event)
 function setPlayerDetails(player, hand)
 {
     let cards = hand.split(",");
-    document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
-    if (cards[1])
+    if (cards)
     {
-        document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
-    }
-    else
-    {
-        document.querySelector("#player-card-2").classList.add("hidden");
+        document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
+        if (cards[1])
+        {
+            document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
+        }
+        else
+        {
+            document.querySelector("#player-card-2").classList.add("hidden");
+        }
     }
     if (player.turn)
     {
