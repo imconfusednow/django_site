@@ -84,7 +84,7 @@ socket.on('report_challenge', (data) => {
     }
 
     showModal(text, [], visible_time, "");
-    flipCard(data.action_type);
+    setTimeout(function() {flipCard(data.action_type); }, visible_time);
 
 });
 
@@ -106,7 +106,7 @@ function showModal(text, buttons, visible_time, truth)
         button.classList.add("option-button");
         button.addEventListener("click", element.function);
     });
-    setTimeout(function() { modal.style.display = "none" }, visible_time);
+    setTimeout(function() { modal.style.display = "none"; }, visible_time);
 }
 
 function flipCard(action_type)
@@ -119,8 +119,8 @@ function flipCard(action_type)
     cardFront.style.transform = "rotateY(180deg)";
     cardFront.style.backfaceVisibility = "hidden";    
     cardBack.parentElement.appendChild(cardFront);
-    cardFront.style.animation = "flip 2s ease 0s 1 normal forwards";
-    cardBack.style.animation = "flip 2s ease 0s 1 normal forwards";
+    cardFront.style.animation = "flip_to_front 2s ease 0s 1 normal forwards";
+    cardBack.style.animation = "flip_to_back 2s ease 0s 1 normal forwards";
 }
 
 function sendStart()

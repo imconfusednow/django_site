@@ -272,7 +272,12 @@ body {
     to {transform:rotate(var(--end-spin) );}
 }
 
-@keyframes flip {
+@keyframes flip_to_back {
+    from {transform:rotateY(0deg);}
+    to {transform:rotateY(180deg);}
+}
+
+@keyframes flip_to_front {
     from {transform:rotateY(180deg);}
     to {transform:rotateY(0deg);}
 }
