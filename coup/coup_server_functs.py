@@ -74,8 +74,8 @@ def pick_starter(sid):
     players = run_query(where, params)
     for i in range(4 - len(players)):
         player_id = get_random_string(8)
-        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id) VALUES(?,?,?,?,?,?,?)", [
-                      room, 1, 0, '', 0, 'AI ' + random.choice(names), player_id])
+        run_statement("INSERT INTO coup_players (game_id_id, computer, coins, hand, turn, name, player_id,challenged_by, blocked_by,) VALUES(?,?,?,?,?,?,?,?,?)", [
+                      room, 1, 0, '', 0, 'AI ' + random.choice(names), player_id, '', ''])
     players = run_query(where, params)
     picked = random.choice(players)
     run_statement("UPDATE coup_players SET turn = ? WHERE id != ?", [
