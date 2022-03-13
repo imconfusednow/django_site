@@ -44,7 +44,7 @@ def start_game(sid):
     send_info(players, sid, False, "start_game")
     print(f"Game {players[0]['game_id_id']} started by {sio}")
     if player["computer"]:
-        next_action(player["player_id"], True)
+        next_action(player["player_id"], "", True)
 
 
 @sio.event

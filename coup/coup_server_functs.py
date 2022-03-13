@@ -110,10 +110,10 @@ def challenge(sid):
     run_statement("UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
 
 def check_challenged(sid, action_type):
-    cnb = run_query("SELECT challenged_by, blocked_by, hand, game_id_id FROM coup_players WHERE player_id = ?", [sid], True)
+    cnb = run_query("SELECT challenged_by, blocked_by, hand, game_id_id, sequence FROM coup_players WHERE player_id = ?", [sid], True)
     challenger = {"name": ""}
     if cnb["challenged_by"]:        
-        challenger = run_query("SELECT name FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
+        challenger = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
