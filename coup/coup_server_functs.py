@@ -42,19 +42,29 @@ def deal(players):
                   players[0]["game_id_id"]])
 
 
+
 def assign_cards(num, player_id, game_id):
     cards = run_query(
         "SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [game_id, num])
-    types = f"{cards[0]['card_type']},{cards[1]['card_type']}"
-    run_statement("UPDATE coup_players SET hand = ? WHERE player_id = ?", [
+    types = ""
+    for i in range(num):
+        types += f"{cards[i]['card_type']},"
+    run_statement("UPDATE coup_players SET hand = hand || ? WHERE player_id = ?", [
                   types, player_id])
     run_statement(
         "DELETE FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [game_id, num])
     return types
 
 
-def discard_cards(num, player):
-    pass
+def discard_card(player_id, game_id):
+    cards = run_query(
+        "SELECT hand FROM coup_players WHERE game_id_id = ? ORDER BY id DESC LIMIT ?", [game_id, 1], True)
+    types = cards["hand"].split(",")
+    types = types.pop()
+    run_statement("UPDATE coup_players SET hand = ? || ',' WHERE player_id = ?", [
+                  types, player_id])
+    run_statement("INSERT INTO coup_decks (game_id_id, card_type)", [game_id, types])
+
 
 
 def pick_starter(sid):
@@ -100,14 +110,19 @@ def challenge(sid):
     run_statement("UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
 
 def check_challenged(sid, action_type):
-    cnb = run_query("SELECT challenged_by, blocked_by, hand FROM coup_players WHERE player_id = ?", [sid], True)
+    cnb = run_query("SELECT challenged_by, blocked_by, hand, game_id_id FROM coup_players WHERE player_id = ?", [sid], True)
     challenger = {"name": ""}
     if cnb["challenged_by"]:        
         challenger = run_query("SELECT name FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
-    return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"]
+    loser = cnb["challenged_by"] if has_card else sid
+
+    discard_card(loser, cnb["game_id_id"])
+
+
+    return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"], 0, 1
 
 def next_turn(sid):
     room = sid_to_room(sid)
@@ -147,7 +162,7 @@ def take_three(sid):
 
 def assassinate(sid):
     run_statement(
-        "UPDATE coup_players SET hand = ? WHERE player_id == ?", ["am", sid])
+        "UPDATE coup_players SET hand = ? WHERE player_id == ?", ["am,", sid])
 
 
 def swap_cards(sid):

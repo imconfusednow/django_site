@@ -10,6 +10,7 @@ class players(models.Model):
     hand = models.CharField(max_length=50, default="")
     challenged_by = models.CharField(max_length=50, default="")
     blocked_by = models.CharField(max_length=50, default="")
+    sequence = models.IntegerField(default=0)
 
 class games(models.Model):
     name = models.CharField(max_length=50, default="")

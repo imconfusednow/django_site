@@ -84,7 +84,7 @@ socket.on('report_challenge', (data) => {
     }
 
     showModal(text, [], visible_time, "");
-    setTimeout(function() {flipCard(data.action_type); }, visible_time);
+    setTimeout(function() {flipCard(data); }, visible_time);
 
 });
 
@@ -109,12 +109,12 @@ function showModal(text, buttons, visible_time, truth)
     setTimeout(function() { modal.style.display = "none"; }, visible_time);
 }
 
-function flipCard(action_type)
+function flipCard(data)
 {
-    let cardBack = document.querySelector("#opponent0-card-1");
+    let cardBack = document.querySelector("#opponent" + data.player_num + "-card-" + data.card_num);
     let cardFront = cardBack.cloneNode();
     cardFront.id = "animated-card-front";
-    cardFront.src = "/static/coup/" + cardTypes[action_type].image;
+    cardFront.src = "/static/coup/" + cardTypes[data.action_type].image;
     cardFront.style.position = "absolute";
     cardFront.style.transform = "rotateY(180deg)";
     cardFront.style.backfaceVisibility = "hidden";    
