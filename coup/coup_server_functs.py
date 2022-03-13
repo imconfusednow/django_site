@@ -111,7 +111,7 @@ def challenge(sid):
 
 def check_challenged(sid, action_type):
     cnb = run_query("SELECT challenged_by, blocked_by, hand, game_id_id, sequence FROM coup_players WHERE player_id = ?", [sid], True)
-    challenger = {"name": ""}
+    challenger = {"name": "", "sequence": ""}
     if cnb["challenged_by"]:        
         challenger = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
     hand = cnb["hand"].split(",")
