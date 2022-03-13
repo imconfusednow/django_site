@@ -73,9 +73,9 @@ def next_action(sid, data, computer=False):
     players, player = c.get_players(sid)
     allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
     send_action(players, sid, allow_challenge, allow_block, data, player)
-    challenged, blocked, has_card, challenger, card_num, player_num = c.check_challenged(sid, data)
+    challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, data)
     if challenged:
-        send_challenge(players, sid, challenged, has_card, challenger, data, card_num, player_num)
+        send_challenge(players, sid, challenged, has_card, challenger, data, player_num, card_num)
     next_player = c.do_action(sid, data, bool(challenged and not has_card))
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
@@ -109,7 +109,7 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
         sio.sleep(2)
 
 
-def send_challenge(players, sid, player_id, has_card, challenger, action_type):
+def send_challenge(players, sid, player_id, has_card, challenger, action_type, player_num, card_num):
     for i in players:
         if (not i['computer'] and i["player_id"] != player_id):
             sio.emit("report_challenge", {"player": challenger, "success": has_card, "action_type": actions[action_type]["code"], "card_num": card_num, "player_num": player_num},  to=i["player_id"])
