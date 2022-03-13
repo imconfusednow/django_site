@@ -215,7 +215,7 @@ function sendRejoin(event)
 function setPlayerDetails(player, hand)
 {
     let cards = hand.split(",");
-    if (cards)
+    if (hand)
     {
         document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
         if (cards[1])
