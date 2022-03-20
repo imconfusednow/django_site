@@ -111,10 +111,14 @@ def send_action(players, sid, allow_challenge, allow_block, action_type, player)
 
 def send_challenge(players, sid, player_id, has_card, challenger, action_type, player_num, card_num):
     for i in players:
+        player_num -= i["sequence"] + 1
+        if player_num < 0:
+            player_num += 4
         if (not i['computer'] and i["player_id"] != player_id):
             sio.emit("report_challenge", {"player": challenger, "success": has_card, "action_type": actions[action_type]["code"], "card_num": card_num, "player_num": player_num},  to=i["player_id"])
         elif i["player_id"] == player_id:
             sio.emit("report_challenge", {"player": "You", "success": has_card, "action_type": actions[action_type]["code"], "card_num": card_num, "player_num": player_num},  to=i["player_id"])
+
     sio.sleep(10)
 
 
