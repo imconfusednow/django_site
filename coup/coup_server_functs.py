@@ -118,7 +118,7 @@ def check_challenged(sid, action_type):
 
     has_card = True if action_type in hand else False
     loser = cnb["challenged_by"] if has_card else sid
-    player_num = cnb["sequence"] if has_card else challenger["sequence"]
+    player_num = challenger["sequence"] if has_card else cnb["sequence"]
 
     if cnb["challenged_by"]:
         discard_card(loser, cnb["game_id_id"])
