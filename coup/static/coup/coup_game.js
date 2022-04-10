@@ -341,7 +341,7 @@ function pickPlayer(event_type)
         doAction(event_type, false);
     }
     names.forEach((element) =>{
-        buttons.push({"text":element.innerText, "function": doAction});
+        buttons.push({"text":element.innerText, "function": dact});
     });
     showModal("Choose Target", buttons, "infinite", "lie", true);
 }
