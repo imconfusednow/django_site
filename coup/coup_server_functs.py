@@ -215,7 +215,7 @@ def run_query(query, params, only_one=False):
         if only_one:
             return_value = return_value[0]
     except Exception as e:
-        print(e)
+        log(e)
 
     return return_value
 
