@@ -106,7 +106,7 @@ function showModal(text, buttons, visible_time, truth, vertical)
         button.classList.add("option-button");
         button.addEventListener("click", element.function);
     });
-    if (!visible_time === "infinite")
+    if (!visible_time !== "infinite")
     {
         setTimeout(closeModal, visible_time);
     }
