@@ -69,7 +69,7 @@ socket.on('report_action', (data) => {
         buttons.push({"text":"Block"});
         visible_time = 8000;
     }
-    showModal(text, buttons, visible_time, truth);
+    showModal(text, buttons, visible_time, truth, false);
 
 });
 
@@ -83,12 +83,12 @@ socket.on('report_challenge', (data) => {
         text = "You challenged";
     }
 
-    showModal(text, [], visible_time, "");
+    showModal(text, [], visible_time, "", false);
     setTimeout(function() {flipCard(data); }, visible_time);
 
 });
 
-function showModal(text, buttons, visible_time, truth)
+function showModal(text, buttons, visible_time, truth, vertical)
 {
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "block";
@@ -106,7 +106,15 @@ function showModal(text, buttons, visible_time, truth)
         button.classList.add("option-button");
         button.addEventListener("click", element.function);
     });
-    setTimeout(function() { modal.style.display = "none"; }, visible_time);
+    if (!visible_time === "infinite")
+    {
+        setTimeout(closeModal, visible_time);
+    }
+}
+
+function closeModal()
+{
+     modal.style.display = "none";
 }
 
 function flipCard(data)
@@ -313,6 +321,7 @@ function getOnTurn(data)
 
 function doAction(event_type, need_pick)
 {
+    closeModal();
     if (need_pick)
     {
         pickPlayer(event_type);
@@ -333,5 +342,5 @@ function pickPlayer(event_type)
     names.forEach((element) =>{
         buttons.push({"text":element.innerText, "function": doAction});
     });
-    showModal("Choose Target", buttons, visible_time, truth);
+    showModal("Choose Target", buttons, "infinite", "lie", true);
 }
