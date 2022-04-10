@@ -63,9 +63,9 @@ def discard_card(player_id, name=None, game_id=None):
     where = "player_id = ?"
     param = player_id
     if name:
-        where = "name = ?"
+        where = "WHERE name = ?"
         param = name
-    cards = run_query(f"SELECT hand FROM coup_players WHERE {where}", [param], True)
+    cards = run_query(f"SELECT hand FROM coup_players {where}", [param], True)
     types = cards["hand"].split(",")
     types = types.pop(0)
     run_statement(f"UPDATE coup_players SET hand = ? || ',' {where}", [
