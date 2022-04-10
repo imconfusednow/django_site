@@ -67,20 +67,24 @@ def challenge(sid):
 
 
 def next_action(sid, data, computer=False):
-    if computer:
-        data = random.choice(list(actions.keys()))
-        sio.sleep(random.randint(1, 3))
+    event_type = data["event_type"]
+    target = data["player"]
     players, player = c.get_players(sid)
-    allow_challenge, allow_block = actions[data]["challenge"], actions[data]["block"]
-    send_action(players, sid, allow_challenge, allow_block, data, player)
+    if computer:
+        event_type = random.choice(list(actions.keys()))
+        target = random.choice(players)
+        target = target["name"]
+        sio.sleep(random.randint(1, 3))
+    allow_challenge, allow_block = actions[event_type]["challenge"], actions[event_type]["block"]
+    send_action(players, sid, allow_challenge, allow_block, event_type, player)
     challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[data]["code"])
     if challenged:
-        send_challenge(players, sid, challenged, has_card, challenger, data, player_num, card_num)
-    next_player = c.do_action(sid, data, bool(challenged and not has_card))
+        send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
+    next_player = c.do_action(sid, event_type, bool(challenged and not has_card), target)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
-        next_action(next_player["player_id"], "", True)
+        next_action(next_player["player_id"], {"event_type": "", "player": ""}, True)
 
 
 def send_info(players, sid, only_one, method):

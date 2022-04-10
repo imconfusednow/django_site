@@ -320,7 +320,7 @@ function getOnTurn(data)
     return ind;
 }
 
-function doAction(event_type, need_pick)
+function doAction(event_type, need_pick, pick)
 {
     closeModal();
     if (need_pick)
@@ -329,7 +329,7 @@ function doAction(event_type, need_pick)
     }
     else
     {
-        socket.emit('do_action', event_type);
+        socket.emit('do_action', {"event_type": event_type, "player": pick});
     }
 }
 
@@ -337,10 +337,10 @@ function pickPlayer(event_type)
 {
     let buttons = [];
     let names = document.querySelectorAll(".opponent-name");
-    let dact = () => {
-        doAction(event_type, false);
-    }
     names.forEach((element) =>{
+        let dact = () => {
+            doAction(event_type, false, element);
+        }
         buttons.push({"text":element.innerText, "function": dact});
     });
     showModal("Choose Target", buttons, "infinite", "lie", true);

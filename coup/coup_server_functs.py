@@ -38,10 +38,10 @@ def sid_to_room(sid):
 def deal(players):
     for i, p in enumerate(players):
         p["hand"] = assign_cards(2, p["player_id"], p["game_id_id"])
-        run_statement("UPDATE coup_players SET sequence = ? WHERE player_id = ?", [i, p["player_id"]])
+        run_statement("UPDATE coup_players SET sequence = ? WHERE player_id = ?", [
+                      i, p["player_id"]])
     run_statement("UPDATE coup_games SET started = 1 WHERE id = ?", [
                   players[0]["game_id_id"]])
-
 
 
 def assign_cards(num, player_id, game_id):
@@ -57,16 +57,21 @@ def assign_cards(num, player_id, game_id):
     return types
 
 
-def discard_card(player_id, game_id=None):
+def discard_card(player_id, name=None, game_id=None):
     if not game_id:
         game_id = sid_to_room(player_id)
-    cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [player_id], True)
+    where = "player_id = ?"
+    param = player_id
+    if name:
+        where = "name = ?"
+        param = name
+    cards = run_query(f"SELECT hand FROM coup_players WHERE {where}", [param], True)
     types = cards["hand"].split(",")
     types = types.pop(0)
-    run_statement("UPDATE coup_players SET hand = ? || ',' WHERE player_id = ?", [
-                  types, player_id])
-    run_statement("INSERT INTO coup_decks (game_id_id, card_type)", [game_id, types])
-
+    run_statement(f"UPDATE coup_players SET hand = ? || ',' {where}", [
+                  types, param])
+    run_statement("INSERT INTO coup_decks (game_id_id, card_type)", [
+                  game_id, types])
 
 
 def pick_starter(sid):
@@ -89,7 +94,7 @@ def pick_starter(sid):
     return players, picked
 
 
-def do_action(sid, action_type, blocked):
+def do_action(sid, action_type, blocked, target):
     if not blocked:
         if action_type == "take-1":
             take_one(sid)
@@ -98,24 +103,29 @@ def do_action(sid, action_type, blocked):
         elif action_type == "take-3":
             take_three(sid)
         elif action_type == "assassinate":
-            assassinate(sid)
+            assassinate(sid, target)
         elif action_type == "swap":
             swap_cards(sid)
         elif action_type == "steal":
-            steal(sid, sid)
+            steal(sid, target)
 
     next_player = next_turn(sid)
     return next_player
 
+
 def challenge(sid):
     room = sid_to_room(sid)
-    run_statement("UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
+    run_statement(
+        "UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
+
 
 def check_challenged(sid, action_type):
-    cnb = run_query("SELECT challenged_by, blocked_by, hand, game_id_id, sequence FROM coup_players WHERE player_id = ?", [sid], True)
+    cnb = run_query(
+        "SELECT challenged_by, blocked_by, hand, game_id_id, sequence FROM coup_players WHERE player_id = ?", [sid], True)
     challenger = {"name": "", "sequence": ""}
-    if cnb["challenged_by"]:        
-        challenger = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [cnb["challenged_by"]], True)
+    if cnb["challenged_by"]:
+        challenger = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [
+                               cnb["challenged_by"]], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
@@ -123,10 +133,10 @@ def check_challenged(sid, action_type):
     player_num = challenger["sequence"] if has_card else cnb["sequence"]
 
     if cnb["challenged_by"]:
-        discard_card(loser, cnb["game_id_id"])
-
+        discard_card(loser, None, cnb["game_id_id"])
 
     return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"], player_num, 1
+
 
 def next_turn(sid):
     room = sid_to_room(sid)
@@ -164,19 +174,19 @@ def take_three(sid):
         "UPDATE coup_players SET coins = coins + 3 WHERE player_id == ?", [sid])
 
 
-def assassinate(sid):
-    discard_card(sid)
+def assassinate(sid, target):
+    discard_card(sid, target, None)
 
 
 def swap_cards(sid):
     pass
 
 
-def steal(sid1, sid2):
+def steal(sid1, target):
     run_statement(
         "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid1])
     run_statement(
-        "UPDATE coup_players SET coins = coins - 2 WHERE player_id == ?", [sid2])
+        "UPDATE coup_players SET coins = coins - 2 WHERE name == ?", [target])
 
 
 def get_random_string(length):
