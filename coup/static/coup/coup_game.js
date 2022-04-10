@@ -114,7 +114,8 @@ function showModal(text, buttons, visible_time, truth, vertical)
 
 function closeModal()
 {
-     modal.style.display = "none";
+    let modal = document.querySelector("#action-overlay");
+    modal.style.display = "none";
 }
 
 function flipCard(data)
