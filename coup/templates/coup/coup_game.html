@@ -11,8 +11,8 @@
         <div class="grid-item"></div>
         <div class="grid-item">
             <div class="player-info" id="opponent1-info">
-                <span style="" id="opponent1-name">???</span>
-                <span style="" id="opponent1-money"></span>
+                <span class="opponent-name" id="opponent1-name">???</span>
+                <span id="opponent1-money"></span>
             </div>
             <div class="opponent-card-div hidden">
                 <div class="flippable-card">
@@ -28,8 +28,8 @@
         <div class="grid-item"></div>
         <div class="grid-item">
             <div class="player-info" id="opponent0-info">
-                <span style="" id="opponent0-name">???</span>
-                <span style="" id="opponent0-money"></span>
+                <span class="opponent-name" id="opponent0-name">???</span>
+                <span id="opponent0-money"></span>
             </div>
             <div class="opponent-card-div hidden">
                 <div class="flippable-card">
@@ -54,8 +54,8 @@
         </div>
         <div class="grid-item">
             <div class="player-info" id="opponent2-info">
-                <span style="" id="opponent2-name">???</span>
-                <span style="" id="opponent2-money"></span>
+                <span class="opponent-name" id="opponent2-name">???</span>
+                <span id="opponent2-money"></span>
             </div>
             <div class="opponent-card-div hidden">
                 <div class="flippable-card">
@@ -71,12 +71,12 @@
         <div class="grid-item "></div>
         <div class="grid-item grid-item-player" id="player-ready" style="display:none">                     
             <div class="player-info" id="player-info">
-                <span style="" id="player-name"></span>
-                <span style="" id="player-money">Coins: 0</span>
+                <span id="player-name"></span>
+                <span id="player-money">Coins: 0</span>
             </div>
             <div class="turn-options hidden">
-                <button class="option-button option-button-true" id="take-1" onclick="doAction('take-1')" style="float: right;">Take 1 Coin</button>
-                <button class="option-button option-button-true" id="foreign-aid" onclick="doAction('foreign-aid')" style="float: right;">Foreign Aid (Take 2 Coins)</button>
+                <button class="option-button option-button-true" id="take-1" onclick="doAction('take-1', false)" style="float: right;">Take 1 Coin</button>
+                <button class="option-button option-button-true" id="foreign-aid" onclick="doAction('foreign-aid', false)" style="float: right;">Foreign Aid (Take 2 Coins)</button>
             </div>
             <div class="player-card-div-1 player-card-div hidden">
                 <div class="flippable-card">
@@ -89,10 +89,10 @@
                 </div>
             </div>
             <div class="turn-options hidden">
-                <button class="option-button option-button-lie" id="assassinate" onclick="doAction('assassinate')">Assassinate</button>
-                <button class="option-button option-button-lie" id="take-3" onclick="doAction('take-3')">Take 3 Coins</button>
-                <button class="option-button option-button-true" id="steal" onclick="doAction('steal')">Steal 2 Coins</button>
-                <button class="option-button option-button-lie" id="swap" onclick="doAction('swap')">Swap Cards</button>
+                <button class="option-button option-button-lie" id="assassinate" onclick="doAction('assassinate', true)">Assassinate</button>
+                <button class="option-button option-button-lie" id="take-3" onclick="doAction('take-3', false)">Take 3 Coins</button>
+                <button class="option-button option-button-true" id="steal" onclick="doAction('steal', true)">Steal 2 Coins</button>
+                <button class="option-button option-button-lie" id="swap" onclick="doAction('swap', false)">Swap Cards</button>
             </div>
             <div class="coup-action turn-options hidden">
                 <button class="option-button" id="coup-action" disabled>Coup</button>

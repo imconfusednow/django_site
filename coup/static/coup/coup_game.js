@@ -225,7 +225,7 @@ function setPlayerDetails(player, hand)
         else
         {
             document.querySelector("#player-card-2").classList.add("hidden");
-        }
+        }        
     }
     if (player.turn)
     {
@@ -265,6 +265,7 @@ function setPlayerDetails(player, hand)
         );
     }
     document.querySelector("#player-money").innerText = "Coins: " + player.coins;
+    document.querySelector("#player-info").sequence = player.sequence;
 }
 
 function setOpponentDetails(players, hands)
@@ -285,6 +286,7 @@ function setOpponentDetails(players, hands)
         }
         document.querySelector("#opponent" + i + "-name").innerText =  player.name;
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
+        document.querySelector("#opponent" + i + "-info").sequence = player.sequence;
         if (player.turn)
         {
             document.querySelector("#opponent" + i + "-info").classList.add("on-turn");
@@ -309,7 +311,27 @@ function getOnTurn(data)
     return ind;
 }
 
-function doAction(event_type)
+function doAction(event_type, need_pick)
 {
-    socket.emit('do_action', event_type);
+    if (need_pick)
+    {
+        pickPlayer(event_type);
+    }
+    else
+    {
+        socket.emit('do_action', event_type);
+    }
+}
+
+function pickPlayer(event_type)
+{
+    let buttons = [];
+    let names = document.querySelectorAll(".opponent-name");
+    let dact = () => {
+        doAction(event_type, false);
+    }
+    names.forEach((element) =>{
+        buttons.push({"text":element.innerText, "function": doAction});
+    });
+    showModal("Choose Target", buttons, visible_time, truth);
 }

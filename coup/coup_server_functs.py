@@ -57,7 +57,9 @@ def assign_cards(num, player_id, game_id):
     return types
 
 
-def discard_card(player_id, game_id):
+def discard_card(player_id, game_id=None):
+    if not game_id:
+        game_id = sid_to_room(player_id)
     cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [player_id], True)
     types = cards["hand"].split(",")
     types = types.pop(0)
@@ -163,8 +165,7 @@ def take_three(sid):
 
 
 def assassinate(sid):
-    run_statement(
-        "UPDATE coup_players SET hand = ? WHERE player_id == ?", ["am,", sid])
+    discard_card(sid)
 
 
 def swap_cards(sid):
