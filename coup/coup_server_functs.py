@@ -70,7 +70,7 @@ def discard_card(player_id, name=None, game_id=None):
     types = types.pop(0)
     run_statement(f"UPDATE coup_players SET hand = ? || ',' {where}", [
                   types, param])
-    run_statement("INSERT INTO coup_decks (game_id_id, card_type)", [
+    run_statement("INSERT INTO coup_decks (game_id_id, card_type) VALUES (?,?)", [
                   game_id, types])
 
 
@@ -201,7 +201,7 @@ def run_statement(query, params):
         con.execute(query, params)
         con.commit()
     except Exception as e:
-        print(e)
+        log(e)
 
 
 def run_query(query, params, only_one=False):

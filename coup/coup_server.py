@@ -68,7 +68,7 @@ def challenge(sid):
 
 def next_action(sid, data, computer=False):
     event_type = data["event_type"]
-    target = data["player"]
+    target = data["player"] if "player" in data else ""
     players, player = c.get_players(sid)
     if computer:
         event_type = random.choice(list(actions.keys()))
