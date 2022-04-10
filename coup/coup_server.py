@@ -77,7 +77,7 @@ def next_action(sid, data, computer=False):
         sio.sleep(random.randint(1, 3))
     allow_challenge, allow_block = actions[event_type]["challenge"], actions[event_type]["block"]
     send_action(players, sid, allow_challenge, allow_block, event_type, player)
-    challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[data]["code"])
+    challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
     if challenged:
         send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
     next_player = c.do_action(sid, event_type, bool(challenged and not has_card), target)

@@ -339,7 +339,7 @@ function pickPlayer(event_type)
     let names = document.querySelectorAll(".opponent-name");
     names.forEach((element) =>{
         let dact = () => {
-            doAction(event_type, false, element);
+            doAction(event_type, false, element.innerText);
         }
         buttons.push({"text":element.innerText, "function": dact});
     });
