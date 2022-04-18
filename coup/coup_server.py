@@ -97,8 +97,9 @@ def next_action(sid, data, computer=False):
 
 
 def send_info(players, sid, data, method):
-    hands = [h.pop("hand") for h in players]
-    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
+    if not data:
+        hands = [h.pop("hand") for h in players]
+        no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
     for i in players:
         if (not data or players[0]["player_id"] == sid) and (not players[0]['computer']):
             if not data:

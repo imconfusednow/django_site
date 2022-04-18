@@ -194,16 +194,19 @@ def swap_cards(sid, cards):
 def get_card_swap(sid):
     room = sid_to_room(sid)
     cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
-
+    player_cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [sid])
+    player_cards = player_cards["hand"].split(",")
+    for i in player_cards:
+        cards.append({"card_type": i})
     return cards
 
 def coup_action(sid):
     pass
 
 
-def steal(sid1, target):
+def steal(sid, target):
     run_statement(
-        "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid1])
+        "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid])
     run_statement(
         "UPDATE coup_players SET coins = coins - 2 WHERE name == ?", [target])
 

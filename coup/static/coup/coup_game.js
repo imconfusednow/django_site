@@ -141,7 +141,7 @@ function showCardModal(cards)
         img.addEventListener("click", selectFunct);
         count ++;
     });
-    let button = document.createElement('img');
+    let button = document.createElement('button');
     modal_btn_div.appendChild(button);
     button.innerText = "Swap";
     button.classList.add("action-modal-btn");
@@ -153,9 +153,9 @@ function showCardModal(cards)
     button.addEventListener("click", dact);
 }
 
-function selectCard()
+function selectCard(thisID)
 {
-    document.querySelector("#player-card-2").classList.toggle("selected_card");
+    document.querySelector("thisID").classList.toggle("selected-card");
 }
 
 function closeModal()
