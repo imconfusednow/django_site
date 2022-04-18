@@ -126,7 +126,7 @@ function showCardModal(cards)
     let modal_btn_div = document.querySelector("#action-modal-btn-div");
     modal_btn_div.innerText = "";
 
-    let div1 = createElement("div");
+    let div1 = document.createElement("div");
     div1.classList.add("modal-card-div");
     modal_btn_div.appendChild(div1);
 
@@ -146,7 +146,7 @@ function showCardModal(cards)
         count ++;
     });
 
-    let div2 = createElement("div");
+    let div2 = document.createElement("div");
     div.classList.add("modal-btn-div");
     modal_btn_div.appendChild(div2);
 
