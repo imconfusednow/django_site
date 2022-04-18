@@ -47,6 +47,12 @@ socket.on('rejoin_game', (data) => {
     setOpponentDetails(players.slice(1), hands.slice(1));
 });
 
+socket.on('get_card_swap', (data) => {
+    console.log(data);    
+    let cards = data.cards;
+    showCardModal(cards);
+});
+
 
 socket.on('report_action', (data) => {
     console.log(data);
@@ -106,10 +112,51 @@ function showModal(text, buttons, visible_time, truth, vertical)
         button.classList.add("option-button");
         button.addEventListener("click", element.function);
     });
-    if (!visible_time !== "infinite")
+    if (visible_time !== "infinite")
     {
         setTimeout(closeModal, visible_time);
     }
+}
+
+function showCardModal(cards)
+{
+    let modal = document.querySelector("#action-overlay");
+    modal.style.display = "block";
+    let modal_text = document.querySelector("#action-modal-text");
+    modal_text.innerText = "Choose 2 Cards to keep";
+    let modal_btn_div = document.querySelector("#action-modal-btn-div");
+    modal_btn_div.innerText = "";
+
+    let count = 0;
+
+    cards.forEach((element) =>{
+        let img = document.createElement('img');
+        let thisID = element.card_type + "-" + count;
+        img.id = thisID;
+        img.src = "/static/coup/" + cardTypes[element.card_type].image;
+        modal_btn_div.appendChild(img);
+        img.classList.add("player-card");
+        let selectFunct = () => {
+            selectCard(thisID);
+        }
+        img.addEventListener("click", selectFunct);
+        count ++;
+    });
+    let button = document.createElement('img');
+    modal_btn_div.appendChild(button);
+    button.innerText = "Swap";
+    button.classList.add("action-modal-btn");
+    button.classList.add("action-modal-btn-truth");
+    button.classList.add("option-button");
+    let dact = () => {
+            doAction("swap", false);
+        }
+    button.addEventListener("click", dact);
+}
+
+function selectCard()
+{
+    document.querySelector("#player-card-2").classList.toggle("selected_card");
 }
 
 function closeModal()

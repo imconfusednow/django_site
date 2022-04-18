@@ -63,8 +63,13 @@ def do_action(sid, data):
 
 @sio.event
 def challenge(sid):
-    c.challenge(sid)    
+    c.challenge(sid)
 
+@sio.event
+def get_card_swap(sid):
+    cards = c.get_card_swap(sid)
+    players, player = c.get_players(sid)
+    send_info(players, sid, True, "get_card_swap")
 
 def next_action(sid, data, computer=False):
     event_type = data["event_type"]

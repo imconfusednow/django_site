@@ -177,8 +177,27 @@ def take_three(sid):
 def assassinate(sid, target):
     discard_card(sid, target, None)
 
+def swap_cards(sid, cards):
+    hand = ""
+    room = sid_to_room(sid)
+    for i in cards:
+        if i["picked"]:
+            hand += i["card_type"]
+            hand += ","
+        else:
+            run_statement("INSERT INTO coup_decks (game_id_id, card_type) VALUES (?,?)", [
+                  room, i["card_type"]])
 
-def swap_cards(sid):
+    run_statement(
+        "UPDATE coup_players SET hand = ? WHERE player_id == ?", [hand])
+
+def get_card_swap(sid):
+    room = sid_to_room(sid)
+    cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
+
+    return cards
+
+def coup_action(sid):
     pass
 
 
