@@ -147,7 +147,7 @@ function showCardModal(cards)
     });
 
     let div2 = document.createElement("div");
-    div.classList.add("modal-btn-div");
+    div2.classList.add("modal-btn-div");
     modal_btn_div.appendChild(div2);
 
     let button = document.createElement('button');
