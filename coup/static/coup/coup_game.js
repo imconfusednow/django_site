@@ -155,7 +155,7 @@ function showCardModal(cards)
 
 function selectCard(thisID)
 {
-    document.querySelector("thisID").classList.toggle("selected-card");
+    document.querySelector(thisID).classList.toggle("selected-card");
 }
 
 function closeModal()

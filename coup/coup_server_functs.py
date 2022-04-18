@@ -197,6 +197,7 @@ def get_card_swap(sid):
     player_cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [sid], True)
     player_cards = player_cards["hand"].split(",")
     for i in player_cards:
+        if i == "": continue
         cards.append({"card_type": i})
     return cards
 
