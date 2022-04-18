@@ -194,7 +194,7 @@ def swap_cards(sid, cards):
 def get_card_swap(sid):
     room = sid_to_room(sid)
     cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
-    player_cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [sid])
+    player_cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [sid], True)
     player_cards = player_cards["hand"].split(",")
     for i in player_cards:
         cards.append({"card_type": i})
