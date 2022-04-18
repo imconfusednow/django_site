@@ -126,6 +126,10 @@ function showCardModal(cards)
     let modal_btn_div = document.querySelector("#action-modal-btn-div");
     modal_btn_div.innerText = "";
 
+    let div1 = createElement("div");
+    div1.classList.add("modal-card-div");
+    modal_btn_div.appendChild(div1);
+
     let count = 0;
 
     cards.forEach((element) =>{
@@ -133,7 +137,7 @@ function showCardModal(cards)
         let thisID = element.card_type + "-" + count;
         img.id = thisID;
         img.src = "/static/coup/" + cardTypes[element.card_type].image;
-        modal_btn_div.appendChild(img);
+        div1.appendChild(img);
         img.classList.add("player-card");
         let selectFunct = () => {
             selectCard(thisID);
@@ -141,8 +145,13 @@ function showCardModal(cards)
         img.addEventListener("click", selectFunct);
         count ++;
     });
+
+    let div2 = createElement("div");
+    div.classList.add("modal-btn-div");
+    modal_btn_div.appendChild(div2);
+
     let button = document.createElement('button');
-    modal_btn_div.appendChild(button);
+    div2.appendChild(button);
     button.innerText = "Swap";
     button.classList.add("action-modal-btn");
     button.classList.add("action-modal-btn-truth");
@@ -155,7 +164,7 @@ function showCardModal(cards)
 
 function selectCard(thisID)
 {
-    document.querySelector(thisID).classList.toggle("selected-card");
+    document.querySelector("#" + thisID).classList.toggle("selected-card");
 }
 
 function closeModal()
