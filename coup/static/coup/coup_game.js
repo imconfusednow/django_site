@@ -184,6 +184,11 @@ function sendStart()
     socket.emit('start_game');
 }
 
+function sendGetSwap()
+{
+    socket.emit('get_card_swap');
+}
+
 function sendChallenge()
 {
     socket.emit("challenge");
