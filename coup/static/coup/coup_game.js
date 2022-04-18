@@ -49,8 +49,7 @@ socket.on('rejoin_game', (data) => {
 
 socket.on('get_card_swap', (data) => {
     console.log(data);    
-    let cards = data.cards;
-    showCardModal(cards);
+    showCardModal(data);
 });
 
 
