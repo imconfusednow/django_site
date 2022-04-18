@@ -94,7 +94,7 @@ def pick_starter(sid):
     return players, picked
 
 
-def do_action(sid, action_type, blocked, target):
+def do_action(sid, action_type, blocked, target, cards):
     if not blocked:
         if action_type == "take-1":
             take_one(sid)
@@ -105,7 +105,7 @@ def do_action(sid, action_type, blocked, target):
         elif action_type == "assassinate":
             assassinate(sid, target)
         elif action_type == "swap":
-            swap_cards(sid)
+            swap_cards(sid, cards)
         elif action_type == "steal":
             steal(sid, target)
 

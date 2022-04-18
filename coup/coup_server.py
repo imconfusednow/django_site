@@ -72,6 +72,7 @@ def get_card_swap(sid):
     send_info(players, sid, True, "get_card_swap")
 
 def next_action(sid, data, computer=False):
+    cards = data["cards"] if "cards" in data else []
     event_type = data["event_type"]
     target = data["player"] if "player" in data else ""
     players, player = c.get_players(sid)
@@ -85,7 +86,7 @@ def next_action(sid, data, computer=False):
     challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
     if challenged:
         send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
-    next_player = c.do_action(sid, event_type, bool(challenged and not has_card), target)
+    next_player = c.do_action(sid, event_type, bool(challenged and not has_card), target, cards)
     players, player = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
