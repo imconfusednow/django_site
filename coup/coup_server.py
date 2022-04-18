@@ -32,7 +32,7 @@ def join_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
     players, player = c.get_players(sid)
-    sio.enter_room(sid, room)
+    sio.enter_room(sid, room)    
     send_info(players, sid, False, "join_game")
     print(f"Player {sid} entered room {room}")
 
@@ -53,7 +53,10 @@ def rejoin_game(sid, data):
     room = c.sid_to_room(sid)
     players, player = c.get_players(sid)
     sio.enter_room(sid, room)
-    send_info(players, sid, True, "rejoin_game")
+    hands = [h.pop("hand") for h in players]
+    no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
+    data = [players, [hands[0]] + no_cards[1:]]
+    send_info(players, sid, data, "rejoin_game")
     print(f"Player {sid} entered room {room}")
 
 
@@ -69,7 +72,7 @@ def challenge(sid):
 def get_card_swap(sid):
     cards = c.get_card_swap(sid)
     players, player = c.get_players(sid)
-    send_info(players, sid, True, "get_card_swap")
+    send_info(players, sid, cards, "get_card_swap")
 
 def next_action(sid, data, computer=False):
     cards = data["cards"] if "cards" in data else []
@@ -93,15 +96,17 @@ def next_action(sid, data, computer=False):
         next_action(next_player["player_id"], {"event_type": "", "player": ""}, True)
 
 
-def send_info(players, sid, only_one, method):
+def send_info(players, sid, data, method):
     hands = [h.pop("hand") for h in players]
     no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
     for i in players:
-        if (not only_one or players[0]["player_id"] == sid) and (not players[0]['computer']):
-            sio.emit(method, [players, [hands[0]] +
-                              no_cards[1:]],  to=players[0]["player_id"])
-            if only_one:
-                break
+        if (not data or players[0]["player_id"] == sid) and (not players[0]['computer']):
+            if not data:
+                sio.emit(method, [players, [hands[0]] +
+                                  no_cards[1:]],  to=players[0]["player_id"])
+
+            if data:
+                sio.emit(method, data,  to=players[0]["player_id"])
         players.append(players.pop(0))
         hands.append(hands.pop(0))
         no_cards.append(no_cards.pop(0))
