@@ -128,7 +128,7 @@ function showCardModal(cards)
 
     let div1 = document.createElement("div");
     div1.classList.add("modal-card-div");
-    div2.id = "modal-btn-div";
+    div1.id = "modal-card-div";
     modal_btn_div.appendChild(div1);
 
     let count = 0;
@@ -164,7 +164,7 @@ function showCardModal(cards)
 
 function doSwap()
 {
-    let childs = document.querySelector("#modal-btn-div").childNodes;
+    let childs = document.querySelector("#modal-card-div").childNodes;
 
     let cards = {};
 
@@ -180,11 +180,18 @@ function doSwap()
 
 function selectCard(thisID)
 {
+    let card = document.querySelector("#" + thisID);
+    if (card.classList.contains("selected-card"))
+    {
+        card.classList.remove("selected-card");
+        return;
+    }
+
     let selected = document.querySelectorAll(".selected-card").length;
     
     if (selected >= 2){return;}     
 
-    document.querySelector("#" + thisID).classList.toggle("selected-card");
+    card.classList.toggle("selected-card");
 }
 
 function closeModal()
