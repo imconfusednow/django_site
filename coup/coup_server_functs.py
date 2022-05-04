@@ -181,12 +181,13 @@ def swap_cards(sid, cards):
     hand = ""
     room = sid_to_room(sid)
     for i in cards:
+        card_type = cards[i].split("-")[0]
         if cards[i] == "selected":
-            hand += i["card_type"]
+            hand += card_type
             hand += ","
         else:
             run_statement("INSERT INTO coup_decks (game_id_id, card_type) VALUES (?,?)", [
-                  room, i["card_type"]])
+                  room, card_type])
 
     run_statement(
         "UPDATE coup_players SET hand = ? WHERE player_id == ?", [hand])
