@@ -181,7 +181,7 @@ def swap_cards(sid, cards):
     hand = ""
     room = sid_to_room(sid)
     for i in cards:
-        if i["picked"]:
+        if cards[i] == "selected":
             hand += i["card_type"]
             hand += ","
         else:

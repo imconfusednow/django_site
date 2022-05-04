@@ -109,8 +109,9 @@ def send_info(players, sid, data, method):
             if data:
                 sio.emit(method, data,  to=players[0]["player_id"])
         players.append(players.pop(0))
-        hands.append(hands.pop(0))
-        no_cards.append(no_cards.pop(0))
+        if not data:
+            hands.append(hands.pop(0))
+            no_cards.append(no_cards.pop(0))
 
 
 def send_action(players, sid, allow_challenge, allow_block, action_type, player):
