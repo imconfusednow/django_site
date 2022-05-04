@@ -137,7 +137,7 @@ function showCardModal(cards)
         let thisID = element.card_type + "-" + count;
         img.id = thisID;
         img.src = "/static/coup/" + cardTypes[element.card_type].image;
-        img.draggable = "false";
+        img.draggable = false;
         div1.appendChild(img);
         img.classList.add("player-card");
         let selectFunct = () => {
@@ -149,6 +149,7 @@ function showCardModal(cards)
 
     let div2 = document.createElement("div");
     div2.classList.add("modal-btn-div");
+    div2.id = "modal-btn-div";
     modal_btn_div.appendChild(div2);
 
     let button = document.createElement('button');
@@ -157,14 +158,34 @@ function showCardModal(cards)
     button.classList.add("action-modal-btn");
     button.classList.add("action-modal-btn-truth");
     button.classList.add("option-button");
-    let dact = () => {
-            doAction("swap", false);
+    button.addEventListener("click", doSwap);
+    let hidden_input = document.createElement('input');
+    hidden_input.id = "card_hash";
+    div2.appendChild(hidden_input);
+}
+
+function doSwap()
+{
+    let childs = document.querySelector("#modal-btn-div").childNodes;
+
+    let cards = {};
+
+    childs.forEach((element) =>{
+        cards[element.id] = "";
+        if (element.classList.contains("selected-card"))
+        {
+            cards[element.id] = "selected";
         }
-    button.addEventListener("click", dact);
+    });
+
 }
 
 function selectCard(thisID)
 {
+    let selected = document.querySelectorAll(".selected-card").length;
+    
+    if (selected >= 2){return;}     
+
     document.querySelector("#" + thisID).classList.toggle("selected-card");
 }
 
@@ -381,7 +402,7 @@ function getOnTurn(data)
     return ind;
 }
 
-function doAction(event_type, need_pick, pick)
+function doAction(event_type, need_pick, pick, cards)
 {
     closeModal();
     if (need_pick)
@@ -390,7 +411,7 @@ function doAction(event_type, need_pick, pick)
     }
     else
     {
-        socket.emit('do_action', {"event_type": event_type, "player": pick});
+        socket.emit('do_action', {"event_type": event_type, "player": pick, "cards": cards});
     }
 }
 
