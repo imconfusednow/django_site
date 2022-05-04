@@ -181,7 +181,7 @@ def swap_cards(sid, cards):
     hand = ""
     room = sid_to_room(sid)
     for i in cards:
-        card_type = cards[i].split("-")[0]
+        card_type = i.split("-")[0]
         if cards[i] == "selected":
             hand += card_type
             hand += ","
@@ -190,7 +190,7 @@ def swap_cards(sid, cards):
                   room, card_type])
 
     run_statement(
-        "UPDATE coup_players SET hand = ? WHERE player_id == ?", [hand])
+        "UPDATE coup_players SET hand = ? WHERE player_id == ?", [hand, sid])
 
 def get_card_swap(sid):
     room = sid_to_room(sid)
