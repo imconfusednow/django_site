@@ -178,8 +178,13 @@ def assassinate(sid, target):
     discard_card(sid, target, None)
 
 def swap_cards(sid, cards):
+    player = run_query("SELECT computer FROM coup_players WHERE player_id = ?", [sid], True)
+    if computer["computer"]:
+        return
     hand = ""
     room = sid_to_room(sid)
+    run_statement(
+        "DELETE FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
     for i in cards:
         card_type = i.split("-")[0]
         if cards[i] == "selected":
