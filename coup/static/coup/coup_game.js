@@ -128,6 +128,7 @@ function showCardModal(cards)
 
     let div1 = document.createElement("div");
     div1.classList.add("modal-card-div");
+    div2.id = "modal-btn-div";
     modal_btn_div.appendChild(div1);
 
     let count = 0;
@@ -159,9 +160,6 @@ function showCardModal(cards)
     button.classList.add("action-modal-btn-truth");
     button.classList.add("option-button");
     button.addEventListener("click", doSwap);
-    let hidden_input = document.createElement('input');
-    hidden_input.id = "card_hash";
-    div2.appendChild(hidden_input);
 }
 
 function doSwap()
