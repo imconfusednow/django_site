@@ -137,6 +137,7 @@ function showCardModal(cards)
         let thisID = element.card_type + "-" + count;
         img.id = thisID;
         img.src = "/static/coup/" + cardTypes[element.card_type].image;
+        img.draggable = "false";
         div1.appendChild(img);
         img.classList.add("player-card");
         let selectFunct = () => {

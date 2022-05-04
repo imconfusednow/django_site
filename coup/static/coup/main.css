@@ -267,17 +267,20 @@ body {
   animation-fill-mode: forwards;
 }
 
-@keyframes spin {
+@keyframes spin 
+{
     from {transform:rotate(var(--start-spin));}
     to {transform:rotate(var(--end-spin) );}
 }
 
-@keyframes flip_to_back {
+@keyframes flip_to_back 
+{
     from {transform:rotateY(0deg);}
     to {transform:rotateY(180deg);}
 }
 
-@keyframes flip_to_front {
+@keyframes flip_to_front 
+{
     from {transform:rotateY(180deg);}
     to {transform:rotateY(0deg);}
 }
@@ -287,7 +290,8 @@ body {
   visibility: hidden;
 }
 
-#action-modal {
+#action-modal 
+{
   text-align: center;
   background: black;
   color: white;
@@ -301,7 +305,8 @@ body {
 
 
 
-#action-overlay {
+#action-overlay 
+{
   display: none;
   background: rgba(0,0,0,0.7);
   width: 100%;
@@ -311,13 +316,15 @@ body {
   display: none;
 }
 
-#action-modal-text {
+#action-modal-text 
+{
   font-size: larger;
   margin-top: 10px;
 }
 
 
-.action-modal-btn {
+.action-modal-btn 
+{
     min-width: 270px;
     color: black;
     background-color: #69ffbe;
@@ -330,11 +337,13 @@ body {
     margin: auto;
 }
 
-.action-modal-btn-true {
+.action-modal-btn-true 
+{
     background-color: #69ff6b;
 }
 
-.action-modal-btn-lie {
+.action-modal-btn-lie 
+{
     background-color: #f7584c;
 }
 
