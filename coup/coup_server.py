@@ -30,8 +30,7 @@ def disconnect(sid):
 @sio.event
 def join_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
-    room = c.sid_to_room(sid)
-    players, player = c.get_players(sid)
+    players, player, room = c.get_players(sid)
     sio.enter_room(sid, room)    
     send_info(players, sid, False, "join_game")
     print(f"Player {sid} entered room {room}")
@@ -51,7 +50,7 @@ def start_game(sid):
 def rejoin_game(sid, data):
     c.set_player_nick(data["player_id"], sid, data["nick"])
     room = c.sid_to_room(sid)
-    players, player = c.get_players(sid)
+    players, player, room = c.get_players(sid)
     sio.enter_room(sid, room)
     hands = [h.pop("hand") for h in players]
     no_cards = [len([i for i in h.split(",") if i != ""]) for h in hands]
@@ -69,16 +68,16 @@ def challenge(sid):
     c.challenge(sid)
 
 @sio.event
-def get_card_swap(sid):
-    cards = c.get_card_swap(sid)
-    players, player = c.get_players(sid)
+def get_card_swap(sid):    
+    players, player, room = c.get_players(sid)
+    cards = c.get_card_swap(sid,room)
     send_info(players, sid, cards, "get_card_swap")
 
 def next_action(sid, data, computer=False):
     cards = data["cards"] if "cards" in data else []
     event_type = data["event_type"]
     target = data["player"] if "player" in data else ""
-    players, player = c.get_players(sid)
+    players, player, room = c.get_players(sid)
     if computer:
         event_type = random.choice(list(actions.keys()))
         target = random.choice(players)
@@ -89,8 +88,12 @@ def next_action(sid, data, computer=False):
     challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
     if challenged:
         send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
-    next_player = c.do_action(sid, event_type, bool(challenged and not has_card), target, cards)
-    players, player = c.get_players(sid)
+    c.do_action(sid, event_type, bool(challenged and not has_card), target, cards)
+    just_died =  c.check_dead()
+    if just_died:
+        sio.emit("lose", [],  just_died["player_id"])
+    next_player = c.next_turn(sid, room)
+    players, player, room = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")
     if next_player["computer"]:
         next_action(next_player["player_id"], {"event_type": "", "player": ""}, True)

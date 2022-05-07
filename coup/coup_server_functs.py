@@ -26,7 +26,7 @@ def get_players(sid):
     for i in range(4 - len(players)):
         players.append({"id": "t" + str(i), "name": "???", "coins": 0,
                         "game_id_id": room, "hand": "", "player_id": "temp", "turn": 0})
-    return [players, player]
+    return [players, player, room]
 
 
 def sid_to_room(sid):
@@ -94,23 +94,23 @@ def pick_starter(sid):
     return players, picked
 
 
-def do_action(sid, action_type, blocked, target, cards):
+def do_action(sid, action_type, blocked, target, cards, room):
+    action_result = ""
     if not blocked:
         if action_type == "take-1":
-            take_one(sid)
+            action_result = take_one(sid)
         elif action_type == "foreign-aid":
-            foreign_aid(sid)
+            action_result = foreign_aid(sid)
         elif action_type == "take-3":
-            take_three(sid)
+            action_result = take_three(sid)
         elif action_type == "assassinate":
-            assassinate(sid, target)
+            action_result = assassinate(sid, target)
         elif action_type == "swap":
-            swap_cards(sid, cards)
+            action_result = swap_cards(sid, cards, room)
         elif action_type == "steal":
-            steal(sid, target)
+            action_result = steal(sid, target)
 
-    next_player = next_turn(sid)
-    return next_player
+    return action_result
 
 
 def challenge(sid):
@@ -138,10 +138,9 @@ def check_challenged(sid, action_type):
     return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"], player_num, 1
 
 
-def next_turn(sid):
-    room = sid_to_room(sid)
+def next_turn(sid, room):
     players = run_query(
-        "SELECT * FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ?", [room])
+        "SELECT * FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ? AND alive = '1'", [room])
     curr_player = next_player = 0
     for i, p in enumerate(players):
         if p["player_id"] == sid:
@@ -158,31 +157,40 @@ def next_turn(sid):
                   players[next_player]["id"]])
     return players[next_player]
 
+def check_dead(sid, room):
+    just_died = run_query("SELECT sid FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ? AND alive = '1' AND hand = ''", [room], True)
+    run_statement(
+        "UPDATE coup_players SET alive = 0 WHERE player_id == ?", [sid])
+    return just_died
+
 
 def take_one(sid):
     run_statement(
         "UPDATE coup_players SET coins = coins + 1 WHERE player_id == ?", [sid])
+    return ""
 
 
 def foreign_aid(sid):
     run_statement(
         "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid])
+    return ""
 
 
 def take_three(sid):
     run_statement(
         "UPDATE coup_players SET coins = coins + 3 WHERE player_id == ?", [sid])
+    return ""
 
 
 def assassinate(sid, target):
-    discard_card(sid, target, None)
+    player_out = discard_card(sid, target, None)
+    return player_out
 
-def swap_cards(sid, cards):
+def swap_cards(sid, cards, room):
     player = run_query("SELECT computer FROM coup_players WHERE player_id = ?", [sid], True)
-    if computer["computer"]:
+    if player["computer"]:
         return
     hand = ""
-    room = sid_to_room(sid)
     run_statement(
         "DELETE FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
     for i in cards:
@@ -197,8 +205,7 @@ def swap_cards(sid, cards):
     run_statement(
         "UPDATE coup_players SET hand = ? WHERE player_id == ?", [hand, sid])
 
-def get_card_swap(sid):
-    room = sid_to_room(sid)
+def get_card_swap(sid, room):
     cards = run_query("SELECT card_type FROM coup_decks WHERE game_id_id = ? ORDER BY id ASC LIMIT ?", [room, 2])
     player_cards = run_query("SELECT hand FROM coup_players WHERE player_id = ?", [sid], True)
     player_cards = player_cards["hand"].split(",")
@@ -242,7 +249,10 @@ def run_query(query, params, only_one=False):
         for r in rows:
             return_value.append(dict(r))
         if only_one:
-            return_value = return_value[0]
+            if return_value:
+                return_value = return_value[0]
+            else:
+                return_value = []
     except Exception as e:
         log(e)
 
