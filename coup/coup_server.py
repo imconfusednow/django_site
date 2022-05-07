@@ -88,10 +88,10 @@ def next_action(sid, data, computer=False):
     challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
     if challenged:
         send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
-    c.do_action(sid, event_type, bool(challenged and not has_card), target, cards)
-    just_died =  c.check_dead()
+    c.do_action(sid, event_type, bool(challenged and not has_card), target, cards, room)
+    just_died =  c.check_dead(room)
     if just_died:
-        sio.emit("lose", [],  just_died["player_id"])
+        sio.emit("lose", [],  just_died)
     next_player = c.next_turn(sid, room)
     players, player, room = c.get_players(sid)
     send_info(players, sid, False, "rejoin_game")

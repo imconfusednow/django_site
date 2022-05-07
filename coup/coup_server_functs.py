@@ -157,11 +157,14 @@ def next_turn(sid, room):
                   players[next_player]["id"]])
     return players[next_player]
 
-def check_dead(sid, room):
-    just_died = run_query("SELECT sid FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ? AND alive = '1' AND hand = ''", [room], True)
-    run_statement(
-        "UPDATE coup_players SET alive = 0 WHERE player_id == ?", [sid])
-    return just_died
+def check_dead(room):
+    just_died = run_query("SELECT player_id FROM coup_players WHERE (player_id != '' OR computer = 1) AND game_id_id = ? AND alive = '1' AND hand = ''", [room], True)
+    if just_died:
+        run_statement(
+            "UPDATE coup_players SET alive = 0 WHERE player_id == ?", [just_died["player_id"]])
+    else:
+        return ""
+    return just_died["player_id"]
 
 
 def take_one(sid):
