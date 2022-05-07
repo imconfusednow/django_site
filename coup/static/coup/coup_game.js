@@ -93,6 +93,16 @@ socket.on('report_challenge', (data) => {
 
 });
 
+socket.on('lose', (data) => {
+    console.log(data);
+    let text = "You lost :("
+    let visible_time = 3000;
+
+    showModal(text, [], visible_time, "", false);
+    setTimeout(function() {flipCard(data); }, visible_time);
+
+});
+
 function showModal(text, buttons, visible_time, truth, vertical)
 {
     let modal = document.querySelector("#action-overlay");
@@ -313,18 +323,23 @@ function sendRejoin(event)
 function setPlayerDetails(player, hand)
 {
     let cards = hand.split(",");
-    if (hand)
+    if (cards[0])
     {
         document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
-        if (cards[1])
-        {
-            document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
-        }
-        else
-        {
-            document.querySelector("#player-card-2").classList.add("hidden");
-        }        
     }
+    else
+    {
+        document.querySelector("#player-card-1").classList.add("hidden");
+    }
+    if (cards[1])
+    {
+        document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
+    }
+    else
+    {
+        document.querySelector("#player-card-2").classList.add("hidden");
+    }        
+    
     if (player.turn)
     {
         document.getElementById('player-info').classList.add("on-turn");        
@@ -339,7 +354,7 @@ function setPlayerDetails(player, hand)
                     {
                         return;
                     }
-                if (cardTypes[cards[0]].actions[element.id] || (cards[1] && cardTypes[cards[1]].actions[element.id]) || defaultActions[element.id])
+                if ((cards[0] && cardTypes[cards[0]].actions[element.id]) || (cards[1] && cardTypes[cards[1]].actions[element.id]) || defaultActions[element.id])
                 {
                     element.classList.remove("option-button-lie");
                     element.classList.add("option-button-true");
