@@ -425,7 +425,9 @@ function setOpponentDetails(players, hands)
                 cards[c].classList.add("hidden");
             }
         }
-        document.querySelector("#opponent" + i + "-name").innerText =  player.name;
+        let opponent_name = document.querySelector("#opponent" + i + "-name").innerText;
+        opponent_name.innerText =  player.name;
+        opponent_name.classList.remove("opponent-alive");
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
         document.querySelector("#opponent" + i + "-info").sequence = player.sequence;
         if (player.turn)
@@ -468,7 +470,7 @@ function doAction(event_type, need_pick, pick, cards)
 function pickPlayer(event_type)
 {
     let buttons = [];
-    let names = document.querySelectorAll(".opponent-name");
+    let names = document.querySelectorAll(".opponent-alive");
     names.forEach((element) =>{
         let dact = () => {
             doAction(event_type, false, element.innerText);
