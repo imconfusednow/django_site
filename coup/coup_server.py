@@ -14,6 +14,7 @@ actions = {
     "steal": {"name": "Steal (Captain)", "challenge": True, "block": True, "code" : "ca"},
     "assassinate": {"name": "Assassinate", "challenge": True, "block": True, "code" : "as"},
     "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "block": False, "code" : "am"},
+    "coup": {"name": "Coup!", "challenge": False, "block": False, "code" : "cu"},
 }
 
 
@@ -85,7 +86,10 @@ def next_action(sid, data, computer=False):
         sio.sleep(random.randint(1, 3))
     allow_challenge, allow_block = actions[event_type]["challenge"], actions[event_type]["block"]
     send_action(players, sid, allow_challenge, allow_block, event_type, player)
-    challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
+    has_card = False
+    challenged = False
+    if actions[event_type]["challenge"] or actions[event_type]["block"]:
+        challenged, blocked, has_card, challenger, player_num, card_num = c.check_challenged(sid, actions[event_type]["code"])
     if challenged:
         send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
     c.do_action(sid, event_type, bool(challenged and not has_card), target, cards, room)

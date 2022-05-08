@@ -326,6 +326,7 @@ function setPlayerDetails(player, hand)
     if (cards[0])
     {
         document.querySelector("#player-card-1").src = "/static/coup/" + cardTypes[cards[0]].image;
+        document.querySelector("#player-card-1").classList.remove("hidden");
     }
     else
     {
@@ -334,6 +335,7 @@ function setPlayerDetails(player, hand)
     if (cards[1])
     {
         document.querySelector("#player-card-2").src = "/static/coup/" + cardTypes[cards[1]].image;
+        document.querySelector("#player-card-2").classList.remove("hidden");
     }
     else
     {
