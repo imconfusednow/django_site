@@ -427,7 +427,13 @@ function setOpponentDetails(players, hands)
         }
         let opponent_name = document.querySelector("#opponent" + i + "-name");
         opponent_name.innerText =  player.name;
-        opponent_name.classList.remove("opponent-alive");
+        if (player.alive)
+        {
+            opponent_name.classList.add("opponent-alive");
+        }
+        {
+            opponent_name.classList.add("opponent-remove");
+        }
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
         document.querySelector("#opponent" + i + "-info").sequence = player.sequence;
         if (player.turn)
