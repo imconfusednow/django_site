@@ -425,7 +425,7 @@ function setOpponentDetails(players, hands)
                 cards[c].classList.add("hidden");
             }
         }
-        let opponent_name = document.querySelector("#opponent" + i + "-name").innerText;
+        let opponent_name = document.querySelector("#opponent" + i + "-name");
         opponent_name.innerText =  player.name;
         opponent_name.classList.remove("opponent-alive");
         document.querySelector("#opponent" + i + "-money").innerText = "Coins: " + player.coins;
