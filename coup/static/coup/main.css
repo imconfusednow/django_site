@@ -198,7 +198,6 @@ body {
 {
   grid-column:1/-1;
   border-radius:5px;
-  animation: blinker 1s linear infinite;
 }
 
 .button-inactive
@@ -206,6 +205,10 @@ body {
   filter:brightness(25%) !important;
   pointer-events: none;
   animation: none;
+}
+
+.button-active{
+    animation: blinker 1s linear infinite;
 }
 
 .player-info

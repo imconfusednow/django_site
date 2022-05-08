@@ -382,12 +382,14 @@ function setPlayerDetails(player, hand)
         let coup_button = document.querySelector("#coup-action");
         coup_button.disabled = false;
         coup_button.classList.remove("button-inactive");
+        coup_button.classList.add("button-active");
     }
     else
     {
         let coup_button = document.querySelector("#coup-action");
         coup_button.disabled = true;
         coup_button.classList.add("button-inactive");
+        coup_button.classList.remove("button-active");
     }
     if (player.coins >= 3)
     {
