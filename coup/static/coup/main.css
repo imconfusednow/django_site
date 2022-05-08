@@ -209,6 +209,7 @@ body {
 
 .button-active{
     animation: blinker 1s linear infinite;
+    background-color: yellow;
 }
 
 .player-info
