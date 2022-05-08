@@ -109,6 +109,8 @@ def do_action(sid, action_type, blocked, target, cards, room):
             action_result = swap_cards(sid, cards, room)
         elif action_type == "steal":
             action_result = steal(sid, target)
+        elif action_type == "coup":
+            action_result = coup_action(target)
 
     return action_result
 
@@ -217,8 +219,9 @@ def get_card_swap(sid, room):
         cards.append({"card_type": i})
     return cards
 
-def coup_action(sid):
-    pass
+def coup_action(target):
+    run_statement(
+        "UPDATE coup_players SET hand = '' WHERE player_id = ?", [target])
 
 
 def steal(sid, target):

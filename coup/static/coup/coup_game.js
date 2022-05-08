@@ -95,7 +95,7 @@ socket.on('report_challenge', (data) => {
 
 socket.on('lose', (data) => {
     console.log(data);
-    let text = "You lost :("
+    let text = "You have been eliminated from the game"
     let visible_time = 3000;
 
     showModal(text, [], visible_time, "", false);
@@ -376,6 +376,30 @@ function setPlayerDetails(player, hand)
                 element.classList.add("hidden");
             }
         );
+    }
+    if (player.coins >= 7)
+    {
+        let coup_button = document.querySelector("#coup-action");
+        coup_button.disabled = false;
+        coup_button.classList.remove("button-inactive");
+    }
+    else
+    {
+        let coup_button = document.querySelector("#coup-action");
+        coup_button.disabled = true;
+        coup_button.classList.add("button-inactive");
+    }
+    if (player.coins >= 3)
+    {
+        let assassin_button = document.querySelector("#assassinate");
+        assassin_button.disabled = false;
+        assassin_button.classList.remove("button-inactive");
+    }
+    else
+    {
+        let assassin_button = document.querySelector("#assassinate");
+        assassin_button.disabled = true;
+        assassin_button.classList.add("button-inactive");
     }
     document.querySelector("#player-money").innerText = "Coins: " + player.coins;
     document.querySelector("#player-info").sequence = player.sequence;

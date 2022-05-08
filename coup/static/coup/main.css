@@ -198,11 +198,14 @@ body {
 {
   grid-column:1/-1;
   border-radius:5px;
+  animation: blinker 1s linear infinite;
 }
 
 .button-inactive
 {
   filter:brightness(25%) !important;
+  pointer-events: none;
+  animation: none;
 }
 
 .player-info
@@ -368,4 +371,17 @@ body {
 .selected-card
 {
   box-shadow: 0px 0px 10px 10px purple;
+}
+
+@keyframes blinker {
+  0%
+  {
+    filter: brightness(0.3);
+  }
+  50% {
+    filter: brightness(1);
+  }
+   100% {
+    filter: brightness(0.3);
+  }
 }
