@@ -108,9 +108,9 @@ def do_action(sid, action_type, blocked, target, cards, room):
         elif action_type == "swap":
             action_result = swap_cards(sid, cards, room)
         elif action_type == "steal":
-            action_result = steal(sid, target)
+            action_result = steal(sid, target, room)
         elif action_type == "coup":
-            action_result = coup_action(target)
+            action_result = coup_action(target, room)
 
     return action_result
 
@@ -219,16 +219,16 @@ def get_card_swap(sid, room):
         cards.append({"card_type": i})
     return cards
 
-def coup_action(target):
+def coup_action(target, room):
     run_statement(
-        "UPDATE coup_players SET hand = '' WHERE player_id = ?", [target])
+        "UPDATE coup_players SET hand = '' WHERE name = ? AND game_id_id = ?", [target, room])
 
 
-def steal(sid, target):
+def steal(sid, target, room):
     run_statement(
         "UPDATE coup_players SET coins = coins + 2 WHERE player_id == ?", [sid])
     run_statement(
-        "UPDATE coup_players SET coins = coins - 2 WHERE name == ?", [target])
+        "UPDATE coup_players SET coins = coins - 2 WHERE name == ? AND game_id_id = ?", [target, room])
 
 
 def get_random_string(length):
