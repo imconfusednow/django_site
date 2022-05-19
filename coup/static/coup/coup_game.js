@@ -151,7 +151,7 @@ function showCardModal(cards)
         img.draggable = false;
         div1.appendChild(img);
         img.classList.add("player-card");
-        let selectFunct = () => {
+        let selectFunct = (e) => {            
             selectCard(thisID);
         }
         img.addEventListener("click", selectFunct);
@@ -206,7 +206,7 @@ function selectCard(thisID)
     card.classList.toggle("selected-card");
 }
 
-function closeModal()
+function closeModal(e)
 {
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "none";
