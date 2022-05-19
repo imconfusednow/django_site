@@ -208,6 +208,7 @@ function selectCard(thisID)
 
 function closeModal(e)
 {
+    if (e.target !== e.currentTarget){return;}
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "none";
 }
