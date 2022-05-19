@@ -151,6 +151,7 @@ function showCardModal(cards)
         img.draggable = false;
         div1.appendChild(img);
         img.classList.add("player-card");
+        img.classList.add("modal-card");
         let selectFunct = (e) => {            
             selectCard(thisID);
         }
