@@ -71,7 +71,7 @@ socket.on('report_action', (data) => {
     }
     if (data.allow_block)
     {
-        buttons.push({"text":"Block"});
+        buttons.push({"text":"Block", "function": sendBlock});
         visible_time = 8000;
     }
     showModal(text, buttons, visible_time, truth, false);
@@ -226,7 +226,7 @@ function selectCard(thisID)
 
 function closeModal(e)
 {
-    if ((!e) || (e.target !== e.currentTarget)){return;}
+    if ((e) && (e.target !== e.currentTarget)){return;}
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "none";
 }
