@@ -93,6 +93,24 @@ socket.on('report_challenge', (data) => {
 
 });
 
+socket.on('report_block', (data) => {
+    console.log(data);
+    let text = data.player + " blocked action";
+    let visible_time = 8000;
+
+    let buttons = [];
+
+    buttons.push({"text":"Challenge", "function": sendChallenge}); 
+
+    if (data.player === "You")
+    {
+        text = "You blocked waiting on challenges";
+    }
+
+    showModal(text, [], visible_time, "", false);
+
+});
+
 socket.on('lose', (data) => {
     console.log(data);
     let text = "You have been eliminated from the game"
@@ -241,6 +259,11 @@ function sendGetSwap()
 function sendChallenge()
 {
     socket.emit("challenge");
+}
+
+function sendBlock()
+{
+    socket.emit("block");
 }
 
 function joinGame()

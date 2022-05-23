@@ -120,14 +120,23 @@ def challenge(sid):
     run_statement(
         "UPDATE coup_players SET challenged_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
 
+def block(sid):
+    room = sid_to_room(sid)
+    run_statement(
+        "UPDATE coup_players SET blocked_by = ? WHERE turn = '1' AND game_id_id = ?", [sid, room])
+
 
 def check_challenged(sid, action_type):
     cnb = run_query(
         "SELECT challenged_by, blocked_by, hand, game_id_id, sequence FROM coup_players WHERE player_id = ?", [sid], True)
     challenger = {"name": "", "sequence": ""}
+    blocker = {"name": "", "sequence": ""}
     if cnb["challenged_by"]:
         challenger = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [
                                cnb["challenged_by"]], True)
+    if cnb["blocked_by"]:
+        blocker = run_query("SELECT name, sequence FROM coup_players WHERE player_id = ?", [
+                               cnb["blocked_by"]], True)
     hand = cnb["hand"].split(",")
 
     has_card = True if action_type in hand else False
@@ -137,7 +146,7 @@ def check_challenged(sid, action_type):
     if cnb["challenged_by"]:
         discard_card(loser, None, cnb["game_id_id"])
 
-    return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"], player_num, 1
+    return cnb["challenged_by"], cnb["blocked_by"], has_card, challenger["name"], blocker["name"], player_num, 1
 
 
 def next_turn(sid, room):
