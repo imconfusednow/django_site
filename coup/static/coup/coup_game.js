@@ -108,7 +108,6 @@ socket.on('report_block', (data) => {
     }
 
     showModal(text, [], visible_time, "", false);
-
 });
 
 socket.on('lose', (data) => {
@@ -227,7 +226,7 @@ function selectCard(thisID)
 
 function closeModal(e)
 {
-    if (e.target !== e.currentTarget){return;}
+    if ((!e) || (e.target !== e.currentTarget)){return;}
     let modal = document.querySelector("#action-overlay");
     modal.style.display = "none";
 }
