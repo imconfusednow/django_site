@@ -13,7 +13,7 @@ let defaultActions = {"take-1" : 1, "foreign-aid" : 1};
 
 socket.on('connect', () => {
     console.log('connected');
-    if (!localStorage.getItem("player_id")) localStorage.setItem("player_id", document.getElementById("player_id").value);
+    localStorage.setItem("player_id", document.getElementById("player_id").value);
 });
 
 socket.on('disconnect', () => {
@@ -100,14 +100,16 @@ socket.on('report_block', (data) => {
 
     let buttons = [];
 
-    buttons.push({"text":"Challenge", "function": sendChallenge}); 
-
     if (data.player === "You")
     {
         text = "You blocked waiting on challenges";
     }
+    else
+    {
+        buttons.push({"text":"Challenge", "function": sendChallenge});
+    }
 
-    showModal(text, [], visible_time, "", false);
+    showModal(text, buttons, visible_time, "", false);
 });
 
 socket.on('lose', (data) => {

@@ -10,7 +10,7 @@ app = socketio.WSGIApp(sio)
 actions = {
     "take-1": {"name": "Take 1 Coin", "challenge": False, "block": False, "code": ""},
     "take-3": {"name": "Take 3 Coins (Duke)", "challenge": True, "block": False, "code": "du"},
-    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "block": True, "code": ""},
+    "foreign-aid": {"name": "Foreign Aid", "challenge": False, "block": True, "code": "fa"},
     "steal": {"name": "Steal (Captain)", "challenge": True, "block": True, "code": "ca"},
     "assassinate": {"name": "Assassinate", "challenge": True, "block": True, "code": "as"},
     "swap": {"name": "Swap Cards (Ambassador)", "challenge": True, "block": False, "code": "am"},
@@ -106,6 +106,9 @@ def next_action(sid, data, computer=False):
                        challenger, event_type, player_num, card_num)
     elif blocked:
         send_block(players, sid, challenged, blocker)
+        challenged, has_card, challenger, player_num, card_num = c.check_block_challenged(sid, actions[event_type]["code"], blocked)
+        if challenged:
+            send_challenge(players, sid, challenged, has_card, challenger, event_type, player_num, card_num)
 
     c.do_action(sid, event_type, bool(
         (challenged and not has_card) or blocked), target, cards, room)

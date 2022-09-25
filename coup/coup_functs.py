@@ -16,6 +16,7 @@ def add_game(name, player_id):
 
 
 def join_game(name, player_id):
+    log(f"Player {player_id} joining game {name}", True)
     existing = games.objects.filter(name=name)
     if not existing.exists():
         return {"error": f"Room does not exist, click create to create this room: {name}"}
@@ -33,6 +34,8 @@ def add_player(room, player_id):
     pk = None
     if player_id and existing.exists():
         pk = existing[0].pk
+    else:
+        player_id = ""
     player = players(game_id=room, computer=False, coins=0, pk=player_id)
     if pk:
         player.save(update_fields=["game_id", "computer", "coins"])
