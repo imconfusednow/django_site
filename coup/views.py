@@ -15,7 +15,7 @@ def login(request):
                 request.session["room_name"] = room_name
                 returned = ""
                 if (form.cleaned_data['submit_type'] == "create"):
-                    return redirect("/coup/create", room_name=room_name)
+                    return redirect("coup-coup_game_create", room_name=room_name)
                 else:
                     returned = c.join_game(room_name,request.session.get("player_id", None))
                     if "error" in returned: raise ValueError(returned["error"])
