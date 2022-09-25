@@ -5,27 +5,20 @@
     <div class="title">
         <h1 class="title-text" id="coup-title">Welcome to Coup Online</h1>
     </div>
-    <div id="create-form-div">
+    <div id="form-div">
         <form id="login-form" onsubmit="handleSubmit(this.submitted)" method="post">
             {% csrf_token %}
             <div class="form-group">
                 {% if error %}
                     <span class="error">{{ error }}</span>
                 {% endif %}
-                <label for=room-name" id="room-name-label">Room Name</label>
+                <label for="game-id" id="game-id-label">Join or create a game below</label>
                 <input required type="text" class="form-control" id="room-name" name="room_name" placeholder="Enter Game Room Name">
-                <label for="password">Room Password</label>
-                <input required type="password" class="form-control" id="password" name="password" placeholder="Enter Password for Game Room">
-                <label for="no_of_players">Number of Players</label>
-                <select id="no_of_players" class="form-select">
-                  <option selected>Open this select menu</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                  <option value="4">Three</option>
-                </select>
+                <input hidden type="text" class="form-control" id="submit-type" name="submit_type">
             </div>
             <div class="button-group">
-                <button type="submit" class="btn btn-light" onclick="joinGame(this)">Enter Game Lobby</button>
+                <button type="submit" class="btn btn-primary" id="create-game-button" onclick="createGame(this)">Create Game</button>
+                <button type="submit" class="btn btn-light" onclick="joinGame(this)">Join Game</button>
             </div>
         </form>
     </div>
