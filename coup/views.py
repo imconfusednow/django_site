@@ -13,10 +13,9 @@ def login(request):
             try:
                 room_name = form.cleaned_data['room_name'].lower()           
                 request.session["room_name"] = room_name
-                returned = ""              
+                returned = ""
                 if (form.cleaned_data['submit_type'] == "create"):
-                    returned = c.add_game(room_name,request.session.get("player_id", None))
-                    if "error" in returned: raise ValueError(returned["error"])
+                    return redirect("/coup/create", room_name=room_name)
                 else:
                     returned = c.join_game(room_name,request.session.get("player_id", None))
                     if "error" in returned: raise ValueError(returned["error"])
@@ -33,6 +32,14 @@ def login(request):
             return redirect("/coup/game")
     return render(request, 'coup/coup_login.html', context)
 
+
+def game_create(request, room_name):
+        if request.method == 'POST':
+            returned = c.add_game(room_name, request.session.get("player_id", None))
+            if "error" in returned: raise ValueError(returned["error"])
+        else:
+            return render(request, 'coup/game_create.html')
+        return redirect("/coup/game")
 
 def game(request):
     context = {"room_name": request.session["room_name"]}

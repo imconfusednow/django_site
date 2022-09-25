@@ -34,9 +34,7 @@ def add_player(room, player_id):
     pk = None
     if player_id and existing.exists():
         pk = existing[0].pk
-    else:
-        player_id = ""
-    player = players(game_id=room, computer=False, coins=0, pk=player_id)
+    player = players(game_id=room, computer=False, coins=0, pk=pk)
     if pk:
         player.save(update_fields=["game_id", "computer", "coins"])
     else:
