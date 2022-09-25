@@ -40,7 +40,16 @@ body {
   background-color:#717b85;
   padding:1%;
   border-radius: 5px;
-  
+}
+
+#create-form-div
+{
+  text-align:center;
+  margin: auto;
+  max-width: 800px;
+  background-color:#717b85;
+  padding:1%;
+  border-radius: 5px;
 }
 
 #game-id
